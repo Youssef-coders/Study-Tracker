@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Homework</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="term-0">
+  <header>HOMEWORK</header>
+  <div class="headerspacer"></div>
+  <div class="sidewallleft"></div>
+  <div class="sidewallright"></div>
+
+  <div class="navbar">
+    <a class="term-element" href="index.html">Dashboard</a>
+    <a class="term-element" href="subjects.html">Subjects</a>
+    <a href="homework.html" class="active term-element">Homework</a>
+    <a class="term-element" href="settings.html">Settings</a>
+  </div>
+
+  <div class="curric-card">
+    <div class="add-group">
+      <button class="addassignment">Add Assignment</button>
+    </div>
+    <h3>Assignments:</h3>
+    <!-- assignments will be rendered here -->
+  </div>
+
+  <!-- Assignment modal -->
+  <div id="assignmentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Add New Assignment</h2>
+      <form class="assignment-form">
+        <div class="form-group">
+          <label>Assignment Name:</label>
+          <input type="text" id="assignmentName" placeholder="e.g. Chapter 3 Exercises" required />
+        </div>
+        <div class="form-group">
+          <label>Subject:</label>
+          <select id="assignmentSubject" required>
+            <option value="">Select Subject</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="English">English</option>
+            <option value="Biology">Biology</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Business">Business</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Due Date:</label>
+          <input type="date" id="assignmentDueDate" required />
+        </div>
+        <div class="form-group">
+          <label>Status:</label>
+          <select id="assignmentStatus" required>
+            <option value="Not Started">Not Started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="save-btn">Save Assignment</button>
+          <button type="button" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+<script src="localStorageManager.js"></script>
+<script src="termController.js"></script>
+<script src="dateManager.js"></script>
+<script src="assignmentLoader.js"></script>
+<script src="darkMode.js"></script>
+<script src="blackoutMode.js"></script>
+
+<script>
+// Simple assignment manager for homework page
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Homework page script loading...');
+  
+  try {
+    const addAssignmentBtn = document.querySelector('.addassignment');
+    const assignmentModal = document.getElementById('assignmentModal');
+    const closeBtn = assignmentModal.querySelector('.close-btn');
+    const cancelBtn = assignmentModal.querySelector('.cancel-btn');
+    const form = assignmentModal.querySelector('.assignment-form');
+
+    if (!addAssignmentBtn || !assignmentModal || !closeBtn || !cancelBtn || !form) {
+      console.error('Required elements not found on homework page');
+      return;
+    }
+
+    console.log('All required elements found, setting up event listeners...');
+
+    // Show modal when Add Assignment button is clicked
+    addAssignmentBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      assignmentModal.style.display = 'block';
+    });
+
+    // Close modal when close button is clicked
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      assignmentModal.style.display = 'none';
+    });
+
+    // Close modal when cancel button is clicked
+    cancelBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      assignmentModal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    assignmentModal.addEventListener('click', function(e) {
+      if (e.target === assignmentModal) {
+        assignmentModal.style.display = 'none';
+      }
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const name = document.getElementById('assignmentName').value;
+      const subject = document.getElementById('assignmentSubject').value;
+      const dueDate = document.getElementById('assignmentDueDate').value;
+      const status = document.getElementById('assignmentStatus').value;
+
+      if (!name || !subject || !dueDate || !status) {
+        alert('Please fill in all fields');
+        return;
+      }
+
+      // Create new assignment
+      const assignment = {
+        id: Date.now().toString(),
+        name: name,
+        subject: subject,
+        dueDate: dueDate,
+        status: status,
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        // Save to localStorage
+        const assignments = LocalStorageManager.load('assignments') || [];
+        assignments.push(assignment);
+        LocalStorageManager.save('assignments', assignments);
+
+        // Close modal and refresh assignments
+        assignmentModal.style.display = 'none';
+        form.reset();
+        
+        // Refresh the assignments display
+        if (window.AssignmentLoader) {
+          AssignmentLoader.loadUpcomingAssignments();
+        }
+        
+        alert('Assignment added successfully!');
+      } catch (error) {
+        console.error('Error saving assignment:', error);
+        alert('Error saving assignment. Please try again.');
+      }
+    });
+
+    console.log('Homework page script loaded successfully');
+  } catch (error) {
+    console.error('Error in homework page script:', error);
+  }
+});
+</script>
+</body>
+</html>

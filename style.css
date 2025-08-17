@@ -1,0 +1,2466 @@
+@font-face {
+    font-family: Excalifont;
+    src: url(LeagueSpartan-VariableFont_wght.ttf);
+}
+
+body{
+    margin: 0;
+    overflow-x: hidden;
+    background: linear-gradient(to right, #f0f2f5, #e6e9ef); /* Soft light gradient */
+    
+}
+
+header {
+  background-color: grey;
+  color: white;
+  height: 60px; /* Reduced back to original height */
+  font-size: 50px;
+  font-family: 'Excalifont';
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+  border: solid black;
+  font-weight: 700;
+
+  /* Perfect centering */
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+
+  /* Micro-adjustment for font */
+  line-height: 0.7; /* Adjust this value between 0.8-1.1 as needed */
+}
+.sidewallleft{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    background-color: grey;
+    left: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.9);
+    border: solid;
+    border-color: black;
+
+}
+.sidewallright{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 25px;
+    background-color: grey;
+    right: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.9);
+    border: solid;
+    border-color: black;
+
+}
+.navbar {
+    top: 80px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    padding: 12px 24px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    background-color: grey; /* Default term-0 color */
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+.divider{
+    color: black;
+    display: inline;
+    font-size: 20px;
+    
+}
+.headerspacer{
+    height: 60px;
+    display: block;
+    background-color: white;
+}
+.navbar a:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.navbar a .resource{
+    min-width: 120px;
+
+}
+.navbar a .active{
+    background: darkslategrey !important; 
+}
+#day-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: 800px;
+    margin-top: 60px;
+    padding: 20px 20px;
+    gap: clamp(15px, 2vw, 25px);
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 1000;
+    font-family: 'Excalifont';
+    color: rgb(0, 0, 0);
+}
+
+#day-info p {
+    display: inline-flex;
+    justify-content: center;
+    font-family: 'Excalifont';
+    font-size: 20px;
+    padding: 0 15px;
+    margin: 0;
+    font-weight: 300;
+}
+.day{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    width: auto;
+    max-width: 800px;
+    margin-top: 60px;
+    padding: 50px 20px;
+    gap: clamp(15px, 2vw, 25px);
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 1000;
+    font-size: 50px;
+    font-family: 'Excalifont';
+    font-weight: 900;
+    color: rgb(0, 0, 0);
+}
+.hourcard {
+    position: absolute;
+    left: 55px; 
+    width: 575px; 
+    top: 235px;
+    padding: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hourcard::-webkit-scrollbar {
+    display: none; 
+}
+@media (min-width: 1600px) {
+    .hourcard {
+        width: 900px; 
+    }
+}
+
+.hourcard h2 {
+    font-family: 'Excalifont';
+    font-size: 36px; 
+    margin: 10px 0;
+    white-space: nowrap; 
+}
+
+.hourcard h1 {
+    font-family: 'Excalifont';
+    font-size: 200px;
+    margin: 0;
+    line-height: 1;
+    flex-grow: 1; 
+    display: flex;
+    align-items: center; 
+}
+
+.hourcard button {
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin-bottom: 0;
+    border-radius: 25px;
+    border-width: 3px;
+    font-family: 'Excalifont';
+    font-size: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.9);
+}
+.hourcard button:hover{
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.streakcard {
+    position: absolute;
+    right: 55px; 
+    width: 575px; 
+    top: 235px;
+    padding: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.streakcard h2 {
+    font-family: 'Excalifont';
+    font-size: 36px; 
+    margin: 10px 0;
+    white-space: nowrap; 
+}
+
+.streakcard h1 {
+    font-family: 'Excalifont';
+    font-size: 250px;
+    margin: 0;
+    line-height: 1;
+    flex-grow: 1; 
+    display: flex;
+    align-items: center; 
+}
+
+/* Beautiful hover effects for cards */
+.hourcard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.streakcard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+@media (min-width: 1600px) {
+    .streakcard {
+        width: 900px; 
+    }
+}
+.widecard {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1120px;
+    top: 650px;
+    padding: 20px;
+    border: 5px solid #00000052;
+    border-radius: 8px;
+    min-height: 200px; 
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    border-radius: 25px;
+    background: #FAF9F6;
+    background: linear-gradient(to right, #f0f2f5, #e6e9ef); /* Soft light gradient */
+}
+
+.widecard h2 {
+    font-family: 'Excalifont';
+    font-size: 36px;
+    margin: 10px 0;
+    white-space: nowrap;
+    text-align: center;
+}
+.assigncontainer{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background-color: transparent;
+    min-height: 50px; /* Ensure minimum height when empty */
+    flex-grow: 1; /* Allow container to stretch */
+    overflow-y: auto; /* Add scrolling if needed */
+}
+
+.assigncontainer:empty::before {
+    content: "No upcoming assignments";
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-family: 'Excalifont';
+    font-size: 18px;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    margin: 10px;
+    backdrop-filter: blur(5px);
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.upassign {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    width: 100%;
+    padding: 15px 0;
+    border: none; 
+    margin-top: 15px;
+    border-radius: 25px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    background: #FAF9F6;
+    transition: all 0.3s ease-in-out; 
+    backdrop-filter: blur(5px);
+}
+.upassign:hover{
+    transform: scale(1.02);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    background: #f0f0f0;
+}
+
+.upassign h4 {
+    font-family: 'Excalifont';
+    font-size: 24px;
+    margin: 0;
+    padding: 0 15px;
+    white-space: nowrap;
+    flex: 1; 
+    text-align: center;
+    color: #000;
+    font-weight: 500;
+}
+@media (min-width: 1600px) {
+    .widecard {
+        width: 1800px; 
+    }
+}
+/*-----------SETTINGS PAGE---------------*/
+.settings-card {
+    position: absolute;
+    top: 150px; 
+    left: 55px; 
+    right: 55px;
+    min-height: 400px;
+    background: #FAF9F6;
+    border-radius: 25px;
+    padding: 20px;
+    border: 5px solid #555; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 20px; 
+}
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border: 5px solid #555; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 20px; 
+    background: #ffffff; 
+    position: relative; 
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end; 
+    width: 200px; 
+}
+
+.setting h3 {
+    font-family: 'Excalifont';
+    font-size: 26px;
+    margin: 0;
+    color: #000000;
+}
+
+.setting button{
+    float: right;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.enable{
+    font-size: 24px;
+    background: linear-gradient(135deg, rgb(115, 216, 115), rgb(76, 175, 80));
+    font-family: 'Excalifont';
+    border: 3px solid;
+    border-radius: 100px;
+    transition: all 0.3s ease-in-out; 
+    border-color: rgb(4, 36, 4);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+    position: relative;
+    overflow: hidden;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    min-width: 100px;
+    text-align: center;
+}
+.disable{
+    font-size: 24px;
+    background: linear-gradient(135deg, rgb(202, 57, 47), rgb(183, 28, 28));
+    font-family: 'Excalifont';
+    border: 3px solid;
+    border-radius: 100px;
+    transition: all 0.3s ease-in-out; 
+    border-color: rgb(75, 6, 6);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+    position: relative;
+    overflow: hidden;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    padding: 10px 20px;
+    min-width: 100px;
+    text-align: center;
+}
+.enable:hover{
+    cursor: pointer;
+    background: linear-gradient(135deg, darkgreen, rgb(27, 94, 32));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+.disable:hover{
+    cursor: pointer;
+    background: linear-gradient(135deg, rgb(110, 30, 30), rgb(93, 20, 20));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+}
+.set{
+    font-size: 32px;
+    background: linear-gradient(135deg, rgb(115, 167, 216), rgb(33, 150, 243));
+    font-family: 'Excalifont';
+    border: 3px solid;
+    border-radius: 100px;
+    transition: all 0.3s ease-in-out; 
+    border-color: rgb(4, 31, 36);
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    position: relative;
+    overflow: hidden;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    padding: 12px 24px;
+    min-width: 120px;
+    text-align: center;
+}
+.set:hover{
+    background: linear-gradient(135deg, rgb(6, 63, 121), rgb(3, 51, 98));
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+@media (min-width: 1600px) {
+    .settings-card{
+        height: 700px;
+    }
+}
+@media (min-width: 1600px) {
+    .setting {
+        height: 120px;
+        font-size: 52px
+    }
+}
+@media (min-width: 1600px) {
+    .setting h3 {
+        font-size: 56px;
+    }
+}
+@media (min-width: 1600px) {
+    .setting .button-group button {
+        width: 250px;
+        height: 80px;
+        font-size: 32px;
+        padding: 20px 35px;
+    }
+}
+@media (min-width: 1600px) {
+    .setting .button-group .set {
+        width: 180px; 
+        height: 100px;
+        font-size: 42px;
+        text-align: center;
+        padding: 25px 35px;
+    }
+}
+/*------------SUBJECTS GRID-----------------*/
+.sro {
+    top: 170px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.sro a {
+    padding: 12px 24px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 60px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    background-color: rgb(176, 212, 171);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    width: 400px;
+    border-color: black;
+    height: 150px;
+}
+.sro a:hover{
+    background-color: rgb(31, 121, 43);
+}
+.srtw {
+    top: 390px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.srtw a {
+    padding: 12px 24px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 60px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    background-color: rgb(176, 212, 171);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    width: 400px;
+    border-color: black;
+    height: 150px;
+
+}
+.srtw a:hover{
+    background-color: rgb(31, 121, 43);
+}
+.srth {
+    top: 600px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.srth a {
+    padding: 12px 24px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 80px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    background-color: rgb(176, 212, 171);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    width: 400px;
+    border-color: black;
+    height: 150px;
+    text-align: center;
+
+}
+.srth a:hover{
+    background-color: rgb(31, 121, 43);
+}
+@media (min-width: 1600px) {
+    .sro a {
+        width: 600px; 
+        height: 200px;
+        font-size: 80px;
+    }
+}
+@media (min-width: 1600px) {
+    .srtw {
+        padding-top: 40px;
+    }
+}
+@media (min-width: 1600px) {
+    .srtw a {
+        width: 600px; 
+        height: 200px;
+        font-size: 80px;
+
+    }
+}
+@media (min-width: 1600px) {
+    .srth{
+        padding-top: 80px;
+    }
+}
+@media (min-width: 1600px) {
+    .srth a {
+        width: 600px; 
+        height: 200px;
+        font-size: 80px
+    }
+}
+/*----------SUBJECTS GRID (RESOURCES)------------*/
+.rro {
+    top: 170px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.rro a {
+    padding: 12px 24px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 60px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    background-color: rgb(95, 93, 221);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    width: 400px;
+    border-color: black;
+    height: 150px;
+}
+.rro a:hover{
+    background-color: rgb(60, 28, 119);
+}
+.rrtw {
+    top: 390px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.rrtw a {
+    padding: 12px 24px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 60px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    background-color: rgb(95, 93, 221);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    width: 400px;
+    border-color: black;
+    height: 150px;
+
+}
+.rrtw a:hover{
+    background-color: rgb(60, 28, 119);
+}
+.rrth {
+    top: 600px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.rrth a {
+    padding: 12px 24px;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 80px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    background-color: rgb(95, 93, 221);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    width: 400px;
+    border-color: black;
+    height: 150px;
+    text-align: center;
+
+}
+.rrth a:hover{
+    background-color: rgb(60, 28, 119);
+}
+@media (min-width: 1600px) {
+    .rro a {
+        width: 600px; 
+        height: 200px;
+        font-size: 80px;
+    }
+}
+@media (min-width: 1600px) {
+    .rrtw {
+        padding-top: 40px;
+    }
+}
+@media (min-width: 1600px) {
+    .rrtw a {
+        width: 600px; 
+        height: 200px;
+        font-size: 80px;
+
+    }
+}
+@media (min-width: 1600px) {
+    .rrth{
+        padding-top: 80px;
+    }
+}
+@media (min-width: 1600px) {
+    .rrth a {
+        width: 600px; 
+        height: 200px;
+        font-size: 80px
+    }
+}
+.subbar {
+    top: 160px;
+    height: 50px;
+    margin: 0 auto;
+    width: 80%;
+    position: absolute;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.subbar a {
+    padding: 12px 24px;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    border-color: black;
+}
+.subbar a:hover{
+    background-color: rgb(54, 52, 52);
+    
+}
+.subbar a .resource{
+    min-width: 120px;
+
+}
+.subbar a .active{
+    background: darkslategrey !important; 
+}
+.subtitle {
+    position: absolute;
+    top: 50px; 
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+    font-family: 'Excalifont';
+    font-size: 55px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding: 20px 0;
+    color: #2c3e50;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+.curric-card {
+    position: absolute;
+    top: 250px; 
+    left: 55px; 
+    right: 55px;
+    min-height: 400px;
+    background: #FAF9F6;
+    border-radius: 25px;
+    padding: 20px;
+    border: 5px solid #555; 
+    border-radius: 8px; 
+    padding: 15px; 
+    margin-bottom: 20px; 
+}
+
+.lesson {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #e1e5e9; 
+    border-radius: 12px; 
+    margin-bottom: 20px; 
+    background: linear-gradient(135deg, #ffffff, #f8f9fa); 
+    position: relative; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.lesson:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-color: #007bff;
+}
+
+/* Beautiful chapter header styling */
+.curric-card h2 {
+    background: linear-gradient(135deg, #007bff, #0056b3) !important;
+    color: white !important;
+    padding: 20px !important;
+    border-radius: 16px !important;
+    margin: 25px 0 20px 0 !important;
+    text-align: center !important;
+    font-family: 'Excalifont' !important;
+    font-size: 28px !important;
+    font-weight: bold !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3) !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.curric-card h2:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 25px rgba(0, 123, 255, 0.4) !important;
+}
+.lesson h3 {
+    font-family: 'Excalifont';
+    font-size: 26px;
+    margin: 0;
+    color: #000000;
+}
+
+/* Assignment and Chapter Title Styling */
+.curric-card h2,
+.quizlesson-card h2,
+.res-card h2,
+.curric-card h3,
+.quizlesson-card h3,
+.res-card h3 {
+    font-family: 'Excalifont';
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin: 15px 0;
+    padding: 10px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+    border: 2px solid #dee2e6;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.curric-card h2,
+.quizlesson-card h2 {
+    font-size: 32px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.curric-card h3,
+.quizlesson-card h3 {
+    font-size: 24px;
+}
+.add-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    justify-content: flex-end;
+}
+
+.add-group button {
+    font-family: 'Excalifont';
+    font-size: 18px;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid;
+    color: white;
+    font-weight: bold;
+}
+.add-group button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Specific button styles for add-group */
+.addchapter {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    border-color: #E65100;
+}
+
+.addlesson {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    border-color: #1565C0;
+}
+
+.addresource {
+    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+    border-color: #6A1B9A;
+}
+
+.addassignment {
+    background: linear-gradient(135deg, #E91E63, #C2185B);
+    border-color: #AD1457;
+}
+
+/* Resource card styling */
+.res-card {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.resource-list {
+  margin-top: 20px;
+}
+
+.resource-item {
+  background: #ffffff;
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.resource-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border-color: #2196f3;
+}
+
+.resource-item h4 {
+  color: #333;
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: 600;
+  font-family: 'Excalifont';
+}
+
+.resource-item p {
+  color: #666;
+  margin: 0;
+  font-size: 0.95rem;
+  font-family: 'Excalifont';
+}
+
+.resource-link, .download-btn {
+  display: inline-block;
+  background: #2196f3;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Excalifont';
+  font-size: 14px;
+  text-align: center;
+  align-self: flex-start;
+}
+
+.resource-link:hover, .download-btn:hover {
+  background: #1976d2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.download-btn {
+  background: #4CAF50;
+}
+
+.download-btn:hover {
+  background: #45a049;
+}
+
+.resource-card {
+            position: absolute;
+            top: 250px; 
+            left: 55px; 
+            right: 55px;
+            min-height: 400px;
+            background: #FAF9F6;
+            border-radius: 25px;
+            padding: 20px;
+            border: 5px solid #555; 
+            border-radius: 8px; 
+            padding: 15px; 
+            margin-bottom: 20px;
+        }
+
+        .resource {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border: 5px solid #555;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .resource h3 {
+            font-family: 'Excalifont';
+            font-size: 26px;
+            margin: 0;
+            color: #000000;
+            flex-grow: 1;
+        }
+
+        .resource-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .view-btn {
+            padding: 8px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Excalifont';
+            font-size: 18px;
+            cursor: pointer;
+            border: 2px solid #2E7D32;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background-color: #2E7D32;
+        }
+
+        .add-resource-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-family: 'Excalifont';
+            font-size: 18px;
+            cursor: pointer;
+            border: 2px solid #2980b9;
+            transition: all 0.3s ease;
+        }
+
+        .add-resource-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            margin: 5% auto;
+            padding: 40px;
+            border: none;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 700px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: translateY(20px);
+            animation: slideUp 0.4s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .close-btn:hover {
+            color: #333;
+            background: rgba(0,0,0,0.2);
+            transform: scale(1.1);
+        }
+
+        .resource-form,
+        .chapter-form,
+        .lesson-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+            font-family: 'Excalifont';
+            font-size: 16px;
+        }
+
+        .resource-form input, 
+        .resource-form textarea,
+        .chapter-form input,
+        .lesson-form input,
+        .chapter-form select,
+        .lesson-form select {
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-family: 'Excalifont';
+            font-size: 16px;
+            background: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .resource-form input:focus, 
+        .resource-form textarea:focus,
+        .chapter-form input:focus,
+        .lesson-form input:focus,
+        .chapter-form select:focus,
+        .lesson-form select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .resource-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Excalifont';
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #2E7D32;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e1e5e9;
+        }
+
+        .modal h2 {
+            color: #333;
+            font-family: 'Excalifont';
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+#lessonModal, #chapterModal {
+    display: none; /* Change to block temporarily to view */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background-color: #FAF9F6;
+    margin: 10% auto;
+    padding: 30px;
+    border: 5px solid #555;
+    border-radius: 15px;
+    width: 60%;
+    max-width: 600px;
+    position: relative;
+}
+
+.lesson-form, .chapter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lesson-form input,
+.chapter-form input {
+    padding: 12px;
+    border: 2px solid #555;
+    border-radius: 8px;
+    font-family: 'Excalifont';
+    font-size: 16px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn {
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Excalifont';
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #2E7D32;
+}
+/* Quiz Season Modal Styles */
+#quizSeasonModal .modal-content {
+  max-width: 900px;
+  padding: 30px;
+}
+
+.week-range {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.quiz-grid table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.quiz-grid th, .quiz-grid td {
+  border: 2px solid #555;
+  padding: 12px;
+  text-align: center;
+}
+
+.quiz-grid select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 2px solid #555;
+  font-family: 'Excalifont';
+}
+
+/* Assignment Modal Styles */
+.assignment-form .form-group {
+  margin-bottom: 20px;
+}
+
+.assignment-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.assignment-form input,
+.assignment-form select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #555;
+  border-radius: 8px;
+  font-family: 'Excalifont';
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.save-btn, .cancel-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-family: 'Excalifont';
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.save-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: 2px solid #2E7D32;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border: 2px solid #d32f2f;
+}     
+/* Term Colors - Enhanced with modern styling */
+body.term-0 .term-element {
+  background: linear-gradient(135deg, #808080, #696969) !important;
+  box-shadow: 0 4px 15px rgba(128, 128, 128, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+body.term-1 .term-element {
+  background: linear-gradient(135deg, #2b5d8a, #1e3a5f) !important; /* dark blue */
+  box-shadow: 0 4px 15px rgba(43, 93, 138, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+body.term-2 .term-element {
+  background: linear-gradient(135deg, #1f7a3a, #155a2a) !important; /* dark green */
+  box-shadow: 0 4px 15px rgba(31, 122, 58, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Ensure navbar term elements always use term colors */
+body.term-0 .navbar .term-element {
+  background: grey !important;
+}
+
+body.term-1 .navbar .term-element {
+  background: #2b5d8a !important; /* dark blue */
+}
+
+body.term-2 .navbar .term-element {
+  background: #1f7a3a !important; /* dark green */
+}
+
+/* Override dark mode for navbar term elements */
+body.dark-mode.term-0 .navbar .term-element {
+  background: grey !important;
+}
+
+body.dark-mode.term-1 .navbar .term-element {
+  background: #2b5d8a !important; /* dark blue */
+}
+
+body.dark-mode.term-2 .navbar .term-element {
+  background: #1f7a3a !important; /* dark green */
+}
+
+/* Override blackout mode for navbar term elements */
+body.blackout-mode.term-0 .navbar .term-element {
+  background: grey !important;
+}
+
+body.blackout-mode.term-1 .navbar .term-element {
+  background: #2b5d8a !important; /* dark blue */
+}
+
+body.blackout-mode.term-2 .navbar .term-element {
+  background: #1f7a3a !important; /* dark green */
+}
+
+/* Blackout Mode */
+body.blackout-mode {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+body.blackout-mode *:not(#day-info):not(#day-info *):not(.day):not(h1.day):not(.sro):not(.srtw):not(.srth) {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #333 !important;
+}   
+/* Ensure .term-element picks up colors */
+/* These are now defined above in the Term Colors section */
+
+/* Navbar active selectors (fix) */
+.navbar a.active { background: darkslategrey !important; }
+.subbar a.active { background: darkslategrey !important; }
+
+/* Dark mode */
+body.dark-mode { background: #121212 !important; color: #eaeaea !important; }
+body.dark-mode .term-element, body.dark-mode .widecard, body.dark-mode .curric-card, body.dark-mode .settings-card { background: #1e1e1e !important; color: #eaeaea !important; border-color: #333 !important; }
+
+/* Dark mode text colors for day info and day */
+body.dark-mode #day-info,
+body.dark-mode #day-info p,
+body.dark-mode .day {
+    color: #eaeaea !important;
+}
+
+/* Dark mode assignment text colors */
+body.dark-mode .upassign h4 {
+    color: #000 !important;
+}
+
+body.dark-mode .assigncontainer:empty::before {
+    color: #000 !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Dark mode assignment hover effect */
+body.dark-mode .upassign:hover {
+    background: #e0e0e0 !important;
+}
+
+
+
+/* Modal base ensure consistent behavior */
+.modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
+.modal .modal-content { max-width: 900px; margin: 6% auto; }
+
+
+/* AI Quiz Modal Styling */
+#aiQuizModal .modal-content {
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Quiz Season Modal Styling */
+#quizSeasonModal .modal-content {
+    max-width: 1200px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.quiz-grid {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+.quiz-grid table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.quiz-grid th,
+.quiz-grid td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.quiz-grid th {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.quiz-grid select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    font-family: 'Excalifont';
+}
+
+.week-range {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.week-range div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.week-range label {
+    font-weight: bold;
+    font-family: 'Excalifont';
+}
+
+.week-range input {
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-family: 'Excalifont';
+    font-size: 16px;
+}
+
+
+
+/* === REQUIRED PATCHES === */
+
+/* Settings button alignment */
+.setting .button-group button,
+.setting .button-group .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+/* Modals: always black text on white background for readability */
+.modal .modal-content {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+/* Start/End styled (allowed change) - Enhanced modern design */
+.btn { 
+    border-radius: 100px; 
+    padding: 14px 24px; 
+    border: 2px solid var(--term-color, #2a7be4); 
+    background: #fff; 
+    font-family: 'Excalifont';
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    min-width: 80px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(42, 123, 228, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.btn-start { 
+    border-color: #2b5d8a; 
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    border: 2px solid #4CAF50;
+}
+
+.btn-end { 
+    border-color: #d32f2f; 
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    border: 2px solid #f44336;
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(42, 123, 228, 0.3);
+    border-color: var(--term-color, #2a7be4);
+}
+
+.btn:active {
+    transform: translateY(0);
+    transition: all 0.1s ease;
+}
+
+.btn-start:hover {
+    background: linear-gradient(135deg, #45a049, #388E3C);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.btn-end:hover {
+    background: linear-gradient(135deg, #d32f2f, #c62828);
+    box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+}
+
+/* Cool ripple effect for buttons */
+.btn::before,
+.enable::before,
+.disable::before,
+.set::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before,
+.enable:active::before,
+.disable:active::before,
+.set:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Dark mode button adjustments */
+body.dark-mode .btn {
+    color: #eaeaea;
+    border-color: var(--term-color, #2a7be4);
+}
+
+body.dark-mode .btn-start {
+    background: linear-gradient(135deg, #388E3C, #2E7D32);
+    border-color: #388E3C;
+}
+
+body.dark-mode .btn-end {
+    background: linear-gradient(135deg, #c62828, #b71c1c);
+    border-color: #c62828;
+}
+
+/* Dark mode for all buttons */
+body.dark-mode .hourcard button {
+    background: linear-gradient(135deg, #2E7D32, #1B5E20);
+    border-color: #1B5E20;
+}
+
+/* Dark mode for AI Quiz Modal */
+body.dark-mode .quiz-info {
+    background: #2a2a2a;
+}
+
+body.dark-mode .question {
+    background: #1e1e1e;
+    border-color: #444;
+}
+
+body.dark-mode .question h3,
+body.dark-mode .question p {
+    color: #eaeaea;
+}
+
+body.dark-mode .option {
+    border-color: #444;
+    background: #2a2a2a;
+}
+
+body.dark-mode .option:hover {
+    border-color: #2196F3;
+    background: #1a1a2a;
+}
+
+body.dark-mode .option span {
+    color: #eaeaea;
+}
+
+/* Dark mode for titles */
+body.dark-mode .curric-card h2,
+body.dark-mode .quizlesson-card h2,
+body.dark-mode .res-card h2 {
+    background: linear-gradient(135deg, #1a1a2a, #16213e);
+    color: #eaeaea;
+}
+
+body.dark-mode .curric-card h3,
+body.dark-mode .quizlesson-card h3,
+body.dark-mode .res-card h3 {
+    background: linear-gradient(135deg, #2a2a2a, #1e1e1e);
+    color: #eaeaea;
+    border-color: #444;
+}
+
+/* Dark mode for Quiz Season Modal */
+body.dark-mode .quiz-grid {
+    border-color: #444;
+}
+
+body.dark-mode .quiz-grid th {
+    background: linear-gradient(135deg, #1a1a2a, #16213e);
+}
+
+body.dark-mode .quiz-grid td {
+    border-color: #444;
+    background: #1e1e1e;
+}
+
+body.dark-mode .quiz-grid select {
+    background: #2a2a2a;
+    color: #eaeaea;
+    border-color: #444;
+}
+
+body.dark-mode .week-range input {
+    background: #2a2a2a;
+    color: #eaeaea;
+    border-color: #444;
+}
+
+body.dark-mode .addlesson {
+    background: linear-gradient(135deg, #1565C0, #0D47A1);
+    border-color: #0D47A1;
+}
+
+body.dark-mode .addchapter {
+    background: linear-gradient(135deg, #E65100, #BF360C);
+    border-color: #BF360C;
+}
+
+body.dark-mode .addresource {
+    background: linear-gradient(135deg, #6A1B9A, #4A148C);
+    border-color: #4A148C;
+}
+
+body.dark-mode .resource-item {
+    background: #2c2c2c;
+    border-color: #555;
+}
+
+body.dark-mode .resource-item h4 {
+    color: #ffffff;
+}
+
+body.dark-mode .resource-item p {
+    color: #cccccc;
+}
+
+body.dark-mode .resource-link {
+    background: #1976d2;
+}
+
+body.dark-mode .resource-link:hover {
+    background: #1565c0;
+}
+
+body.dark-mode .download-btn {
+    background: #388E3C;
+}
+
+body.dark-mode .download-btn:hover {
+    background: #2E7D32;
+}
+
+body.dark-mode .addassignment {
+    background: linear-gradient(135deg, #AD1457, #880E4F);
+    border-color: #880E4F;
+}
+
+/* Beautiful dark mode styling for lessons */
+body.dark-mode .lesson {
+    background: linear-gradient(135deg, #2a2a2a, #1e1e1e) !important;
+    border: 2px solid #444 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+body.dark-mode .lesson:hover {
+    background: linear-gradient(135deg, #333333, #2a2a2a) !important;
+    border-color: #666 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark-mode .lesson h3 {
+    color: #eaeaea !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Dark mode for chapters */
+body.dark-mode .chapter {
+    background: linear-gradient(135deg, #1a1a2a, #16213e) !important;
+    border: 2px solid #444 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+body.dark-mode .chapter:hover {
+    background: linear-gradient(135deg, #16213e, #0f1419) !important;
+    border-color: #666 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark-mode .chapter h3 {
+    color: #eaeaea !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode .save-btn {
+    background: linear-gradient(135deg, #2E7D32, #1B5E20);
+    border-color: #1B5E20;
+}
+
+body.dark-mode .cancel-btn {
+    background: linear-gradient(135deg, #c62828, #b71c1c);
+    border-color: #b71c1c;
+}
+
+
+
+body.dark-mode .edit-status-btn {
+    background: linear-gradient(135deg, #6A1B9A, #4A148C);
+    border-color: #4A148C;
+}
+
+/* Focus states for accessibility */
+.btn:focus,
+.enable:focus,
+.disable:focus,
+.set:focus,
+.hourcard button:focus,
+.addlesson:focus,
+.addchapter:focus,
+.addresource:focus,
+.addassignment:focus,
+.save-btn:focus,
+.cancel-btn:focus,
+.edit-status-btn:focus {
+    outline: 2px solid #2196F3;
+    outline-offset: 2px;
+}
+
+/* Button press animation */
+.btn:active,
+.enable:active,
+.disable:active,
+.set:active,
+.hourcard button:active,
+.addchapter:active,
+.addresource:active,
+.addassignment:active,
+.save-btn:active,
+.cancel-btn:active,
+.edit-status-btn:active {
+    transform: scale(0.95);
+    transition: all 0.1s ease;
+}
+
+/* Global button styling for all buttons */
+.hourcard button,
+.addlesson,
+.addchapter,
+.addresource,
+.addassignment,
+.save-btn,
+.cancel-btn,
+.edit-status-btn {
+    font-family: 'Excalifont';
+    font-weight: bold;
+    border-radius: 100px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Specific button styles */
+.hourcard button {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border-color: #388E3C;
+    font-size: 30px;
+    padding: 15px 30px;
+}
+
+.addlesson {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    border-color: #1565C0;
+    font-size: 24px;
+    padding: 12px 24px;
+}
+
+.addchapter {
+    background: linear-gradient(135deg, #FF9800, #F57C00);
+    color: white;
+    border-color: #E65100;
+    font-size: 24px;
+    padding: 12px 24px;
+}
+
+.addresource {
+    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+    color: white;
+    border-color: #6A1B9A;
+    font-size: 24px;
+    padding: 12px 24px;
+}
+
+.addassignment {
+    background: linear-gradient(135deg, #E91E63, #C2185B);
+    color: white;
+    border-color: #AD1457;
+    font-size: 24px;
+    padding: 12px 24px;
+}
+
+.save-btn {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border-color: #388E3C;
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.cancel-btn {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+    border-color: #c62828;
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+
+
+.edit-status-btn {
+    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+    color: white;
+    border-color: #6A1B9A;
+    font-size: 16px;
+    padding: 8px 16px;
+    margin-left: 10px;
+}
+
+/* Button hover effects */
+.hourcard button:hover,
+.addlesson:hover,
+.addchapter:hover,
+.addresource:hover,
+.addassignment:hover,
+.save-btn:hover,
+.cancel-btn:hover,
+.edit-status-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.hourcard button:hover {
+    background: linear-gradient(135deg, #45a049, #388E3C);
+}
+
+.addlesson:hover {
+    background: linear-gradient(135deg, #1976D2, #1565C0);
+}
+
+.addchapter:hover {
+    background: linear-gradient(135deg, #F57C00, #E65100);
+}
+
+.addresource:hover {
+    background: linear-gradient(135deg, #7B1FA2, #6A1B9A);
+}
+
+.addassignment:hover {
+    background: linear-gradient(135deg, #C2185B, #AD1457);
+}
+
+.save-btn:hover {
+    background: linear-gradient(135deg, #45a049, #388E3C);
+}
+
+.cancel-btn:hover {
+    background: linear-gradient(135deg, #d32f2f, #c62828);
+}
+
+
+
+.edit-status-btn:hover {
+    background: linear-gradient(135deg, #7B1FA2, #6A1B9A);
+}
+
+/* Ripple effect for all buttons */
+.hourcard button::before,
+.addlesson::before,
+.addchapter::before,
+.addresource::before,
+.addassignment::before,
+.save-btn::before,
+.cancel-btn::before,
+.edit-status-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.hourcard button:active::before,
+.addlesson:active::before,
+.addchapter:active::before,
+.addresource:active::before,
+.addassignment:active::before,
+.save-btn:active::before,
+.cancel-btn:active::before,
+.edit-status-btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Blackout mode button adjustments */
+body.blackout-mode .btn {
+    background: #333 !important;
+    color: #fff !important;
+    border-color: #666 !important;
+}
+
+body.blackout-mode .btn-start {
+    background: #2d5a2d !important;
+}
+
+body.blackout-mode .btn-end {
+    background: #5a2d2d !important;
+}
+
+/* Blackout mode for all buttons */
+body.blackout-mode .hourcard button,
+body.blackout-mode .addlesson,
+body.blackout-mode .addchapter,
+body.blackout-mode .addresource,
+body.blackout-mode .addassignment,
+body.blackout-mode .save-btn,
+body.blackout-mode .cancel-btn,
+body.blackout-mode .edit-status-btn {
+    background: #333 !important;
+    color: #fff !important;
+    border-color: #666 !important;
+}
+
+/* Blackout mode for navbar and subbar */
+body.blackout-mode .navbar .term-element,
+body.blackout-mode .navbar a,
+body.blackout-mode .subbar .term-element,
+body.blackout-mode .subbar a,
+body.blackout-mode .sro a,
+body.blackout-mode .srtw a,
+body.blackout-mode .srth a {
+    background: #000 !important;
+    color: #fff !important;
+    border-color: red !important;
+}
+
+/* ULTRA SPECIFIC day background override for blackout mode - MAXIMUM SPECIFICITY */
+body.blackout-mode #day-info,
+body.blackout-mode #day-info *,
+body.blackout-mode h1.day,
+body.blackout-mode .day {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+/* Force day background to be transparent with highest possible specificity */
+body.blackout-mode #day-info {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+body.blackout-mode #day-info h1.day {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+body.blackout-mode h1.day {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+/* CRITICAL: Override any conflicting rules for day elements */
+body.blackout-mode #day-info,
+body.blackout-mode #day-info p,
+body.blackout-mode h1.day {
+    background: transparent !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Blackout mode for subject grid rows - transparent background */
+body.blackout-mode .subject-grid {
+    background: transparent !important;
+}
+
+body.blackout-mode .subject-row {
+    background: transparent !important;
+}
+
+/* Ensure subject row containers are transparent in blackout mode */
+body.blackout-mode .sro,
+body.blackout-mode .srtw,
+body.blackout-mode .srth {
+    background: transparent !important;
+}
+
+/* CRITICAL: Force subject rows to be transparent with maximum specificity */
+body.blackout-mode .sro,
+body.blackout-mode .srtw,
+body.blackout-mode .srth {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Remove scrollbars globally */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+*::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Ensure scrolling still works */
+html, body {
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+/* Blackout mode for resource items */
+body.blackout-mode .resource-item {
+    background: #000 !important;
+    border-color: red !important;
+    color: #fff !important;
+}
+
+body.blackout-mode .resource-item h4 {
+    color: #fff !important;
+}
+
+body.blackout-mode .resource-item p {
+    color: #ccc !important;
+}
+
+body.blackout-mode .resource-link {
+    background: #333 !important;
+    color: #fff !important;
+    border-color: red !important;
+}
+
+body.blackout-mode .download-btn {
+    background: #333 !important;
+    color: #fff !important;
+    border-color: red !important;
+}
+
+/* Global dark mode: apply everywhere */
+body.dark-mode {
+  background: #111 !important;
+  color: #eee !important;
+}
+body.dark-mode .term-element,
+body.dark-mode .hourcard,
+body.dark-mode .streakcard,
+body.dark-mode .widecard,
+body.dark-mode .curric-card,
+body.dark-mode .res-card,
+body.dark-mode .setting {
+  background: #1a1a1a !important;
+  border-color: var(--term-color, #2a7be4) !important;
+}
+
+body.dark-mode .setting h1,
+body.dark-mode .setting h2,
+body.dark-mode .setting h3,
+body.dark-mode .setting p,
+body.dark-mode .setting label {
+  color: #eaeaea !important;
+}
+
+/* Dark mode for homework page assignments */
+body.dark-mode .curric-card .upassign {
+  background-color: #2a2a2a !important;
+  border-color: #444 !important;
+}
+
+body.dark-mode .curric-card .upassign h4 {
+  color: #eaeaea !important;
+}
+
+/* Blackout mode: sleek depressed look - background black, text white, subtle borders */
+body.blackout-mode *:not(.navbar .term-element):not(.navbar a):not(.subbar .term-element):not(.subbar a):not(.sro a):not(.srtw a):not(.srth a):not(#day-info):not(#day-info *):not(.day):not(h1.day):not(.sro):not(.srtw):not(.srth) {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: #333 !important;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Make div backgrounds transparent in blackout mode for text readability */
+body.blackout-mode div:not(.modal .modal-content):not(.navbar):not(.sidewallleft):not(.sidewallright):not(header) {
+  background: transparent !important;
+}
+
+/* Blackout mode for subject grid buttons */
+body.blackout-mode .sro a,
+body.blackout-mode .srtw a,
+body.blackout-mode .srth a {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: red !important;
+}
+
+/* Ensure subbar is properly styled in blackout mode */
+body.blackout-mode .subbar {
+  background: transparent !important;
+}
+
+body.blackout-mode .subbar a {
+  background: #000 !important;
+  color: #fff !important;
+  border-color: red !important;
+}
+
+/* Blackout mode assignment text colors */
+body.blackout-mode .upassign h4 {
+    color: #fff !important;
+}
+
+body.blackout-mode .assigncontainer:empty::before {
+    color: #fff !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Blackout mode for homework page assignments */
+body.blackout-mode .curric-card .upassign {
+    background-color: #000 !important;
+    border-color: #333 !important;
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Blackout mode assignment hover effect */
+body.blackout-mode .upassign:hover {
+    background: #333 !important;
+}
+body.blackout-mode .modal .modal-content {
+  background: #fff !important;
+  color: #000 !important;
+  border-color: #333 !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+/* === Card background & border fix v5.4 === */
+.hourcard, .streakcard, .curric-card,
+.resource-card, .res-card, .setting, .settings-card, .widecard {
+  background-color: #fff !important;
+  border-width: 10px !important;
+  border-style: solid !important;
+}
+
+/* Assignment container should not have borders */
+.assigncontainer {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Upcoming assignments should not have borders */
+.upassign {
+  background-color: #FAF9F6 !important;
+  border: none !important;
+}
+
+/* Homework page specific styling */
+.curric-card .upassign {
+  background-color: #FAF9F6 !important;
+  border: 2px solid #e1e5e9 !important;
+  border-radius: 12px !important;
+  margin: 10px 0 !important;
+  padding: 15px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+}
+
+.curric-card .upassign h4 {
+  margin: 0 !important;
+  font-size: 16px !important;
+  color: #333 !important;
+  flex: 1 !important;
+  min-width: 120px !important;
+}
+
+.curric-card .upassign .edit-status-btn {
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+body.blackout-mode .hourcard,
+body.blackout-mode .streakcard,
+body.blackout-mode .curric-card,
+body.blackout-mode .assigncontainer,
+body.blackout-mode .upassign,
+body.blackout-mode .quiz-card,
+body.blackout-mode .resource-card,
+body.blackout-mode .res-card,
+body.blackout-mode .setting,
+body.blackout-mode .settings-card,
+body.blackout-mode .widecard {
+  background-color: #000 !important;
+  border-color: #333 !important;
+  box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.15), 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* === New Quiz System Styles === */
+
+.day.blackout-mode{
+    background: transparent !important;
+}

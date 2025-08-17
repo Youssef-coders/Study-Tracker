@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="term-0">
+  <header>DASHBOARD</header>
+  <div class="headerspacer"></div>
+  <div class="sidewallleft"></div>
+  <div class="sidewallright"></div>
+
+  <div class="navbar">
+    <a href="index.html" class="active term-element">Dashboard</a>
+    <a class="term-element" href="subjects.html">Subjects</a>
+    <a class="term-element" href="homework.html">Homework</a>
+    <a class="term-element" href="settings.html">Settings</a>
+  </div>
+
+  <div id="day-info">
+    <p>Term 0</p>
+    <p>Week 0/11</p>
+    <p>Month</p>
+    <p>Day</p>
+  </div>
+  <h1 class="day">MONDAY</h1>
+
+  <div class="hourcard">
+    <h2>Hours Studied:</h2>
+    <h1>0</h1>
+    <button id="addHourBtn">Add 1 Hour</button>
+  </div>
+
+  <div class="streakcard">
+    <h2>Study Streak:</h2>
+    <h1>0</h1>
+  </div>
+
+  <div class="widecard">
+    <h2>Upcoming Assignments:</h2>
+    <div class="assigncontainer"></div>
+  </div>
+
+  <!-- Core scripts -->
+
+
+
+
+
+
+
+<script src="localStorageManager.js"></script>
+<script src="termController.js"></script>
+<script src="dateManager.js"></script>
+<script src="hourTracker.js"></script>
+<script src="streakCounter.js"></script>
+<script src="assignmentLoader.js"></script>
+<script src="aiQuizGenerator.js"></script>
+<script src="lessonManager.js"></script>
+<script src="darkMode.js"></script>
+<script src="blackoutMode.js"></script>
+</body>
+</html>

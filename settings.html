@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Settings</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="term-0">
+  <header>SETTINGS</header>
+  <div class="headerspacer"></div>
+  <div class="sidewallleft"></div>
+  <div class="sidewallright"></div>
+
+  <div class="navbar">
+    <a class="term-element" href="index.html">Dashboard</a>
+    <a class="term-element" href="subjects.html">Subjects</a>
+    <a class="term-element" href="homework.html">Homework</a>
+    <a href="settings.html" class="active term-element">Settings</a>
+  </div>
+
+  <div class="settings-card">
+    <div class="setting">
+      <h3>Dark Mode</h3>
+      <div class="button-group">
+        <button class="enable dark">Enable</button>
+        <button class="disable dark">Disable</button>
+      </div>
+    </div>
+
+    <div class="setting">
+      <h3>EOT Blackout Mode</h3>
+      <div class="button-group">
+        <button class="enable blackout">Enable</button>
+        <button class="disable blackout">Disable</button>
+      </div>
+    </div>
+
+    <div class="setting">
+      <h3>Quiz Season</h3>
+      <div class="button-group">
+        <button class="set">Set</button>
+      </div>
+    </div>
+
+    <div class="setting">
+      <h3>Semester Control</h3>
+      <div class="button-group">
+        <button class="term-start">Start</button>
+        <button class="term-end">End</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Season modal -->
+  <div id="quizSeasonModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Set Quiz Season</h2>
+      <div class="week-range">
+        <div>
+          <label>Start Week</label>
+          <input type="number" id="qs-start" min="1" max="11" />
+        </div>
+        <div>
+          <label>End Week</label>
+          <input type="number" id="qs-end" min="1" max="11" />
+        </div>
+      </div>
+      <div class="quiz-grid">
+        <table>
+          <thead>
+            <tr>
+              <th>Week</th>
+              <th>SUN</th><th>MON</th><th>TUE</th><th>WED</th><th>THU</th>
+            </tr>
+          </thead>
+          <tbody id="qs-body"></tbody>
+        </table>
+      </div>
+      <div class="modal-actions">
+        <button class="save-btn" id="qs-save">Save</button>
+        <button class="cancel-btn" id="qs-cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+<script src="localStorageManager.js"></script>
+<script src="termController.js"></script>
+<script src="dateManager.js"></script>
+<script src="aiQuizGenerator.js"></script>
+<script src="lessonManager.js"></script>
+<script src="darkMode.js"></script>
+<script src="blackoutMode.js"></script>
+<script src="termArchiver.js"></script>
+<script src="quizScheduler.js"></script>
+</body>
+</html>
