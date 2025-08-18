@@ -70,10 +70,10 @@ header {
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .navbar a {
@@ -1051,6 +1051,10 @@ body.blackout-mode .setting .button-group .set {
     z-index: 1000;
 }
 
+/* Slightly lift subbar on small screens */
+/* Slight adjustment only on curriculum pages */
+.curric-card ~ .subbar, .subtitle ~ .subbar { top: 152px; }
+
 .subbar a {
     padding: 12px 24px;
     color: white;
@@ -1109,12 +1113,11 @@ body.blackout-mode .setting .button-group .set {
 
 .chapter {
     border: 1px solid #e1e5e9;
-    border-left: 6px solid var(--term-color, #2b5d8a);
     background: linear-gradient(135deg, #ffffff, #f9fafb);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin: 12px 0 14px 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin: 8px 0 10px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 .chapter > h2 {
     margin: 0 0 10px 0 !important;
@@ -1127,16 +1130,15 @@ body.blackout-mode .setting .button-group .set {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 8px 12px;
-    margin: 6px 0;
-    min-height: 44px;
+    gap: 8px;
+    padding: 6px 10px;
+    margin: 4px 0;
+    min-height: 38px;
     border: 1px solid #e6e9ed;
-    border-left: 4px solid var(--term-color, #2b5d8a);
-    border-radius: 10px;
+    border-radius: 8px;
     background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
 }
 
 .lesson:hover {
@@ -1168,7 +1170,7 @@ body.blackout-mode .setting .button-group .set {
 }
 .lesson h3 {
     font-family: 'Excalifont';
-    font-size: 16px;
+    font-size: 15px;
     margin: 0;
     color: #000000;
     font-weight: 700;
