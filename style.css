@@ -1036,6 +1036,40 @@ body.blackout-mode .setting .button-group .set {
     z-index: 1100;
 }
 
+/* Generic header that sits above a card, aligns with card edges, and lays out title + actions on one line */
+.card-header {
+    position: absolute;
+    left: 55px;
+    right: 55px;
+    top: 200px; /* card starts at 250px, so header sits just above */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 1200;
+}
+
+.card-header .card-title {
+    font-family: 'Excalifont';
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,123,255,0.25);
+    flex: 1 1 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-header .button-group { display: flex; gap: 10px; flex: 0 0 auto; }
+.card-header .button-group .addassignment,
+.card-header .button-group .addlesson,
+.card-header .button-group .addchapter { padding: 10px 20px; }
+
 /* Ensure the first title inside the card is flush to the top edge of the container */
 .curric-card > h3:first-child {
     margin-top: 0 !important;
