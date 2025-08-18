@@ -2546,13 +2546,15 @@ body.blackout-mode .modal .modal-content {
   background-color: #FAF9F6 !important;
   border: 2px solid #e1e5e9 !important;
   border-radius: 12px !important;
-  margin: 10px 0 !important;
+  margin: 10px 3px !important; /* 3px gap on each side */
   padding: 15px !important;
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
   flex-wrap: wrap !important;
   gap: 10px !important;
+  box-sizing: border-box !important; /* ensure width includes padding and border */
+  width: calc(100% - 6px) !important; /* full width minus 3px gap left and right */
 }
 
 .curric-card .upassign h4 {
