@@ -1068,7 +1068,12 @@ body.blackout-mode .setting .button-group .set {
 .card-header .button-group { display: flex; gap: 10px; flex: 0 0 auto; }
 .card-header .button-group .addassignment,
 .card-header .button-group .addlesson,
-.card-header .button-group .addchapter { padding: 10px 20px; }
+.card-header .button-group .addchapter,
+.card-header .button-group .addresource {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.2;
+}
 
 /* Ensure the first title inside the card is flush to the top edge of the container */
 .curric-card > h3:first-child {
@@ -2126,24 +2131,24 @@ body.dark-mode .edit-status-btn {
     background: linear-gradient(135deg, #2196F3, #1976D2);
     color: white;
     border-color: #1565C0;
-    font-size: 24px;
-    padding: 12px 24px;
+    font-size: 18px;
+    padding: 10px 16px;
 }
 
 .addchapter {
     background: linear-gradient(135deg, #FF9800, #F57C00);
     color: white;
     border-color: #E65100;
-    font-size: 24px;
-    padding: 12px 24px;
+    font-size: 18px;
+    padding: 10px 16px;
 }
 
 .addresource {
     background: linear-gradient(135deg, #9C27B0, #7B1FA2);
     color: white;
     border-color: #6A1B9A;
-    font-size: 24px;
-    padding: 12px 24px;
+    font-size: 18px;
+    padding: 10px 16px;
 }
 
 .addassignment {
