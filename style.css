@@ -562,7 +562,7 @@ body.blackout-mode .setting .button-group .set {
 }
 @media (min-width: 1600px) {
     .settings-card{
-        height: 700px;
+        height: 710px; /* add extra height on large screens */
     }
 }
 @media (min-width: 1600px) {
