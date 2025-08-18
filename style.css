@@ -93,6 +93,22 @@ header {
     position: relative;
     overflow: hidden;
 }
+/* Animated underline for navbar links */
+.navbar a::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 6px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--term-color, #2b5d8a);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 220ms ease;
+}
+.navbar a:hover::after { transform: scaleX(1); }
+.navbar a.active::after { transform: scaleX(1); }
 .divider{
     color: black;
     display: inline;
@@ -219,6 +235,35 @@ header {
     font-size: 30px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.9);
 }
+
+/* Highest streak card styled like hourcard button */
+.streak-top-card {
+    position: absolute;
+    right: 55px;
+    width: 575px;
+    top: 650px;
+    padding: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.streak-top-card h2 { font-family: 'Excalifont'; margin: 0; font-size: 28px; }
+.streak-top-card h1 { font-family: 'Excalifont'; margin: 6px 0 0 0; font-size: 72px; color: #d4af37; /* gold */ }
+
+@media (min-width: 1600px) {
+    .streak-top-card { width: 900px; }
+}
 .hourcard button:hover{
     background: linear-gradient(135deg, #2c3e50, #34495e);
     color: white;
@@ -265,15 +310,21 @@ header {
     align-items: center; 
 }
 
+/* Streak pop animation */
+.streakcard h1.streak-pop { animation: streakPop 300ms ease-out; }
+@keyframes streakPop { 0%{ transform: scale(1); } 40%{ transform: scale(1.08);} 100%{ transform: scale(1);} }
+
+.streak-top-card h1.glow { text-shadow: 0 0 10px rgba(212, 175, 55, 0.7), 0 0 20px rgba(212, 175, 55, 0.5); }
+
 /* Beautiful hover effects for cards */
 .hourcard:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1), 0 0 0 2px var(--term-color, #2b5d8a) inset;
 }
 
 .streakcard:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.1), 0 0 0 2px var(--term-color, #2b5d8a) inset;
 }
 @media (min-width: 1600px) {
     .streakcard {
@@ -312,7 +363,7 @@ header {
     background-color: transparent;
     min-height: 50px; /* Ensure minimum height when empty */
     flex-grow: 1; /* Allow container to stretch */
-    overflow-y: auto; /* Add scrolling if needed */
+    overflow-y: visible; /* Let container grow to fit */
 }
 
 .assigncontainer:empty::before {
@@ -330,6 +381,22 @@ header {
     display: block;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* Generic empty state for containers */
+.empty-state {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-family: 'Excalifont';
+    font-size: 18px;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    margin: 10px;
+    border: 2px solid var(--term-color, #2b5d8a);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    backdrop-filter: blur(5px);
 }
 
 .upassign {
@@ -363,6 +430,26 @@ header {
     color: #000;
     font-weight: 500;
 }
+
+/* Assignment actions */
+.assign-actions { display: flex; gap: 8px; align-items: center; }
+.assign-actions .delete-assign-btn {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: #fff;
+    border: 2px solid #b71c1c;
+    border-radius: 25px;
+    padding: 8px 14px;
+    font-family: 'Excalifont';
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 12px rgba(244,67,54,0.25);
+}
+.assign-actions .delete-assign-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(244,67,54,0.35);
+}
+/* .assign-filters removed per request */
 @media (min-width: 1600px) {
     .widecard {
         width: 1800px; 

@@ -519,108 +519,46 @@ class LessonManager {
       console.log('Container found:', container.className);
       console.log('Container children:', container.children);
       
+      // Clear container fully (header is outside the card)
+      container.innerHTML = '';
+
       // Chapters are already filtered by subject from loadLessons()
       console.log('Chapters to render (already filtered by subject):', chapters);
       chapters.forEach((chapter, index) => {
         console.log(`Chapter ${index}: "${chapter.title}" - Subject: "${chapter.subject}"`);
       });
       
-      // Clear existing content but keep the add-group or add buttons
-      const addGroup = container.querySelector('.add-group');
-      if (!addGroup) {
-        console.log('No add-group found in container, checking for add buttons directly...');
-        // For quizzes page, the add buttons might be direct children
-        const addButtons = container.querySelectorAll('.addchapter, .addlesson');
-        if (addButtons.length > 0) {
-          console.log(`Found ${addButtons.length} add buttons directly in container`);
-          
-          // Clear all content after the last add button
-          const lastAddButton = addButtons[addButtons.length - 1];
-          let nextElement = lastAddButton.nextElementSibling;
-          while (nextElement) {
-            const temp = nextElement.nextElementSibling;
-            nextElement.remove();
-            nextElement = temp;
-          }
-          
-                     console.log(`Rendering ${chapters.length} chapters after add buttons...`);
-           
-           // Render chapters and lessons after the last add button
-           chapters.forEach((chapter, index) => {
-            console.log(`Creating chapter div for: ${chapter.title}`);
-            const chapterDiv = document.createElement('div');
-            chapterDiv.className = 'chapter';
-            chapterDiv.innerHTML = `<h2>${chapter.title}</h2>`;
-            lastAddButton.parentNode.insertBefore(chapterDiv, lastAddButton.nextSibling);
-            
-            // Render lessons in this chapter
-            if (chapter.lessons && chapter.lessons.length > 0) {
-              console.log(`Rendering ${chapter.lessons.length} lessons for chapter ${index + 1}`);
-              chapter.lessons.forEach(lesson => {
-                console.log(`Creating lesson div for: ${lesson.title}`);
-                const lessonDiv = document.createElement('div');
-                lessonDiv.className = 'lesson';
-                
-                lessonDiv.innerHTML = `
-                  <h3>${lesson.title}</h3>
-                  <div class="button-group">
-                    <h3>${lesson.progress}%</h3>
-                  </div>
-                `;
-                chapterDiv.appendChild(lessonDiv);
-                console.log(`Lesson div added to chapter: ${lesson.title}`);
-              });
-            } else {
-              console.log(`No lessons found for chapter: ${chapter.title}`);
-            }
-          });
-        } else {
-          console.log('No add buttons found anywhere');
-          return;
-        }
-      } else {
-        console.log('Found add-group in container, clearing existing content...');
-        
-        // Clear all content after the add-group to prevent infinite loops
-        let nextElement = addGroup.nextElementSibling;
-        while (nextElement) {
-          const temp = nextElement.nextElementSibling;
-          nextElement.remove();
-          nextElement = temp;
-        }
-        
-                 console.log(`Rendering ${chapters.length} chapters...`);
-         
-         // Render chapters and lessons
-         chapters.forEach((chapter, index) => {
-          console.log(`Creating chapter div for: ${chapter.title}`);
-          const chapterDiv = document.createElement('div');
-          chapterDiv.className = 'chapter';
-          chapterDiv.innerHTML = `<h2>${chapter.title}</h2>`;
-          container.appendChild(chapterDiv);
-          
-          // Render lessons in this chapter
-          if (chapter.lessons && chapter.lessons.length > 0) {
-            console.log(`Rendering ${chapter.lessons.length} lessons for chapter ${index + 1}`);
-            chapter.lessons.forEach(lesson => {
-              console.log(`Creating lesson div for: ${lesson.title}`);
-              const lessonDiv = document.createElement('div');
-              lessonDiv.className = 'lesson';
-              
-              lessonDiv.innerHTML = `
-                <h3>${lesson.title}</h3>
-                <div class="button-group">
-                  <h3>${lesson.progress}%</h3>
-                </div>
-              `;
-              chapterDiv.appendChild(lessonDiv);
-              console.log(`Lesson div added to chapter: ${lesson.title}`);
-            });
-          } else {
-            console.log(`No lessons found for chapter: ${chapter.title}`);
-          }
-        });
+      console.log(`Rendering ${chapters.length} chapters...`);
+
+      if (chapters.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = 'No lessons yet';
+        container.appendChild(empty);
+        return;
       }
+
+      // Render chapters and lessons
+      chapters.forEach((chapter, index) => {
+        const chapterDiv = document.createElement('div');
+        chapterDiv.className = 'chapter';
+        chapterDiv.innerHTML = `<h2>${chapter.title}</h2>`;
+        container.appendChild(chapterDiv);
+
+        if (chapter.lessons && chapter.lessons.length > 0) {
+          chapter.lessons.forEach(lesson => {
+            const lessonDiv = document.createElement('div');
+            lessonDiv.className = 'lesson';
+            lessonDiv.innerHTML = `
+              <h3>${lesson.title}</h3>
+              <div class="button-group">
+                <h3>${lesson.progress}%</h3>
+              </div>
+            `;
+            chapterDiv.appendChild(lessonDiv);
+          });
+        }
+      });
       
       console.log('Chapters rendered successfully');
     } catch (error) {
@@ -635,6 +573,9 @@ class LessonManager {
     console.log('Rendering resources in container:', container);
     console.log('Resources to render:', resources);
     
+    // Clear container fully (header is outside)
+    container.innerHTML = '';
+
     // Get current subject and filter resources
     const currentSubject = this.getCurrentSubject();
     const subjectResources = resources.filter(resource => 
@@ -642,18 +583,14 @@ class LessonManager {
     );
     console.log(`Filtered resources for ${currentSubject}:`, subjectResources);
     
-    // Clear existing content but keep the add-group
-    const addGroup = container.querySelector('.add-group');
-    if (addGroup) {
-      // Clear all content after the add-group
-      let nextElement = addGroup.nextElementSibling;
-      while (nextElement) {
-        const temp = nextElement.nextElementSibling;
-        nextElement.remove();
-        nextElement = temp;
-      }
+    if (subjectResources.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.textContent = 'No resources yet';
+      container.appendChild(empty);
+      return;
     }
-    
+
     // Render resources
     subjectResources.forEach((resource, index) => {
       const resourceDiv = document.createElement('div');

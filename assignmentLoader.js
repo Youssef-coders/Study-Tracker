@@ -10,6 +10,7 @@ class AssignmentLoader {
     }
     
     console.log('Assignment container found, loading assignments...');
+    // this.buildFilters(); // search disabled
     this.loadUpcomingAssignments();
   }
 
@@ -20,10 +21,15 @@ class AssignmentLoader {
     try {
       const arr = LocalStorageManager.load('assignments') || [];
       console.log(`Found ${arr.length} total assignments`);
-      
-      const upcoming = arr.filter(a => a.status !== 'Completed').sort((a,b)=> new Date(a.dueDate)-new Date(b.dueDate)).slice(0,3);
+      // Remove filters/search; just show all non-completed
+      const q = '';
+      const subj = 'All';
+      const upcoming = arr
+        .filter(a => a.status !== 'Completed')
+        .filter(a => !q || (a.name?.toLowerCase().includes(q) || a.subject?.toLowerCase().includes(q)))
+        .filter(a => subj === 'All' || a.subject === subj)
+        .sort((a,b)=> new Date(a.dueDate)-new Date(b.dueDate));
       console.log(`Filtered to ${upcoming.length} upcoming assignments`);
-      
       this.renderAssignments(upcoming);
       
       const endTime = performance.now();
@@ -44,20 +50,19 @@ class AssignmentLoader {
         return;
       }
       
-      // Clear existing content but keep the add-group and title
-      const addGroup = container.querySelector('.add-group');
-      const title = container.querySelector('h3');
-      
-      if (addGroup && title) {
-        container.innerHTML = '';
-        container.appendChild(addGroup);
-        container.appendChild(title);
-      } else {
-        container.innerHTML = '';
-      }
+      // Clear container fully (no filters bar)
+      container.innerHTML = '';
       
       console.log(`Rendering ${assignments.length} assignments...`);
       
+      if (assignments.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.textContent = 'No assignments yet';
+        container.appendChild(empty);
+        return;
+      }
+
       assignments.forEach((a, index) => {
         const due = new Date(a.dueDate); due.setHours(0,0,0,0);
         const today = new Date(); today.setHours(0,0,0,0);
@@ -71,7 +76,10 @@ class AssignmentLoader {
           <h4>${a.subject}</h4>
           <h4>${dueText}</h4>
           <h4>${a.status}</h4>
-          <button class="edit-status-btn" data-id="${a.id || a.name}" data-status="${a.status}">Edit Status</button>
+          <div class="assign-actions">
+            <button class=\"edit-status-btn\" data-id=\"${a.id || a.name}\" data-status=\"${a.status}\">Edit Status</button>
+            <button class=\"delete-assign-btn\" data-id=\"${a.id || ''}\">Delete</button>
+          </div>
         `;
         
         // Add event listener for edit status button
@@ -80,6 +88,12 @@ class AssignmentLoader {
           e.preventDefault();
           e.stopPropagation();
           this.editAssignmentStatus(a);
+        });
+        const delBtn = el.querySelector('.delete-assign-btn');
+        delBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.deleteAssignment(a);
         });
         
         container.appendChild(el);
@@ -142,6 +156,43 @@ class AssignmentLoader {
       assignments[index] = assignment;
       LocalStorageManager.save('assignments', assignments);
     }
+  }
+
+  static deleteAssignment(assignment) {
+    try {
+      const assignments = LocalStorageManager.load('assignments') || [];
+      const updated = assignments.filter(a => {
+        if (assignment.id && a.id) return a.id !== assignment.id;
+        return !(a.name === assignment.name && a.subject === assignment.subject && a.dueDate === assignment.dueDate);
+      });
+      LocalStorageManager.save('assignments', updated);
+      this.loadUpcomingAssignments();
+    } catch (e) { console.error('Error deleting assignment', e); }
+  }
+
+  static buildFilters() {
+    const container = document.querySelector('.curric-card');
+    if (!container) return;
+    if (container.querySelector('.assign-filters')) return;
+    const bar = document.createElement('div');
+    bar.className = 'assign-filters';
+    bar.innerHTML = `
+      <input id="assign-search" type="text" placeholder="Search assignments..." />
+      <select id="assign-subject"><option>All</option></select>
+    `;
+    container.insertBefore(bar, container.firstChild);
+    bar.addEventListener('input', () => this.loadUpcomingAssignments());
+    bar.addEventListener('change', () => this.loadUpcomingAssignments());
+  }
+
+  static populateSubjects(arr){
+    try{
+      const select = document.getElementById('assign-subject');
+      if (!select) return;
+      const current = select.value || 'All';
+      const set = Array.from(new Set(arr.map(a=>a.subject).filter(Boolean)));
+      select.innerHTML = '<option>All</option>' + set.map(s=>`<option${s===current?' selected':''}>${s}</option>`).join('');
+    }catch(e){}
   }
 }
 document.addEventListener('DOMContentLoaded', ()=>AssignmentLoader.init());

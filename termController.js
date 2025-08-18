@@ -7,7 +7,9 @@ class TermController {
     document.querySelector('.term-start')?.classList.add('btn','btn-start');
     document.querySelector('.term-end')?.classList.add('btn','btn-end');
     document.querySelector('.term-start')?.addEventListener('click', ()=> this.startTerm());
-    document.querySelector('.term-end')?.addEventListener('click', ()=> this.endTerm());
+    document.querySelector('.term-end')?.addEventListener('click', ()=> {
+      if (confirm('End the current term and archive data?')) this.endTerm();
+    });
   }
   applyTheme() {
     const active = LocalStorageManager.isTermActive();
