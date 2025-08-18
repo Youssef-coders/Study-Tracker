@@ -39,6 +39,11 @@
     <h1>0</h1>
   </div>
 
+  <div class="streak-top-card">
+    <h2>Highest Streak</h2>
+    <h1 id="highestStreak">0</h1>
+  </div>
+
   <div class="widecard">
     <h2>Upcoming Assignments:</h2>
     <div class="assigncontainer"></div>
@@ -57,6 +62,20 @@
 <script src="dateManager.js"></script>
 <script src="hourTracker.js"></script>
 <script src="streakCounter.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    try{
+      var hs = localStorage.getItem('highestStreak');
+      if (hs == null) {
+        var s = parseInt(localStorage.getItem('streak'))||0;
+        localStorage.setItem('highestStreak', String(s));
+        hs = s;
+      }
+      var el = document.getElementById('highestStreak');
+      if (el) el.textContent = String(hs);
+    }catch(e){}
+  });
+</script>
 <script src="assignmentLoader.js"></script>
 <script src="aiQuizGenerator.js"></script>
 <script src="lessonManager.js"></script>

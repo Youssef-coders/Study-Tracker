@@ -24,7 +24,19 @@ class StreakCounter {
     this.last = todayStr;
     localStorage.setItem('streak', String(this.streak));
     localStorage.setItem('lastStudyDate', this.last);
+    // update highest streak
+    try {
+      const hs = parseInt(localStorage.getItem('highestStreak')) || 0;
+      const beat = this.streak > hs;
+      if (beat) localStorage.setItem('highestStreak', String(this.streak));
+      const el = document.getElementById('highestStreak');
+      if (el) {
+        el.textContent = String(beat ? this.streak : hs);
+        if (beat) { el.classList.add('glow'); setTimeout(()=> el.classList.remove('glow'), 1000); }
+      }
+    } catch(e){}
     this.updateDisplay();
+    try { document.querySelector('.streakcard h1')?.classList.add('streak-pop'); setTimeout(()=>document.querySelector('.streakcard h1')?.classList.remove('streak-pop'), 320); } catch(e){}
   }
 
   static isConsecutiveDay(last) {
