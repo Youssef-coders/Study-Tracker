@@ -869,7 +869,7 @@ body.blackout-mode .setting .button-group .set {
     }
 }
 .subbar {
-    top: 160px;
+    top: 155px; /* move subbar up by 5px */
     height: 50px;
     margin: 0 auto;
     width: 80%;
@@ -910,7 +910,7 @@ body.blackout-mode .setting .button-group .set {
 }
 .subtitle {
     position: absolute;
-    top: 50px; 
+    top: 45px; /* move subtitle up by 5px */
     left: 0;
     width: 100%;
     text-align: center;
@@ -926,7 +926,7 @@ body.blackout-mode .setting .button-group .set {
 }
 .curric-card {
     position: absolute;
-    top: 250px; 
+    top: 260px; /* move card slightly down to add a gap below header */
     left: 55px; 
     right: 55px;
     min-height: 400px;
@@ -1041,7 +1041,7 @@ body.blackout-mode .setting .button-group .set {
     position: absolute;
     left: 55px;
     right: 55px;
-    top: 200px; /* card starts at 250px, so header sits just above */
+    top: 195px; /* slightly higher to create a clearer gap */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1070,9 +1070,10 @@ body.blackout-mode .setting .button-group .set {
 .card-header .button-group .addlesson,
 .card-header .button-group .addchapter,
 .card-header .button-group .addresource {
-    padding: 10px 16px;
+    padding: 10px 20px;
     font-size: 18px;
     line-height: 1.2;
+    min-width: 200px; /* unify button widths */
 }
 
 /* Ensure the first title inside the card is flush to the top edge of the container */
@@ -2132,7 +2133,8 @@ body.dark-mode .edit-status-btn {
     color: white;
     border-color: #1565C0;
     font-size: 18px;
-    padding: 10px 16px;
+    padding: 10px 20px;
+    min-width: 200px;
 }
 
 .addchapter {
@@ -2140,7 +2142,8 @@ body.dark-mode .edit-status-btn {
     color: white;
     border-color: #E65100;
     font-size: 18px;
-    padding: 10px 16px;
+    padding: 10px 20px;
+    min-width: 200px;
 }
 
 .addresource {
@@ -2148,7 +2151,8 @@ body.dark-mode .edit-status-btn {
     color: white;
     border-color: #6A1B9A;
     font-size: 18px;
-    padding: 10px 16px;
+    padding: 10px 20px;
+    min-width: 200px;
 }
 
 .addassignment {
