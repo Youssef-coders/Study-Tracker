@@ -368,6 +368,11 @@ header {
         width: 1800px; 
     }
 }
+/* Global term color variables */
+body.term-0 { --term-color: grey; }
+body.term-1 { --term-color: #2b5d8a; }
+body.term-2 { --term-color: #1f7a3a; }
+
 /*-----------SETTINGS PAGE---------------*/
 .settings-card {
     position: absolute;
@@ -378,10 +383,11 @@ header {
     background: #FAF9F6;
     border-radius: 25px;
     padding: 20px;
-    border: 5px solid #555; 
+    border: 5px solid var(--term-color, #555); /* match border to term color */
     border-radius: 8px; 
     padding: 15px; 
     margin-bottom: 20px; 
+    overflow: auto; /* ensure inner content doesn't spill */
 }
 
 .setting {
@@ -412,7 +418,7 @@ header {
 }
 
 .setting button{
-    float: right;
+    float: none; /* prevent collapsing of parent height */
     display: flex;
     flex-direction: row;
     gap: 10px;
