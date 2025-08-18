@@ -869,7 +869,7 @@ body.blackout-mode .setting .button-group .set {
     }
 }
 .subbar {
-    top: 155px; /* move subbar up by 5px */
+    top: 140px; /* move subbar further up so it's not cramped below headers */
     height: 50px;
     margin: 0 auto;
     width: 80%;
@@ -910,7 +910,7 @@ body.blackout-mode .setting .button-group .set {
 }
 .subtitle {
     position: absolute;
-    top: 45px; /* move subtitle up by 5px */
+    top: 40px; /* move subtitle slightly up */
     left: 0;
     width: 100%;
     text-align: center;
@@ -1041,12 +1041,13 @@ body.blackout-mode .setting .button-group .set {
     position: absolute;
     left: 55px;
     right: 55px;
-    top: 195px; /* slightly higher to create a clearer gap */
+    top: 195px; /* consistent gap above containers (same as homework) */
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
     z-index: 1200;
+    background: transparent;
 }
 
 .card-header .card-title {
@@ -1055,14 +1056,15 @@ body.blackout-mode .setting .button-group .set {
     font-weight: 800;
     margin: 0;
     padding: 8px 14px;
-    background: linear-gradient(135deg, #007bff, #0056b3);
+    background: var(--term-color, #2b5d8a); /* will be overridden by term classes */
     color: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0,123,255,0.25);
-    flex: 1 1 auto;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+    flex: 0 1 auto; /* do not overgrow so two buttons can fit */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    max-width: calc(100% - 440px); /* leave space for two 200px buttons + gap */
 }
 
 .card-header .button-group { display: flex; gap: 10px; flex: 0 0 auto; }
