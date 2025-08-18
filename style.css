@@ -1025,6 +1025,22 @@ body.blackout-mode .setting .button-group .set {
     justify-content: flex-end;
 }
 
+/* Floating Add Assignment button: keep same horizontal alignment as the assignments card, but place it above/outside the card */
+.add-floating {
+    position: absolute;
+    left: 55px; /* aligns with .curric-card left */
+    right: 55px; /* aligns with .curric-card right */
+    top: 200px; /* appears above the card (card starts at top: 250px) */
+    margin: 0;
+    justify-content: flex-end;
+    z-index: 1100;
+}
+
+/* Ensure the first title inside the card is flush to the top edge of the container */
+.curric-card > h3:first-child {
+    margin-top: 0 !important;
+}
+
 .add-group button {
     font-family: 'Excalifont';
     font-size: 18px;
