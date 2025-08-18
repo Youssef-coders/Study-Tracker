@@ -3,6 +3,15 @@ class StreakCounter {
     if (!document.querySelector('.streakcard')) return;
     this.streak = parseInt(localStorage.getItem('streak')) || 0;
     this.last = localStorage.getItem('lastStudyDate') || null;
+    // If app was closed over missed days, ensure reset-on-load
+    const now = new Date(); now.setHours(0,0,0,0);
+    const todayStr = now.toISOString().split('T')[0];
+    const yesterday = new Date(now); yesterday.setDate(yesterday.getDate() - 1);
+    const yStr = yesterday.toISOString().split('T')[0];
+    if (this.last && this.last !== todayStr && this.last !== yStr) {
+      this.streak = 0;
+      localStorage.setItem('streak', '0');
+    }
     this.updateDisplay();
   }
 
@@ -24,6 +33,28 @@ class StreakCounter {
     const now = new Date(); now.setHours(0,0,0,0);
     const diff = Math.round((now - ld) / (1000*60*60*24));
     return diff === 1;
+  }
+
+  // Called at midnight to reset streak if the user did not study today
+  static handleMidnightTick() {
+    const now = new Date(); now.setHours(0,0,0,0);
+    const yesterday = new Date(now); yesterday.setDate(yesterday.getDate() - 1);
+    const yStr = yesterday.toISOString().split('T')[0];
+    const last = localStorage.getItem('lastStudyDate');
+    if (!last) {
+      // No history; ensure display is zeroed
+      this.streak = 0;
+      localStorage.setItem('streak', '0');
+      this.updateDisplay();
+      return;
+    }
+    if (last !== yStr) {
+      // If the last recorded day is not yesterday, then the last day had no study → reset
+      this.streak = 0;
+      localStorage.setItem('streak', '0');
+      // Do not update lastStudyDate here; it should only reflect study days
+      this.updateDisplay();
+    }
   }
 
   static updateDisplay() {

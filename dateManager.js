@@ -30,5 +30,6 @@ class DateManager {
       di.innerHTML = `<p>${termLabel}</p><p>${weekLabel}</p><p>${months[now.getMonth()]}</p><p>${now.getDate()}</p>`;
     }
   }
+  static refresh(){ this.init(); }
 }
 document.addEventListener('DOMContentLoaded', ()=>DateManager.init());
