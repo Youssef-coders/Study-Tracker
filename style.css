@@ -489,6 +489,70 @@ header {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
 }
+/* Unify Settings buttons to match Start/End glow with no border */
+.setting .button-group .term-start,
+.setting .button-group .term-end,
+.setting .button-group .enable,
+.setting .button-group .disable,
+.setting .button-group .set {
+    border: none !important;
+    border-radius: 100px;
+    color: #fff;
+    font-family: 'Excalifont';
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    padding: 12px 26px;
+    min-width: 130px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    transition: all 0.25s ease-in-out;
+}
+
+/* Variant colors aligned with Start/End */
+.setting .button-group .term-start,
+.setting .button-group .enable {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32) !important;
+    box-shadow: 0 8px 26px rgba(76, 175, 80, 0.45) !important;
+}
+.setting .button-group .term-start:hover,
+.setting .button-group .enable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(76, 175, 80, 0.5) !important;
+}
+
+.setting .button-group .term-end,
+.setting .button-group .disable {
+    background: linear-gradient(135deg, #f44336, #c62828) !important;
+    box-shadow: 0 8px 26px rgba(244, 67, 54, 0.45) !important;
+}
+.setting .button-group .term-end:hover,
+.setting .button-group .disable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(244, 67, 54, 0.5) !important;
+}
+
+.setting .button-group .set {
+    background: linear-gradient(135deg, #2196F3, #1565C0) !important;
+    box-shadow: 0 8px 26px rgba(33, 150, 243, 0.45) !important;
+}
+.setting .button-group .set:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(33, 150, 243, 0.5) !important;
+}
+
+/* Dark/Blackout mode consistency */
+body.dark-mode .setting .button-group .term-start,
+body.dark-mode .setting .button-group .enable { background: linear-gradient(135deg, #388E3C, #1B5E20) !important; }
+body.dark-mode .setting .button-group .term-end,
+body.dark-mode .setting .button-group .disable { background: linear-gradient(135deg, #c62828, #8E0000) !important; }
+body.dark-mode .setting .button-group .set { background: linear-gradient(135deg, #1976D2, #0D47A1) !important; }
+
+body.blackout-mode .setting .button-group .term-start,
+body.blackout-mode .setting .button-group .enable,
+body.blackout-mode .setting .button-group .term-end,
+body.blackout-mode .setting .button-group .disable,
+body.blackout-mode .setting .button-group .set {
+    border: none !important;
+}
 @media (min-width: 1600px) {
     .settings-card{
         height: 700px;
