@@ -130,6 +130,7 @@ class AssignmentLoader {
       
       // Refresh the display
       this.loadUpcomingAssignments();
+      try { Notify && Notify.info(`Status changed to ${nextStatus}`); } catch(e) {}
       
       const endTime = performance.now();
       console.log(`Status update took ${endTime - startTime}ms`);
@@ -166,6 +167,7 @@ class AssignmentLoader {
         return !(a.name === assignment.name && a.subject === assignment.subject && a.dueDate === assignment.dueDate);
       });
       LocalStorageManager.save('assignments', updated);
+      try { Notify && Notify.success('Assignment deleted'); } catch(e) {}
       this.loadUpcomingAssignments();
     } catch (e) { console.error('Error deleting assignment', e); }
   }

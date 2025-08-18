@@ -478,6 +478,80 @@ body.term-2 { --term-color: #1f7a3a; }
     overflow: visible; /* allow natural growth without scrollbars */
 }
 
+/*-----------POMODORO PAGE---------------*/
+.pomocard {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 220px;
+    width: min(92%, 900px);
+    min-height: 420px;
+    padding: 30px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    border: 4px solid var(--term-color, #2b5d8a);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+.pomocard h2 { font-family: 'Excalifont'; font-size: 36px; margin: 0; }
+.timer-display { font-family: 'Excalifont'; font-size: 140px; line-height: 1; }
+.pom-mode { font-family: 'Excalifont'; font-size: 22px; color: #555; }
+.pom-controls { display: flex; gap: 16px; }
+.pom-controls button {
+    padding: 12px 24px;
+    border-radius: 100px;
+    border: 3px solid #1565C0;
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    font-family: 'Excalifont';
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0 6px 20px rgba(33,150,243,0.35);
+}
+.pom-controls button:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(33,150,243,0.45); }
+.pom-controls #pom-pause { background: linear-gradient(135deg, #FF9800, #F57C00); border-color: #E65100; box-shadow: 0 6px 20px rgba(255,152,0,0.35); }
+.pom-controls #pom-reset { background: linear-gradient(135deg, #f44336, #d32f2f); border-color: #b71c1c; box-shadow: 0 6px 20px rgba(244,67,54,0.35); }
+
+@media (min-width: 1600px) {
+    .timer-display { font-size: 200px; }
+    .pomocard { width: 1100px; min-height: 520px; }
+}
+
+/* Pomodoro: dark mode */
+body.dark-mode .pomocard {
+    background: #1e1e1e !important;
+    border-color: var(--term-color, #2b5d8a) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.35) !important;
+}
+body.dark-mode .timer-display { color: #eaeaea !important; }
+body.dark-mode .pom-mode { color: #bdbdbd !important; }
+body.dark-mode .pom-controls button {
+    filter: saturate(0.95) brightness(0.95);
+    border-color: #0D47A1;
+}
+body.dark-mode .pom-controls #pom-pause { background: linear-gradient(135deg, #EF6C00, #E65100); border-color: #BF360C; }
+body.dark-mode .pom-controls #pom-reset { background: linear-gradient(135deg, #c62828, #b71c1c); border-color: #8E0000; }
+
+/* Pomodoro: blackout mode */
+body.blackout-mode .pomocard {
+    background: #000 !important;
+    color: #fff !important;
+    border-color: #333 !important;
+    box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.08), 0 4px 8px rgba(0,0,0,0.5) !important;
+}
+body.blackout-mode .timer-display, body.blackout-mode .pom-mode { color: #fff !important; }
+body.blackout-mode .pom-controls button {
+    background: #333 !important;
+    color: #fff !important;
+    border-color: #666 !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6) !important;
+}
+
 .setting {
     display: flex;
     justify-content: space-between;
@@ -1778,6 +1852,38 @@ body.dark-mode .upassign:hover {
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
 .modal .modal-content { max-width: 900px; margin: 6% auto; }
 
+/* Toast notifications */
+#toast-container {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 3000;
+}
+.toast {
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #fff;
+  font-family: 'Excalifont';
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 240ms ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.info { background: linear-gradient(135deg, #2196F3, #1976D2); }
+.toast.success { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
+.toast.warn { background: linear-gradient(135deg, #FFC107, #FF9800); color: #111; }
+.toast.error { background: linear-gradient(135deg, #f44336, #d32f2f); }
+
+/* Dark/blackout tweaks */
+body.dark-mode .toast.warn { color: #000; }
+body.blackout-mode .toast { box-shadow: 0 8px 24px rgba(255,255,255,0.15); }
+
 
 /* AI Quiz Modal Styling */
 #aiQuizModal .modal-content {
@@ -2194,6 +2300,11 @@ body.dark-mode .edit-status-btn {
     transition: all 0.1s ease;
 }
 
+/* Click feedback pulse */
+button.clicked, .term-element.clicked {
+    box-shadow: 0 0 0 8px rgba(33, 150, 243, 0.15) inset !important;
+}
+
 /* Global button styling for all buttons */
 .hourcard button,
 .addlesson,
@@ -2364,6 +2475,19 @@ body.dark-mode .edit-status-btn {
 .edit-status-btn:active::before {
     width: 300px;
     height: 300px;
+}
+
+/* Global ripple circles */
+.ripple-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    pointer-events: none;
+    transform: scale(0);
+    animation: rippleExpand 520ms ease-out forwards;
+}
+@keyframes rippleExpand {
+  to { transform: scale(1); opacity: 0; }
 }
 
 /* Blackout mode button adjustments */

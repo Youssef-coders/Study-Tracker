@@ -17,6 +17,7 @@
     <a class="term-element" href="index.html">Dashboard</a>
     <a class="term-element" href="subjects.html">Subjects</a>
     <a href="homework.html" class="active term-element">Homework</a>
+    <a class="term-element" href="pomodoro.html">Pomodoro</a>
     <a class="term-element" href="settings.html">Settings</a>
   </div>
 
@@ -87,6 +88,9 @@
 <script src="assignmentLoader.js"></script>
 <script src="darkMode.js"></script>
 <script src="blackoutMode.js"></script>
+<script src="notify.js"></script>
+<script src="ripple.js"></script>
+<!-- <script src="soundManager.js"></script> -->
 
 <script>
 // Simple assignment manager for homework page
@@ -146,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const status = document.getElementById('assignmentStatus').value;
 
       if (!name || !subject || !dueDate || !status) {
-        alert('Please fill in all fields');
+        Notify.warn('Please fill in all fields');
         return;
       }
 
@@ -175,10 +179,10 @@ document.addEventListener('DOMContentLoaded', function() {
           AssignmentLoader.loadUpcomingAssignments();
         }
         
-        alert('Assignment added successfully!');
+        Notify.success('Assignment added successfully!');
       } catch (error) {
         console.error('Error saving assignment:', error);
-        alert('Error saving assignment. Please try again.');
+        Notify.error('Error saving assignment. Please try again.');
       }
     });
 

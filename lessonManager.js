@@ -250,7 +250,7 @@ class LessonManager {
     const title = document.getElementById('chapterTitle').value;
     
     if (!title) {
-      alert('Please fill in the chapter title');
+      try { Notify && Notify.warn('Please fill in the chapter title'); } catch(e) {}
       return;
     }
     
@@ -271,7 +271,7 @@ class LessonManager {
     
     this.closeModal('addChapterModal');
     this.loadLessons();
-    alert('Chapter added successfully!');
+    try { Notify && Notify.success('Chapter added'); } catch(e) {}
   }
 
   static addLesson() {
@@ -279,7 +279,7 @@ class LessonManager {
     const chapterId = document.getElementById('lessonChapter').value;
     
     if (!title || !chapterId) {
-      alert('Please fill in all fields');
+      try { Notify && Notify.warn('Please fill in all fields'); } catch(e) {}
       return;
     }
     
@@ -304,9 +304,9 @@ class LessonManager {
       
       this.closeModal('addLessonModal');
       this.loadLessons();
-      alert('Lesson added successfully!');
+      try { Notify && Notify.success('Lesson added'); } catch(e) {}
     } else {
-      alert('Chapter not found');
+      try { Notify && Notify.error('Chapter not found'); } catch(e) {}
     }
   }
 
@@ -316,7 +316,7 @@ class LessonManager {
     const subject = document.getElementById('resourceSubject').value;
     
     if (!title || !resourceType) {
-      alert('Please fill in all fields');
+      try { Notify && Notify.warn('Please fill in all fields'); } catch(e) {}
       return;
     }
     
@@ -332,7 +332,7 @@ class LessonManager {
     if (resourceType === 'file') {
       const fileInput = document.getElementById('resourceFile');
       if (!fileInput.files[0]) {
-        alert('Please select a file');
+        try { Notify && Notify.warn('Please select a file'); } catch(e) {}
         return;
       }
       const file = fileInput.files[0];
@@ -354,7 +354,7 @@ class LessonManager {
       // Link-based resource
       const url = document.getElementById('resourceUrl').value;
       if (!url) {
-        alert('Please enter a URL');
+        try { Notify && Notify.warn('Please enter a URL'); } catch(e) {}
         return;
       }
       resource.url = url;
@@ -369,7 +369,7 @@ class LessonManager {
     
     this.closeModal('addResourceModal');
     this.loadLessons(); // This will detect if we're on resources page and render appropriately
-    alert('Resource added successfully!');
+    try { Notify && Notify.success('Resource added'); } catch(e) {}
   }
   
   static downloadResource(resourceId) {

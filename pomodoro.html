@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pomodoro Timer</title>
+  <link rel="stylesheet" href="style.css?v=1" />
+  <script src="loader.js"></script>
+</head>
+<body class="term-0">
+  <header>POMODORO</header>
+  <div class="headerspacer"></div>
+  <div class="sidewallleft"></div>
+  <div class="sidewallright"></div>
+
+  <div class="navbar">
+    <a class="term-element" href="index.html">Dashboard</a>
+    <a class="term-element" href="subjects.html">Subjects</a>
+    <a class="term-element" href="homework.html">Homework</a>
+    <a class="term-element" href="pomodoro.html" class="active term-element">Pomodoro</a>
+    <a class="term-element" href="settings.html">Settings</a>
+  </div>
+
+  <div class="pomocard">
+    <h2>Pomodoro Timer</h2>
+    <div class="timer-display" id="pom-timer">25:00</div>
+    <div class="pom-mode"><span id="pom-mode">FOCUS</span></div>
+    <div class="pom-controls">
+      <button id="pom-start">Start</button>
+      <button id="pom-pause">Pause</button>
+      <button id="pom-reset">Reset</button>
+    </div>
+  </div>
+
+  <script src="localStorageManager.js"></script>
+  <script src="termController.js"></script>
+  <script src="dateManager.js"></script>
+  <script src="darkMode.js"></script>
+  <script src="blackoutMode.js"></script>
+  <script src="notify.js"></script>
+  <script src="pomodoro.js"></script>
+  <script src="ripple.js"></script>
+</body>
+</html>
+
+

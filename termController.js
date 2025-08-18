@@ -49,7 +49,7 @@ class TermController {
     LocalStorageManager.setTermStart(new Date().toISOString().slice(0,10));
     this.applyTheme();
     DateManager.init();
-    alert(`Term ${term} started.`);
+    try { Notify && Notify.success(`Term ${term} started.`); } catch(e) {}
   }
   endTerm() {
     const archive = {
@@ -73,7 +73,7 @@ class TermController {
     LocalStorageManager.setTermStart(null);
     this.applyTheme();
     DateManager.init();
-    alert('Term ended. Pre-term mode activated.');
+    try { Notify && Notify.info('Term ended. Pre-term mode activated.'); } catch(e) {}
   }
 }
 document.addEventListener('DOMContentLoaded', ()=>{ window.TermController = new TermController(); });
