@@ -1,13 +1,19 @@
 class StreakCounter {
+  static dateKey(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    const day = String(d.getDate()).padStart(2,'0');
+    return `${y}-${m}-${day}`;
+  }
   static init() {
     if (!document.querySelector('.streakcard')) return;
     this.streak = parseInt(localStorage.getItem('streak')) || 0;
     this.last = localStorage.getItem('lastStudyDate') || null;
     // If app was closed over missed days, ensure reset-on-load
     const now = new Date(); now.setHours(0,0,0,0);
-    const todayStr = now.toISOString().split('T')[0];
+    const todayStr = this.dateKey(now);
     const yesterday = new Date(now); yesterday.setDate(yesterday.getDate() - 1);
-    const yStr = yesterday.toISOString().split('T')[0];
+    const yStr = this.dateKey(yesterday);
     if (this.last && this.last !== todayStr && this.last !== yStr) {
       this.streak = 0;
       localStorage.setItem('streak', '0');
@@ -17,8 +23,9 @@ class StreakCounter {
 
   static recordStudySession() {
     const now = new Date(); now.setHours(0,0,0,0);
-    const todayStr = now.toISOString().split('T')[0];
+    const todayStr = this.dateKey(now);
     if (this.last === todayStr) return; // already recorded today
+    const before = this.streak;
     if (this.isConsecutiveDay(this.last)) this.streak++;
     else this.streak = 1;
     this.last = todayStr;
@@ -36,7 +43,9 @@ class StreakCounter {
       }
     } catch(e){}
     this.updateDisplay();
-    try { document.querySelector('.streakcard h1')?.classList.add('streak-pop'); setTimeout(()=>document.querySelector('.streakcard h1')?.classList.remove('streak-pop'), 320); } catch(e){}
+    if (this.streak !== before) {
+      try { const n = document.querySelector('.streakcard h1'); n?.classList.add('streak-pop'); setTimeout(()=>n?.classList.remove('streak-pop'), 320); } catch(e){}
+    }
   }
 
   static isConsecutiveDay(last) {
@@ -51,7 +60,7 @@ class StreakCounter {
   static handleMidnightTick() {
     const now = new Date(); now.setHours(0,0,0,0);
     const yesterday = new Date(now); yesterday.setDate(yesterday.getDate() - 1);
-    const yStr = yesterday.toISOString().split('T')[0];
+    const yStr = this.dateKey(yesterday);
     const last = localStorage.getItem('lastStudyDate');
     if (!last) {
       // No history; ensure display is zeroed
