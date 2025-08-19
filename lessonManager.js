@@ -542,8 +542,20 @@ class LessonManager {
       chapters.forEach((chapter, index) => {
         const chapterDiv = document.createElement('div');
         chapterDiv.className = 'chapter';
-        chapterDiv.innerHTML = `<h2>${chapter.title}</h2>`;
+        chapterDiv.setAttribute('data-chapter-id', chapter.id);
+        chapterDiv.innerHTML = `<button class="chapter-delete-btn" data-delete-id="${chapter.id}" title="Delete chapter">−</button><h2>${chapter.title}</h2>`;
         container.appendChild(chapterDiv);
+        // Chapter delete reveal on double click
+        chapterDiv.addEventListener('dblclick', (e)=>{
+          e.preventDefault(); e.stopPropagation();
+          chapterDiv.classList.toggle('show-delete');
+        });
+        // Chapter delete action
+        const chDelBtn = chapterDiv.querySelector('.chapter-delete-btn');
+        chDelBtn?.addEventListener('click', (e)=>{
+          e.preventDefault(); e.stopPropagation();
+          LessonManager.deleteChapter(chapter.id);
+        });
 
         if (chapter.lessons && chapter.lessons.length > 0) {
           chapter.lessons.forEach(lesson => {
@@ -552,8 +564,10 @@ class LessonManager {
             const subject = this.getCurrentSubject();
             const mastery = this.updateLessonMastery(subject, lesson.id, lesson.progress ?? 0);
             const colorClass = mastery >= 100 ? 'progress-green' : (mastery > 0 ? 'progress-yellow' : 'progress-red');
+            lessonDiv.setAttribute('data-lesson-id', lesson.id);
             lessonDiv.innerHTML = `
-              <h3>${lesson.title}</h3>
+              <button class="lesson-delete-btn" data-delete-id="${lesson.id}" title="Delete lesson">−</button>
+              <h3 class="lesson-title-chip ${colorClass}">${lesson.title}</h3>
               <div class="button-group">
                 <h3 class="progress-chip ${colorClass}" data-lesson-id="${lesson.id}">${mastery}%</h3>
               </div>
@@ -565,6 +579,17 @@ class LessonManager {
             chip?.addEventListener('click', (e)=>{
               e.preventDefault(); e.stopPropagation();
               this.showLessonQuizModal(subject, lesson.id, lesson.title);
+            });
+            // Show delete control on double click
+            lessonDiv.addEventListener('dblclick', (e)=>{
+              e.preventDefault(); e.stopPropagation();
+              lessonDiv.classList.toggle('show-delete');
+            });
+            // Delete handler
+            const delBtn = lessonDiv.querySelector('.lesson-delete-btn');
+            delBtn?.addEventListener('click', (e)=>{
+              e.preventDefault(); e.stopPropagation();
+              LessonManager.deleteLesson(lesson.id);
             });
           });
         }
@@ -580,8 +605,11 @@ class LessonManager {
     const quizzes = LocalStorageManager.getLessonQuizzes(subject, lessonId);
     // mastery is floor(total quiz percent / 10), clamped to 100
     const totalPct = quizzes.reduce((acc, q)=>{
-      const out = Number(q.outOf)||0; const sc = Number(q.score)||0;
-      return acc + (out > 0 ? (sc/out)*100 : 0);
+      const outRaw = Number(q.outOf) || 0;
+      if (outRaw <= 0) return acc;
+      const scRaw = Number(q.score) || 0;
+      const safeScore = Math.min(Math.max(0, scRaw), outRaw);
+      return acc + (safeScore / outRaw) * 100;
     }, 0);
     const mastery = Math.max(0, Math.min(100, Math.floor(totalPct / 10)));
     const chapters = this.loadChapters();
@@ -596,14 +624,22 @@ class LessonManager {
     modal.className = 'modal';
     modal.id = 'lessonQuizModal';
     const quizzes = LocalStorageManager.getLessonQuizzes(subject, lessonId);
-    const grid = quizzes.length ? quizzes.map((q)=>{ const pct=Math.round((q.score/q.outOf)*100); const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red'); const date=q.date? new Date(q.date).toLocaleDateString():''; return `<div class=\"quiz-card\"><div class=\"quiz-ring ${ringClass}\" style=\"--pct:${pct}\">${pct}%</div><div class=\"quiz-meta\"><div class=\"quiz-score\">${q.score}/${q.outOf}</div><div class=\"quiz-date\">${date}</div></div></div>`; }).join('') : '<div class="quiz-card"><div class="quiz-title">No quizzes yet</div></div>';
+    const grid = quizzes.length ? quizzes.map((q)=>{ 
+      const out = Math.max(1, Number(q.outOf)||0);
+      const rawScore = Math.max(0, Number(q.score)||0);
+      const safeScore = Math.min(rawScore, out);
+      const pct = Math.round((safeScore / out) * 100);
+      const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red');
+      const date = q.date? new Date(q.date).toLocaleDateString():''; 
+      return `<div class=\"quiz-card\"><div class=\"quiz-ring ${ringClass}\" style=\"--pct:${pct}\">${pct}%</div><div class=\"quiz-meta\"><div class=\"quiz-score\">${safeScore}/${out}</div><div class=\"quiz-date\">${date}</div></div></div>`; 
+    }).join('') : '<div class="quiz-card"><div class="quiz-title">No quizzes yet</div></div>';
     const mastery = this.updateLessonMastery(subject, lessonId, 0);
     modal.innerHTML = `
       <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h2>Lesson Mastery</h2>
-        <p><strong>${lessonTitle}</strong></p>
-        <p>Mastery: <strong id="masteryVal">${mastery}%</strong></p>
+        <p class="lesson-title">${lessonTitle}</p>
+        <p class="mastery-line">Mastery: <span class="mastery-value" id="masteryVal">${mastery}%</span></p>
         <ul class="quiz-list"></ul>
         <div class="quiz-grid">${grid}</div>
         <form class="quiz-add-form" style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
@@ -617,14 +653,37 @@ class LessonManager {
     const close = ()=> modal.remove();
     modal.querySelector('.close-btn')?.addEventListener('click', close);
     // Only close via X button
+    // Clamp score to not exceed out-of dynamically
+    const scoreInput = modal.querySelector('#quizScore');
+    const outInput = modal.querySelector('#quizOutOf');
+    const clampScore = () => {
+      const outMax = Math.max(1, Number(outInput.value || 1));
+      if (scoreInput) {
+        scoreInput.setAttribute('max', String(outMax));
+        let scVal = Number(scoreInput.value || 0);
+        if (scVal > outMax) scoreInput.value = String(outMax);
+        if (scVal < 0) scoreInput.value = '0';
+      }
+    };
+    outInput?.addEventListener('input', clampScore);
+    clampScore();
     modal.querySelector('.quiz-add-form')?.addEventListener('submit', (e)=>{
       e.preventDefault(); e.stopPropagation();
-      const sc = Math.max(0, Number(modal.querySelector('#quizScore').value||0));
+      let sc = Math.max(0, Number(modal.querySelector('#quizScore').value||0));
       const out = Math.max(1, Number(modal.querySelector('#quizOutOf').value||10));
+      if (sc > out) { sc = out; modal.querySelector('#quizScore').value = String(out); }
       LocalStorageManager.addLessonQuiz(subject, lessonId, sc, out);
       try { Notify && Notify.success('Quiz result added'); } catch(_) {}
       const qs = LocalStorageManager.getLessonQuizzes(subject, lessonId);
-      modal.querySelector('.quiz-grid').innerHTML = qs.map((q)=>{ const pct=Math.round((q.score/q.outOf)*100); const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red'); const date=q.date? new Date(q.date).toLocaleDateString():''; return `<div class=\\\"quiz-card\\\"><div class=\\\"quiz-ring ${ringClass}\\\" style=\\\"--pct:${pct}\\\">${pct}%</div><div class=\\\"quiz-meta\\\"><div class=\\\"quiz-score\\\">${q.score}/${q.outOf}</div><div class=\\\"quiz-date\\\">${date}</div></div></div>`; }).join('');
+      modal.querySelector('.quiz-grid').innerHTML = qs.map((q)=>{ 
+        const out2 = Math.max(1, Number(q.outOf)||0);
+        const rawScore2 = Math.max(0, Number(q.score)||0);
+        const safeScore2 = Math.min(rawScore2, out2);
+        const pct = Math.round((safeScore2 / out2) * 100);
+        const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red'); 
+        const date=q.date? new Date(q.date).toLocaleDateString():''; 
+        return `<div class=\\\"quiz-card\\\"><div class=\\\"quiz-ring ${ringClass}\\\" style=\\\"--pct:${pct}\\\">${pct}%</div><div class=\\\"quiz-meta\\\"><div class=\\\"quiz-score\\\">${safeScore2}/${out2}</div><div class=\\\"quiz-date\\\">${date}</div></div></div>`; 
+      }).join('');
       const m = this.updateLessonMastery(subject, lessonId, 0);
       modal.querySelector('#masteryVal').textContent = `${m}%`;
       document.querySelectorAll(`.progress-chip[data-lesson-id='${lessonId}']`).forEach(el=>{
@@ -637,6 +696,12 @@ class LessonManager {
           parent.classList.add(m>=100?'mastery-complete':(m>0?'mastery-partial':'mastery-none'));
         }
       });
+      // update lesson title chip color to match mastery
+      const titleEl = document.querySelector(`.lesson[data-lesson-id='${lessonId}'] .lesson-title-chip`);
+      if (titleEl){
+        titleEl.classList.remove('progress-red','progress-yellow','progress-green');
+        titleEl.classList.add(m>=100?'progress-green':(m>0?'progress-yellow':'progress-red'));
+      }
       if (m >= 100) {
         try { Notify && Notify.success('Mastery complete!'); } catch(_){ }
         this.launchConfetti();
@@ -724,6 +789,35 @@ class LessonManager {
     
     if (updated) {
       this.saveChapters(chapters);
+    }
+  }
+
+  static deleteLesson(lessonId){
+    const chapters = this.loadChapters();
+    let changed = false;
+    chapters.forEach(ch=>{
+      const before = (ch.lessons||[]).length;
+      ch.lessons = (ch.lessons||[]).filter(ls=> ls.id !== lessonId);
+      if (ch.lessons.length !== before) changed = true;
+    });
+    if (changed){
+      this.saveChapters(chapters);
+      try { Notify && Notify.success('Lesson deleted'); } catch(_){ }
+      this.loadLessons();
+    } else {
+      try { Notify && Notify.warn('Lesson not found'); } catch(_){ }
+    }
+  }
+
+  static deleteChapter(chapterId){
+    const chapters = this.loadChapters();
+    const filtered = chapters.filter(ch => ch.id !== chapterId);
+    if (filtered.length !== chapters.length){
+      this.saveChapters(filtered);
+      try { Notify && Notify.success('Chapter deleted'); } catch(_){ }
+      this.loadLessons();
+    } else {
+      try { Notify && Notify.warn('Chapter not found'); } catch(_){ }
     }
   }
 
