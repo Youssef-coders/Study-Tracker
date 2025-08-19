@@ -1212,6 +1212,19 @@ body.blackout-mode .setting .button-group .set {
     box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
 }
+.lesson { position: relative; }
+.lesson .lesson-delete-btn { position: absolute; top: 0; left: 0; transform: translate(-30%, -30%); width: 28px; height: 28px; border-radius: 50%; border: none; background: linear-gradient(135deg, #ff6b6b, #c0392b); color: #fff; font-weight: 900; font-size: 18px; line-height: 28px; text-align: center; cursor: pointer; opacity: 0; pointer-events: none; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.lesson.show-delete .lesson-delete-btn { opacity: 1; pointer-events: auto; }
+.lesson .lesson-delete-btn:hover { filter: brightness(1.05); }
+
+.chapter { position: relative; }
+.chapter .chapter-delete-btn { position: absolute; top: 0; left: 0; transform: translate(-30%, -30%); width: 28px; height: 28px; border-radius: 50%; border: none; background: linear-gradient(135deg, #ff6b6b, #c0392b); color: #fff; font-weight: 900; font-size: 18px; line-height: 28px; text-align: center; cursor: pointer; opacity: 0; pointer-events: none; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.chapter.show-delete .chapter-delete-btn { opacity: 1; pointer-events: auto; }
+.chapter .chapter-delete-btn:hover { filter: brightness(1.05); }
+.lesson .lesson-title-chip { display: inline-block; font-family: 'Excalifont'; font-weight: 900; font-size: 22px; padding: 8px 12px; border-radius: 12px; color: #fff; background: linear-gradient(135deg, var(--term-color, #2b5d8a), #0f2742); box-shadow: 0 2px 10px rgba(0,0,0,0.10); }
+.lesson .lesson-title-chip.progress-green { background: linear-gradient(135deg, #2E7D32, #1B5E20); }
+.lesson .lesson-title-chip.progress-yellow { background: linear-gradient(135deg, #FBC02D, #F57F17); color: #111; }
+.lesson .lesson-title-chip.progress-red { background: linear-gradient(135deg, #C62828, #8E0000); }
 .lesson.mastery-complete { border-color: #1B5E20 !important; background: linear-gradient(135deg, #e8f5e9, #ffffff) !important; }
 .lesson.mastery-partial { border-color: #F57F17 !important; background: linear-gradient(135deg, #fff8e1, #ffffff) !important; }
 .lesson.mastery-none { border-color: #8E0000 !important; background: linear-gradient(135deg, #ffebee, #ffffff) !important; }
@@ -1272,6 +1285,12 @@ body.blackout-mode .setting .button-group .set {
 #lessonQuizModal .modal-content { max-width: 720px; border: 3px solid var(--term-color, #2b5d8a); border-radius: 16px; padding: 24px; }
 #lessonQuizModal h2 { font-family: 'Excalifont'; font-size: 36px; margin-bottom: 10px; background: linear-gradient(135deg, var(--term-color, #2b5d8a), #0f2742); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
 #lessonQuizModal p { font-family: 'Excalifont'; font-size: 22px; margin: 10px 0; }
+#lessonQuizModal .lesson-title { display: inline-block; font-family: 'Excalifont'; font-size: 24px; font-weight: 900; margin: 8px 0; padding: 10px 14px; border-radius: 12px; color: #fff; background: linear-gradient(135deg, var(--term-color, #2b5d8a), #0f2742); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+#lessonQuizModal .mastery-line { font-family: 'Excalifont'; font-size: 20px; margin: 10px 0; display: flex; align-items: center; gap: 10px; }
+#lessonQuizModal .mastery-value { display: inline-block; font-family: 'Excalifont'; font-size: 28px; font-weight: 900; padding: 8px 14px; border-radius: 999px; color: #fff; background: linear-gradient(135deg, var(--term-color, #2b5d8a), #0f2742); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+#lessonQuizModal .mastery-value.progress-green { background: linear-gradient(135deg, #2E7D32, #1B5E20); color: #fff; }
+#lessonQuizModal .mastery-value.progress-yellow { background: linear-gradient(135deg, #FBC02D, #F57F17); color: #222; }
+#lessonQuizModal .mastery-value.progress-red { background: linear-gradient(135deg, #C62828, #8E0000); color: #fff; }
 #lessonQuizModal .quiz-list { display:none; }
 #lessonQuizModal .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0; }
 #lessonQuizModal .quiz-card { border: 2px solid #dee2e6; border-radius: 14px; padding: 14px; background: linear-gradient(135deg, #ffffff, #f8f9fa); box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 12px; }
