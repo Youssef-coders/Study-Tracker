@@ -1058,8 +1058,8 @@ body.blackout-mode .setting .button-group .set {
 /* Mobile tweaks */
 @media (max-width: 768px) {
   .subbar { top: 150px; }
-  .navbar { width: 95%; gap: 10px; }
-  .navbar a { padding: 10px 16px; font-size: 16px; }
+  .navbar { width: 95%; gap: 10px; position: static; top: auto; transform: none; left: auto; margin: 10px auto; }
+  .navbar a { padding: 8px 14px; font-size: 15px; }
   #day-info { gap: 10px; position: static; margin: 10px auto; }
   .day { position: static; margin: 10px auto; text-align: center; }
 
@@ -1067,11 +1067,15 @@ body.blackout-mode .setting .button-group .set {
   .hourcard, .streakcard, .streak-top-card, .widecard,
   .curric-card, .settings-card, .resource-card, .res-card {
     position: static !important;
-    width: calc(100% - 30px) !important;
+    width: calc(100% - 24px) !important;
     left: auto !important; right: auto !important; top: auto !important;
-    margin: 12px 15px !important;
+    margin: 10px 12px !important;
   }
-  .widecard { min-height: 180px; }
+  .hourcard, .streakcard { height: auto; padding: 16px; }
+  .hourcard h2, .streakcard h2 { font-size: 22px; }
+  .hourcard h1 { font-size: 120px; }
+  .streakcard h1 { font-size: 160px; }
+  .widecard { min-height: 160px; }
 
   /* Curriculum headers should flow with content */
   .card-header {
@@ -1079,11 +1083,16 @@ body.blackout-mode .setting .button-group .set {
     left: auto !important; right: auto !important; top: auto !important;
     margin: 10px 15px !important;
   }
+  .card-header .card-title { font-size: 22px; max-width: calc(100% - 340px); }
+  .card-header .button-group .addlesson,
+  .card-header .button-group .addchapter,
+  .card-header .button-group .addresource,
+  .card-header .button-group .addassignment { min-width: 160px; padding: 8px 16px; font-size: 16px; }
 
   /* Subject rows stack */
   .sro, .srtw, .srth {
     position: static !important;
-    width: calc(100% - 30px);
+    width: calc(100% - 24px);
     margin: 10px auto;
     display: flex;
     flex-wrap: wrap;
@@ -1092,21 +1101,30 @@ body.blackout-mode .setting .button-group .set {
   }
 
   /* Pomodoro */
-  .timer-display { font-size: 96px; }
-  .pomocard { position: static; width: calc(100% - 30px); min-height: 360px; margin: 12px 15px; }
+  .timer-display { font-size: 90px; }
+  .pomocard { position: static; width: calc(100% - 24px); min-height: 340px; margin: 10px 12px; padding: 20px; }
 }
 
 @media (max-width: 480px) {
-  .navbar a { padding: 8px 12px; font-size: 14px; }
-  .hourcard h1 { font-size: 140px; }
-  .streakcard h1 { font-size: 180px; }
-  .card-header .card-title { max-width: calc(100% - 320px); font-size: 22px; }
+  .navbar a { padding: 6px 10px; font-size: 13px; }
+  .hourcard h1 { font-size: 100px; }
+  .streakcard h1 { font-size: 140px; }
+  .card-header .card-title { max-width: calc(100% - 280px); font-size: 20px; }
   .card-header .button-group .addlesson,
   .card-header .button-group .addchapter,
   .card-header .button-group .addresource,
-  .card-header .button-group .addassignment { min-width: 150px; padding: 8px 14px; font-size: 16px; }
-  .lesson { min-height: 34px; padding: 6px 8px; }
-  .lesson h3 { font-size: 14px; }
+  .card-header .button-group .addassignment { min-width: 130px; padding: 6px 12px; font-size: 14px; }
+  .lesson { min-height: 32px; padding: 5px 8px; }
+  .lesson h3 { font-size: 13px; }
+}
+
+/* Landscape small-height devices */
+@media (max-height: 450px) and (orientation: landscape) {
+  .navbar { position: static; margin: 6px auto; }
+  #day-info, .day { margin: 6px auto; }
+  .hourcard h1 { font-size: 90px; }
+  .streakcard h1 { font-size: 120px; }
+  .pomocard { min-height: 280px; }
 }
 
 .subbar a {
