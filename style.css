@@ -102,7 +102,7 @@ header {
     bottom: 6px;
     height: 3px;
     border-radius: 3px;
-    background: var(--term-color, #2b5d8a);
+    background: var(--term-active-accent, var(--term-color, #2b5d8a));
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 220ms ease;
@@ -456,9 +456,9 @@ header {
     }
 }
 /* Global term color variables */
-body.term-0 { --term-color: grey; }
-body.term-1 { --term-color: #2b5d8a; }
-body.term-2 { --term-color: #1f7a3a; }
+body.term-0 { --term-color: grey; --term-color-active: #4d4d4d; --term-active-accent: #ff3d00; }
+body.term-1 { --term-color: #2b5d8a; --term-color-active: #1e3f63; --term-active-accent: #ff9800; }
+body.term-2 { --term-color: #1f7a3a; --term-color-active: #145c2f; --term-active-accent: #8e24aa; }
 
 /*-----------SETTINGS PAGE---------------*/
 .settings-card {
@@ -1971,8 +1971,32 @@ body.blackout-mode *:not(#day-info):not(#day-info *):not(.day):not(h1.day):not(.
 /* These are now defined above in the Term Colors section */
 
 /* Navbar active selectors (fix) */
-.navbar a.active { background: darkslategrey !important; }
-.subbar a.active { background: darkslategrey !important; }
+.navbar a.active { 
+  background: var(--term-active-accent, var(--term-color, #2b5d8a)) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45), 0 0 0 3px var(--term-active-accent, rgba(255,255,255,0.15)) inset;
+  transform: translateY(-2px) scale(1.02);
+  border: 2px solid var(--term-active-accent, transparent);
+}
+.subbar a.active { 
+  background: var(--term-active-accent, var(--term-color, #2b5d8a)) !important;
+  color: #fff !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.45), 0 0 0 3px var(--term-active-accent, rgba(255,255,255,0.15)) inset;
+  transform: translateY(-2px) scale(1.02);
+  border: 2px solid var(--term-active-accent, transparent);
+}
+
+/* Ensure active color shows in dark/blackout modes */
+body.dark-mode .navbar a.active,
+body.blackout-mode .navbar a.active {
+  background: var(--term-active-accent, var(--term-color, #2b5d8a)) !important;
+  color: #fff !important;
+}
+body.dark-mode .subbar a.active,
+body.blackout-mode .subbar a.active {
+  background: var(--term-active-accent, var(--term-color, #2b5d8a)) !important;
+  color: #fff !important;
+}
 
 /* Dark mode */
 body.dark-mode { background: #121212 !important; color: #eaeaea !important; }
