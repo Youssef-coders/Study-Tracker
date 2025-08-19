@@ -1055,6 +1055,33 @@ body.blackout-mode .setting .button-group .set {
 /* Slight adjustment only on curriculum pages */
 .curric-card ~ .subbar, .subtitle ~ .subbar { top: 152px; }
 
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .subbar { top: 150px; }
+  .navbar { width: 95%; gap: 10px; }
+  .navbar a { padding: 10px 16px; font-size: 16px; }
+  #day-info { gap: 10px; }
+  .hourcard, .streakcard { width: calc(100% - 110px); left: 55px; right: 55px; }
+  .hourcard { top: 220px; }
+  .streakcard { top: 640px; right: 55px; }
+  .widecard { top: 1000px; width: calc(100% - 110px); }
+  .timer-display { font-size: 96px; }
+  .pomocard { top: 200px; width: calc(100% - 110px); min-height: 380px; }
+}
+
+@media (max-width: 480px) {
+  .navbar a { padding: 8px 12px; font-size: 14px; }
+  .hourcard h1 { font-size: 140px; }
+  .streakcard h1 { font-size: 180px; }
+  .card-header .card-title { max-width: calc(100% - 320px); font-size: 22px; }
+  .card-header .button-group .addlesson,
+  .card-header .button-group .addchapter,
+  .card-header .button-group .addresource,
+  .card-header .button-group .addassignment { min-width: 150px; padding: 8px 14px; font-size: 16px; }
+  .lesson { min-height: 34px; padding: 6px 8px; }
+  .lesson h3 { font-size: 14px; }
+}
+
 .subbar a {
     padding: 12px 24px;
     color: white;
