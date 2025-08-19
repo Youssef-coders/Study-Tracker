@@ -558,6 +558,8 @@ class LessonManager {
                 <h3 class="progress-chip ${colorClass}" data-lesson-id="${lesson.id}">${mastery}%</h3>
               </div>
             `;
+            // apply lesson-level class for background/border state
+            lessonDiv.classList.add(mastery >= 100 ? 'mastery-complete' : (mastery > 0 ? 'mastery-partial' : 'mastery-none'));
             chapterDiv.appendChild(lessonDiv);
             const chip = lessonDiv.querySelector('.progress-chip');
             chip?.addEventListener('click', (e)=>{
@@ -576,9 +578,12 @@ class LessonManager {
 
   static updateLessonMastery(subject, lessonId, fallback=0) {
     const quizzes = LocalStorageManager.getLessonQuizzes(subject, lessonId);
-    let sum = 0;
-    quizzes.forEach(q=>{ const out = Number(q.outOf)||0; const sc = Number(q.score)||0; if (out>0 && sc>=0) sum += (sc/out)*100; });
-    const mastery = Math.max(0, Math.min(100, Math.round(sum)));
+    // mastery is floor(total quiz percent / 10), clamped to 100
+    const totalPct = quizzes.reduce((acc, q)=>{
+      const out = Number(q.outOf)||0; const sc = Number(q.score)||0;
+      return acc + (out > 0 ? (sc/out)*100 : 0);
+    }, 0);
+    const mastery = Math.max(0, Math.min(100, Math.floor(totalPct / 10)));
     const chapters = this.loadChapters();
     let changed = false;
     chapters.forEach(ch=>{ (ch.lessons||[]).forEach(ls=>{ if (ls.id === lessonId) { if (ls.progress !== mastery) { ls.progress = mastery; changed = true; } } }); });
@@ -591,7 +596,7 @@ class LessonManager {
     modal.className = 'modal';
     modal.id = 'lessonQuizModal';
     const quizzes = LocalStorageManager.getLessonQuizzes(subject, lessonId);
-    const list = quizzes.length ? quizzes.map((q,i)=>`<li>Quiz ${i+1}: ${q.score}/${q.outOf} (${Math.round((q.score/q.outOf)*100)}%)</li>`).join('') : '<li>No quizzes yet</li>';
+    const grid = quizzes.length ? quizzes.map((q)=>{ const pct=Math.round((q.score/q.outOf)*100); const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red'); const date=q.date? new Date(q.date).toLocaleDateString():''; return `<div class=\"quiz-card\"><div class=\"quiz-ring ${ringClass}\" style=\"--pct:${pct}\">${pct}%</div><div class=\"quiz-meta\"><div class=\"quiz-score\">${q.score}/${q.outOf}</div><div class=\"quiz-date\">${date}</div></div></div>`; }).join('') : '<div class="quiz-card"><div class="quiz-title">No quizzes yet</div></div>';
     const mastery = this.updateLessonMastery(subject, lessonId, 0);
     modal.innerHTML = `
       <div class="modal-content">
@@ -599,7 +604,8 @@ class LessonManager {
         <h2>Lesson Mastery</h2>
         <p><strong>${lessonTitle}</strong></p>
         <p>Mastery: <strong id="masteryVal">${mastery}%</strong></p>
-        <ul class="quiz-list">${list}</ul>
+        <ul class="quiz-list"></ul>
+        <div class="quiz-grid">${grid}</div>
         <form class="quiz-add-form" style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
           <label>Score <input type="number" id="quizScore" min="0" value="10" style="width:80px;"/></label>
           <label>Out of <input type="number" id="quizOutOf" min="1" value="10" style="width:80px;"/></label>
@@ -610,7 +616,7 @@ class LessonManager {
     modal.style.display = 'block';
     const close = ()=> modal.remove();
     modal.querySelector('.close-btn')?.addEventListener('click', close);
-    modal.addEventListener('click', (e)=>{ if (e.target===modal) close(); });
+    // Only close via X button
     modal.querySelector('.quiz-add-form')?.addEventListener('submit', (e)=>{
       e.preventDefault(); e.stopPropagation();
       const sc = Math.max(0, Number(modal.querySelector('#quizScore').value||0));
@@ -618,15 +624,39 @@ class LessonManager {
       LocalStorageManager.addLessonQuiz(subject, lessonId, sc, out);
       try { Notify && Notify.success('Quiz result added'); } catch(_) {}
       const qs = LocalStorageManager.getLessonQuizzes(subject, lessonId);
-      modal.querySelector('.quiz-list').innerHTML = qs.map((q,i)=>`<li>Quiz ${i+1}: ${q.score}/${q.outOf} (${Math.round((q.score/q.outOf)*100)}%)</li>`).join('');
+      modal.querySelector('.quiz-grid').innerHTML = qs.map((q)=>{ const pct=Math.round((q.score/q.outOf)*100); const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red'); const date=q.date? new Date(q.date).toLocaleDateString():''; return `<div class=\\\"quiz-card\\\"><div class=\\\"quiz-ring ${ringClass}\\\" style=\\\"--pct:${pct}\\\">${pct}%</div><div class=\\\"quiz-meta\\\"><div class=\\\"quiz-score\\\">${q.score}/${q.outOf}</div><div class=\\\"quiz-date\\\">${date}</div></div></div>`; }).join('');
       const m = this.updateLessonMastery(subject, lessonId, 0);
       modal.querySelector('#masteryVal').textContent = `${m}%`;
       document.querySelectorAll(`.progress-chip[data-lesson-id='${lessonId}']`).forEach(el=>{
         el.textContent = `${m}%`;
         el.classList.remove('progress-red','progress-yellow','progress-green');
         el.classList.add(m>=100?'progress-green':(m>0?'progress-yellow':'progress-red'));
+        const parent = el.closest('.lesson');
+        if (parent){
+          parent.classList.remove('mastery-none','mastery-partial','mastery-complete');
+          parent.classList.add(m>=100?'mastery-complete':(m>0?'mastery-partial':'mastery-none'));
+        }
       });
+      if (m >= 100) {
+        try { Notify && Notify.success('Mastery complete!'); } catch(_){ }
+        this.launchConfetti();
+      }
     });
+  }
+
+  static launchConfetti(){
+    const colors = ['#e91e63','#9c27b0','#3f51b5','#03a9f4','#4caf50','#ff9800','#f44336'];
+    const n = 140;
+    for (let i=0;i<n;i++){
+      const s = document.createElement('span');
+      s.className = 'confetti-piece';
+      s.style.left = Math.random()*100 + 'vw';
+      s.style.background = colors[Math.floor(Math.random()*colors.length)];
+      s.style.animation = `confettiFall ${1400 + Math.random()*1600}ms ease-out forwards`;
+      s.style.transform = `translateY(${Math.random()*-100}px)`;
+      document.body.appendChild(s);
+      setTimeout(()=> s.remove(), 3200);
+    }
   }
 
   static renderResources(resources) {
