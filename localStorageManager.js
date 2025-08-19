@@ -38,13 +38,35 @@ class LocalStorageManager {
   // Lesson quiz history (per subject->lessonId -> array of {score,outOf,date})
   static getLessonQuizzes(subject, lessonId){
     const all = this.load('lessonQuizzes') || {};
-    return (all[subject]?.[lessonId]) || [];
+    const arr = (all[subject]?.[lessonId]) || [];
+    // Normalize any legacy invalid entries (cap score, fix totals)
+    let mutated = false;
+    const fixed = arr.map(q => {
+      let out = Number(q.outOf);
+      if (!Number.isFinite(out) || out <= 0) { out = 1; mutated = true; }
+      let sc = Number(q.score);
+      if (!Number.isFinite(sc) || sc < 0) { sc = 0; mutated = true; }
+      if (sc > out) { sc = out; mutated = true; }
+      return { ...q, score: sc, outOf: out };
+    });
+    if (mutated){
+      if (!all[subject]) all[subject] = {};
+      all[subject][lessonId] = fixed;
+      this.save('lessonQuizzes', all);
+    }
+    return fixed;
   }
   static addLessonQuiz(subject, lessonId, score, outOf){
     const all = this.load('lessonQuizzes') || {};
+    // Sanitize inputs
+    let safeOut = Number(outOf);
+    if (!Number.isFinite(safeOut) || safeOut <= 0) safeOut = 1;
+    let safeScore = Number(score);
+    if (!Number.isFinite(safeScore) || safeScore < 0) safeScore = 0;
+    if (safeScore > safeOut) safeScore = safeOut;
     if (!all[subject]) all[subject] = {};
     if (!all[subject][lessonId]) all[subject][lessonId] = [];
-    all[subject][lessonId].push({ score, outOf, date: new Date().toISOString() });
+    all[subject][lessonId].push({ score: safeScore, outOf: safeOut, date: new Date().toISOString() });
     this.save('lessonQuizzes', all);
   }
 

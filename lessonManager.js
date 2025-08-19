@@ -672,7 +672,11 @@ class LessonManager {
       e.preventDefault(); e.stopPropagation();
       let sc = Math.max(0, Number(modal.querySelector('#quizScore').value||0));
       const out = Math.max(1, Number(modal.querySelector('#quizOutOf').value||10));
-      if (sc > out) { sc = out; modal.querySelector('#quizScore').value = String(out); }
+      if (sc > out) { 
+        sc = out; 
+        modal.querySelector('#quizScore').value = String(out); 
+        try { Notify && Notify.warn('Score capped to not exceed the total'); } catch(_){ }
+      }
       LocalStorageManager.addLessonQuiz(subject, lessonId, sc, out);
       try { Notify && Notify.success('Quiz result added'); } catch(_) {}
       const qs = LocalStorageManager.getLessonQuizzes(subject, lessonId);
