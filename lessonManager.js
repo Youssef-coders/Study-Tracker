@@ -549,13 +549,21 @@ class LessonManager {
           chapter.lessons.forEach(lesson => {
             const lessonDiv = document.createElement('div');
             lessonDiv.className = 'lesson';
+            const subject = this.getCurrentSubject();
+            const mastery = this.updateLessonMastery(subject, lesson.id, lesson.progress ?? 0);
+            const colorClass = mastery >= 100 ? 'progress-green' : (mastery > 0 ? 'progress-yellow' : 'progress-red');
             lessonDiv.innerHTML = `
               <h3>${lesson.title}</h3>
               <div class="button-group">
-                <h3>${lesson.progress}%</h3>
+                <h3 class="progress-chip ${colorClass}" data-lesson-id="${lesson.id}">${mastery}%</h3>
               </div>
             `;
             chapterDiv.appendChild(lessonDiv);
+            const chip = lessonDiv.querySelector('.progress-chip');
+            chip?.addEventListener('click', (e)=>{
+              e.preventDefault(); e.stopPropagation();
+              this.showLessonQuizModal(subject, lesson.id, lesson.title);
+            });
           });
         }
       });
@@ -564,6 +572,61 @@ class LessonManager {
     } catch (error) {
       console.error('Error rendering chapters:', error);
     }
+  }
+
+  static updateLessonMastery(subject, lessonId, fallback=0) {
+    const quizzes = LocalStorageManager.getLessonQuizzes(subject, lessonId);
+    let sum = 0;
+    quizzes.forEach(q=>{ const out = Number(q.outOf)||0; const sc = Number(q.score)||0; if (out>0 && sc>=0) sum += (sc/out)*100; });
+    const mastery = Math.max(0, Math.min(100, Math.round(sum)));
+    const chapters = this.loadChapters();
+    let changed = false;
+    chapters.forEach(ch=>{ (ch.lessons||[]).forEach(ls=>{ if (ls.id === lessonId) { if (ls.progress !== mastery) { ls.progress = mastery; changed = true; } } }); });
+    if (changed) this.saveChapters(chapters);
+    return (quizzes.length ? mastery : (fallback||0));
+  }
+
+  static showLessonQuizModal(subject, lessonId, lessonTitle) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.id = 'lessonQuizModal';
+    const quizzes = LocalStorageManager.getLessonQuizzes(subject, lessonId);
+    const list = quizzes.length ? quizzes.map((q,i)=>`<li>Quiz ${i+1}: ${q.score}/${q.outOf} (${Math.round((q.score/q.outOf)*100)}%)</li>`).join('') : '<li>No quizzes yet</li>';
+    const mastery = this.updateLessonMastery(subject, lessonId, 0);
+    modal.innerHTML = `
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Lesson Mastery</h2>
+        <p><strong>${lessonTitle}</strong></p>
+        <p>Mastery: <strong id="masteryVal">${mastery}%</strong></p>
+        <ul class="quiz-list">${list}</ul>
+        <form class="quiz-add-form" style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <label>Score <input type="number" id="quizScore" min="0" value="10" style="width:80px;"/></label>
+          <label>Out of <input type="number" id="quizOutOf" min="1" value="10" style="width:80px;"/></label>
+          <button type="submit" class="save-btn">Add</button>
+        </form>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.style.display = 'block';
+    const close = ()=> modal.remove();
+    modal.querySelector('.close-btn')?.addEventListener('click', close);
+    modal.addEventListener('click', (e)=>{ if (e.target===modal) close(); });
+    modal.querySelector('.quiz-add-form')?.addEventListener('submit', (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      const sc = Math.max(0, Number(modal.querySelector('#quizScore').value||0));
+      const out = Math.max(1, Number(modal.querySelector('#quizOutOf').value||10));
+      LocalStorageManager.addLessonQuiz(subject, lessonId, sc, out);
+      try { Notify && Notify.success('Quiz result added'); } catch(_) {}
+      const qs = LocalStorageManager.getLessonQuizzes(subject, lessonId);
+      modal.querySelector('.quiz-list').innerHTML = qs.map((q,i)=>`<li>Quiz ${i+1}: ${q.score}/${q.outOf} (${Math.round((q.score/q.outOf)*100)}%)</li>`).join('');
+      const m = this.updateLessonMastery(subject, lessonId, 0);
+      modal.querySelector('#masteryVal').textContent = `${m}%`;
+      document.querySelectorAll(`.progress-chip[data-lesson-id='${lessonId}']`).forEach(el=>{
+        el.textContent = `${m}%`;
+        el.classList.remove('progress-red','progress-yellow','progress-green');
+        el.classList.add(m>=100?'progress-green':(m>0?'progress-yellow':'progress-red'));
+      });
+    });
   }
 
   static renderResources(resources) {
