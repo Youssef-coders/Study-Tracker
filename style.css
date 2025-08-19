@@ -1259,6 +1259,11 @@ body.blackout-mode .setting .button-group .set {
     letter-spacing: 0.3px;
 }
 
+/* Mastery color states */
+.progress-chip.progress-green { background: linear-gradient(135deg, #2E7D32, #1B5E20) !important; }
+.progress-chip.progress-yellow { background: linear-gradient(135deg, #FBC02D, #F57F17) !important; color: #111; }
+.progress-chip.progress-red { background: linear-gradient(135deg, #C62828, #8E0000) !important; }
+
 /* Assignment and Chapter Title Styling */
 .curric-card h2,
 .quizlesson-card h2,

@@ -35,6 +35,19 @@ class LocalStorageManager {
     this.save('progress', p);
   }
 
+  // Lesson quiz history (per subject->lessonId -> array of {score,outOf,date})
+  static getLessonQuizzes(subject, lessonId){
+    const all = this.load('lessonQuizzes') || {};
+    return (all[subject]?.[lessonId]) || [];
+  }
+  static addLessonQuiz(subject, lessonId, score, outOf){
+    const all = this.load('lessonQuizzes') || {};
+    if (!all[subject]) all[subject] = {};
+    if (!all[subject][lessonId]) all[subject][lessonId] = [];
+    all[subject][lessonId].push({ score, outOf, date: new Date().toISOString() });
+    this.save('lessonQuizzes', all);
+  }
+
   // Quiz schedule
   static getQuizSchedule(){ return this.load('quizSchedule') || { startWeek:1, endWeek:11, quizzes:{} }; }
   static saveQuizSchedule(s){ this.save('quizSchedule', s); }
