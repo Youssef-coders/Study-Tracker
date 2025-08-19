@@ -1294,7 +1294,7 @@ body.blackout-mode .setting .button-group .set {
 #lessonQuizModal .quiz-list { display:none; }
 #lessonQuizModal .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0; }
 #lessonQuizModal .quiz-card { border: 2px solid #dee2e6; border-radius: 14px; padding: 14px; background: linear-gradient(135deg, #ffffff, #f8f9fa); box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 12px; }
-#lessonQuizModal .quiz-ring { width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(var(--ring, #2b5d8a) calc(var(--pct, 0) * 1%), #e8e8e8 0); display: flex; align-items: center; justify-content: center; font-family: 'Excalifont'; font-weight: 900; font-size: 16px; color: #222; }
+#lessonQuizModal .quiz-ring { width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(var(--ring, #2b5d8a) var(--pct, 0)%, #e8e8e8 0); display: flex; align-items: center; justify-content: center; font-family: 'Excalifont'; font-weight: 900; font-size: 16px; color: #222; }
 #lessonQuizModal .quiz-ring.ring-green { --ring: #2E7D32; }
 #lessonQuizModal .quiz-ring.ring-yellow { --ring: #FBC02D; }
 #lessonQuizModal .quiz-ring.ring-red { --ring: #C62828; }
