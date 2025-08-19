@@ -631,15 +631,16 @@ class LessonManager {
       const pct = Math.round((safeScore / out) * 100);
       const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red');
       const date = q.date? new Date(q.date).toLocaleDateString():''; 
-      return `<div class=\"quiz-card\"><div class=\"quiz-ring ${ringClass}\" style=\"--pct:${pct}\">${pct}%</div><div class=\"quiz-meta\"><div class=\"quiz-score\">${safeScore}/${out}</div><div class=\"quiz-date\">${date}</div></div></div>`; 
+      return `<div class="quiz-card"><div class="quiz-ring ${ringClass}" style="--pct:${pct}">${pct}%</div><div class="quiz-meta"><div class="quiz-score">${safeScore}/${out}</div><div class="quiz-date">${date}</div></div></div>`; 
     }).join('') : '<div class="quiz-card"><div class="quiz-title">No quizzes yet</div></div>';
     const mastery = this.updateLessonMastery(subject, lessonId, 0);
+    const masteryColorClass = mastery >= 100 ? 'progress-green' : (mastery > 0 ? 'progress-yellow' : 'progress-red');
     modal.innerHTML = `
       <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h2>Lesson Mastery</h2>
         <p class="lesson-title">${lessonTitle}</p>
-        <p class="mastery-line">Mastery: <span class="mastery-value" id="masteryVal">${mastery}%</span></p>
+        <p class="mastery-line">Mastery: <span class="mastery-value ${masteryColorClass}" id="masteryVal">${mastery}%</span></p>
         <ul class="quiz-list"></ul>
         <div class="quiz-grid">${grid}</div>
         <form class="quiz-add-form" style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
@@ -682,7 +683,7 @@ class LessonManager {
         const pct = Math.round((safeScore2 / out2) * 100);
         const ringClass = pct>=80? 'ring-green' : (pct>=40? 'ring-yellow' : 'ring-red'); 
         const date=q.date? new Date(q.date).toLocaleDateString():''; 
-        return `<div class=\\\"quiz-card\\\"><div class=\\\"quiz-ring ${ringClass}\\\" style=\\\"--pct:${pct}\\\">${pct}%</div><div class=\\\"quiz-meta\\\"><div class=\\\"quiz-score\\\">${safeScore2}/${out2}</div><div class=\\\"quiz-date\\\">${date}</div></div></div>`; 
+        return `<div class="quiz-card"><div class="quiz-ring ${ringClass}" style="--pct:${pct}">${pct}%</div><div class="quiz-meta"><div class="quiz-score">${safeScore2}/${out2}</div><div class="quiz-date">${date}</div></div></div>`; 
       }).join('');
       const m = this.updateLessonMastery(subject, lessonId, 0);
       modal.querySelector('#masteryVal').textContent = `${m}%`;
