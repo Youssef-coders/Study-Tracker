@@ -1060,13 +1060,40 @@ body.blackout-mode .setting .button-group .set {
   .subbar { top: 150px; }
   .navbar { width: 95%; gap: 10px; }
   .navbar a { padding: 10px 16px; font-size: 16px; }
-  #day-info { gap: 10px; }
-  .hourcard, .streakcard { width: calc(100% - 110px); left: 55px; right: 55px; }
-  .hourcard { top: 220px; }
-  .streakcard { top: 640px; right: 55px; }
-  .widecard { top: 1000px; width: calc(100% - 110px); }
+  #day-info { gap: 10px; position: static; margin: 10px auto; }
+  .day { position: static; margin: 10px auto; text-align: center; }
+
+  /* Stack cards vertically and remove absolute positioning */
+  .hourcard, .streakcard, .streak-top-card, .widecard,
+  .curric-card, .settings-card, .resource-card, .res-card {
+    position: static !important;
+    width: calc(100% - 30px) !important;
+    left: auto !important; right: auto !important; top: auto !important;
+    margin: 12px 15px !important;
+  }
+  .widecard { min-height: 180px; }
+
+  /* Curriculum headers should flow with content */
+  .card-header {
+    position: static !important;
+    left: auto !important; right: auto !important; top: auto !important;
+    margin: 10px 15px !important;
+  }
+
+  /* Subject rows stack */
+  .sro, .srtw, .srth {
+    position: static !important;
+    width: calc(100% - 30px);
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  /* Pomodoro */
   .timer-display { font-size: 96px; }
-  .pomocard { top: 200px; width: calc(100% - 110px); min-height: 380px; }
+  .pomocard { position: static; width: calc(100% - 30px); min-height: 360px; margin: 12px 15px; }
 }
 
 @media (max-width: 480px) {
