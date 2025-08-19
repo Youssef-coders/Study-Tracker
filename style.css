@@ -1212,6 +1212,9 @@ body.blackout-mode .setting .button-group .set {
     box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     transition: box-shadow 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
 }
+.lesson.mastery-complete { border-color: #1B5E20 !important; background: linear-gradient(135deg, #e8f5e9, #ffffff) !important; }
+.lesson.mastery-partial { border-color: #F57F17 !important; background: linear-gradient(135deg, #fff8e1, #ffffff) !important; }
+.lesson.mastery-none { border-color: #8E0000 !important; background: linear-gradient(135deg, #ffebee, #ffffff) !important; }
 
 .lesson:hover {
     transform: translateY(-1px);
@@ -1250,19 +1253,42 @@ body.blackout-mode .setting .button-group .set {
 
 .lesson .button-group h3 {
     margin: 0;
-    font-size: 14px;
-    font-weight: 800;
-    padding: 6px 12px;
+    font-size: 42px;
+    font-weight: 900;
+    padding: 14px 24px;
     border-radius: 999px;
     color: #fff;
     background: linear-gradient(135deg, var(--term-color, #2b5d8a), #0f2742);
-    letter-spacing: 0.3px;
+    letter-spacing: 0.4px;
 }
 
 /* Mastery color states */
 .progress-chip.progress-green { background: linear-gradient(135deg, #2E7D32, #1B5E20) !important; }
 .progress-chip.progress-yellow { background: linear-gradient(135deg, #FBC02D, #F57F17) !important; color: #111; }
 .progress-chip.progress-red { background: linear-gradient(135deg, #C62828, #8E0000) !important; }
+.progress-chip { cursor: pointer; display: inline-block; }
+
+/* Lesson mastery modal styling */
+#lessonQuizModal .modal-content { max-width: 720px; border: 3px solid var(--term-color, #2b5d8a); border-radius: 16px; padding: 24px; }
+#lessonQuizModal h2 { font-family: 'Excalifont'; font-size: 36px; margin-bottom: 10px; background: linear-gradient(135deg, var(--term-color, #2b5d8a), #0f2742); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+#lessonQuizModal p { font-family: 'Excalifont'; font-size: 22px; margin: 10px 0; }
+#lessonQuizModal .quiz-list { display:none; }
+#lessonQuizModal .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 16px 0; }
+#lessonQuizModal .quiz-card { border: 2px solid #dee2e6; border-radius: 14px; padding: 14px; background: linear-gradient(135deg, #ffffff, #f8f9fa); box-shadow: 0 2px 12px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 12px; }
+#lessonQuizModal .quiz-ring { width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(var(--ring, #2b5d8a) var(--pct)%, #e8e8e8 0); display: flex; align-items: center; justify-content: center; font-family: 'Excalifont'; font-weight: 900; font-size: 16px; color: #222; }
+#lessonQuizModal .quiz-ring.ring-green { --ring: #2E7D32; }
+#lessonQuizModal .quiz-ring.ring-yellow { --ring: #FBC02D; }
+#lessonQuizModal .quiz-ring.ring-red { --ring: #C62828; }
+#lessonQuizModal .quiz-meta { display: flex; flex-direction: column; gap: 4px; }
+#lessonQuizModal .quiz-score { font-family: 'Excalifont'; font-weight: 900; font-size: 26px; }
+#lessonQuizModal .quiz-pct { font-family: 'Excalifont'; font-weight: 700; font-size: 16px; color: #555; }
+#lessonQuizModal .quiz-date { font-family: 'Excalifont'; font-size: 14px; color: #777; }
+#lessonQuizModal label { font-family: 'Excalifont'; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; }
+#lessonQuizModal input[type="number"] { padding: 10px 12px; border: 2px solid #555; border-radius: 10px; font-family: 'Excalifont'; font-size: 16px; }
+
+/* Confetti */
+.confetti-piece { position: fixed; width: 8px; height: 12px; top: -20px; opacity: 0.9; border-radius: 2px; z-index: 4000; pointer-events: none; }
+@keyframes confettiFall { to { transform: translateY(120vh) rotate(360deg); opacity: 0; } }
 
 /* Assignment and Chapter Title Styling */
 .curric-card h2,
