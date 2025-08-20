@@ -9,14 +9,34 @@ class StreakCounter {
     if (!document.querySelector('.streakcard')) return;
     this.streak = parseInt(localStorage.getItem('streak')) || 0;
     this.last = localStorage.getItem('lastStudyDate') || null;
-    // If app was closed over missed days, ensure reset-on-load
+    // If app was closed over missed days, ensure reset-on-load (but allow weekend gaps)
     const now = new Date(); now.setHours(0,0,0,0);
     const todayStr = this.dateKey(now);
     const yesterday = new Date(now); yesterday.setDate(yesterday.getDate() - 1);
     const yStr = this.dateKey(yesterday);
+    
     if (this.last && this.last !== todayStr && this.last !== yStr) {
-      this.streak = 0;
-      localStorage.setItem('streak', '0');
+      // Check if the gap is just a weekend (Thursday to Sunday = 3 days)
+      const lastDate = new Date(this.last);
+      const daysDiff = Math.round((now - lastDate) / (1000*60*60*24));
+      
+             if (daysDiff === 3) {
+         // Check if it's Wednesday to Sunday gap
+         const lastDay = lastDate.getDay(); // 3=Wednesday
+         const todayDay = now.getDay(); // 0=Sunday
+         if (lastDay === 3 && todayDay === 0) {
+           // This is a valid weekend gap, don't reset
+         } else {
+           // Not a weekend gap, reset streak
+           this.streak = 0;
+           localStorage.setItem('streak', '0');
+         }
+       } else if (daysDiff > 3) {
+        // Gap is more than weekend, reset streak
+        this.streak = 0;
+        localStorage.setItem('streak', '0');
+      }
+      // If daysDiff is 1 or 2, it's consecutive or just one day gap, don't reset
     }
     this.updateDisplay();
   }
@@ -53,7 +73,29 @@ class StreakCounter {
     const ld = new Date(last); ld.setHours(0,0,0,0);
     const now = new Date(); now.setHours(0,0,0,0);
     const diff = Math.round((now - ld) / (1000*60*60*24));
-    return diff === 1;
+    
+    // For Sunday-Thursday week structure, allow gaps on weekends
+    if (diff === 1) return true; // Consecutive day
+    
+    // Check if the gap includes only weekend days (Wednesday to Sunday = 3 days)
+    if (diff === 3) {
+      const lastDay = ld.getDay(); // 3=Wednesday, 4=Thursday
+      const currentDay = now.getDay(); // 0=Sunday
+      
+      // If last study was Wednesday and current is Sunday, that's allowed (Thursday/Friday are weekend)
+      if (lastDay === 3 && currentDay === 0) return true;
+    }
+    
+    // Check if the gap is Wednesday to Monday (5 days) - this should continue streak
+    if (diff === 5) {
+      const lastDay = ld.getDay(); // 3=Wednesday
+      const currentDay = now.getDay(); // 1=Monday
+      
+      // If last study was Wednesday and current is Monday, this continues streak (Thursday/Friday are weekend)
+      if (lastDay === 3 && currentDay === 1) return true;
+    }
+    
+    return false;
   }
 
   // Called at midnight to reset streak if the user did not study today
@@ -69,8 +111,13 @@ class StreakCounter {
       this.updateDisplay();
       return;
     }
-    if (last !== yStr) {
-      // If the last recorded day is not yesterday, then the last day had no study → reset
+    
+    // Check if yesterday was a weekend day (Thursday or Friday)
+    const yesterdayDay = yesterday.getDay(); // 4=Thursday, 5=Friday
+    const isWeekend = yesterdayDay === 4 || yesterdayDay === 5; // Thursday and Friday are weekend
+    
+    if (last !== yStr && !isWeekend) {
+      // If the last recorded day is not yesterday AND yesterday wasn't a weekend, then reset
       this.streak = 0;
       localStorage.setItem('streak', '0');
       // Do not update lastStudyDate here; it should only reflect study days

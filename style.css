@@ -3,6 +3,11 @@
     src: url(LeagueSpartan-VariableFont_wght.ttf);
 }
 
+/* Default term color RGB values */
+:root {
+    --term-color-rgb: 43, 93, 138;
+}
+
 body{
     margin: 0;
     overflow-x: hidden;
@@ -83,32 +88,19 @@ header {
     font-size: 18px;
     font-family: 'Excalifont';
     font-weight: bold;
-    background-color: grey; /* Default term-0 color */
-    border-radius: 25px;
-    display: flex;
+    background-color: var(--term-color, grey); /* Use term color */
+    border-radius: 50px;
+    display: inline-flex;
     align-items: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: fit-content;
+    box-shadow: 10px 10px 5px -5px rgba(0,0,0,0.75);
+    border: solid;
+    border-color: black;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
 }
-/* Animated underline for navbar links */
-.navbar a::after {
-    content: "";
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 6px;
-    height: 3px;
-    border-radius: 3px;
-    background: var(--term-active-accent, var(--term-color, #2b5d8a));
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 220ms ease;
-}
-.navbar a:hover::after { transform: scaleX(1); }
-.navbar a.active::after { transform: scaleX(1); }
+
 .divider{
     color: black;
     display: inline;
@@ -129,9 +121,7 @@ header {
     min-width: 120px;
 
 }
-.navbar a .active{
-    background: darkslategrey !important; 
-}
+
 #day-info {
     position: absolute;
     left: 50%;
@@ -140,7 +130,7 @@ header {
     justify-content: center;
     width: auto;
     max-width: 800px;
-    margin-top: 60px;
+    margin-top: 58px;
     padding: 20px 20px;
     gap: clamp(15px, 2vw, 25px);
     border-radius: 8px;
@@ -155,9 +145,125 @@ header {
     justify-content: center;
     font-family: 'Excalifont';
     font-size: 20px;
-    padding: 0 15px;
+    padding: 8px 15px;
     margin: 0;
     font-weight: 300;
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.15);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(var(--term-color-rgb, 43, 93, 138), 0.3);
+}
+
+/* Universal button hover effects for all buttons */
+button, .btn, .enable, .disable, .set, .addassignment, .addlesson, .addchapter, .addresource, .save-btn, .cancel-btn, .edit-status-btn, .delete-assign-btn, .delete-week-btn, .add-week-btn, .start-week-btn, .skip-week-btn {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover, .btn:hover, .enable:hover, .disable:hover, .set:hover, .addassignment:hover, .addlesson:hover, .addchapter:hover, .addresource:hover, .save-btn:hover, .cancel-btn:hover, .edit-status-btn:hover, .delete-assign-btn:hover, .delete-week-btn:hover, .add-week-btn:hover, .start-week-btn:hover, .skip-week-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 15px rgba(var(--term-color-rgb, 43, 93, 138), 0.4), 0 0 0 1px rgba(var(--term-color-rgb, 43, 93, 138), 0.3);
+}
+
+button:active, .btn:active, .enable:active, .disable:active, .set:active, .addassignment:active, .addlesson:active, .addchapter:active, .addresource:active, .save-btn:active, .cancel-btn:active, .edit-status-btn:active, .delete-assign-btn:active, .delete-week-btn:active, .add-week-btn:active, .start-week-btn:active, .skip-week-btn:active {
+    transform: translateY(0px) scale(0.98);
+    transition: all 0.1s ease;
+}
+
+button:focus, .btn:focus, .enable:focus, .disable:focus, .set:focus, .addassignment:focus, .addlesson:focus, .addchapter:focus, .addresource:focus, .save-btn:focus, .cancel-btn:focus, .edit-status-btn:focus, .delete-assign-btn:focus, .delete-week-btn:focus, .add-week-btn:focus, .start-week-btn:focus, .skip-week-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--term-color-rgb, 43, 93, 138), 0.5);
+}
+
+/* Flashy light effect for all buttons */
+button::before, .btn::before, .enable::before, .disable::before, .set::before, .addassignment::before, .addlesson::before, .addchapter::before, .addresource::before, .save-btn::before, .cancel-btn::before, .edit-status-btn::before, .delete-assign-btn::before, .delete-week-btn::before, .add-week-btn::before, .start-week-btn::before, .skip-week-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+button:hover::before, .btn:hover::before, .enable:hover::before, .disable:hover::before, .set:hover::before, .addassignment:hover::before, .addlesson:hover::before, .addchapter:hover::before, .addresource:hover::before, .save-btn:hover::before, .cancel-btn:hover::before, .edit-status-btn:hover::before, .delete-assign-btn:hover::before, .delete-week-btn:hover::before, .add-week-btn:hover::before, .start-week-btn:hover::before, .skip-week-btn:hover::before {
+    left: 100%;
+}
+
+/* Make week display clickable */
+#day-info .week-display {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+    
+    /* Reset button defaults */
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.15);
+    border: 1px solid rgba(var(--term-color-rgb, 43, 93, 138), 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    
+    /* Match other day-info p elements */
+    display: inline-flex;
+    justify-content: center;
+    font-family: 'Excalifont';
+    font-size: 20px;
+    padding: 8px 15px;
+    margin: 0;
+    font-weight: 300;
+    
+    /* Remove button styling */
+    outline: none;
+    box-shadow: none;
+}
+
+#day-info .week-display:hover {
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.3);
+    transform: translateY(-2px) scale(1.02);
+    border-color: rgba(var(--term-color-rgb, 43, 93, 138), 0.5);
+    box-shadow: 0 4px 15px rgba(var(--term-color-rgb, 43, 93, 138), 0.4), 0 0 0 1px rgba(var(--term-color-rgb, 43, 93, 138), 0.3);
+}
+
+#day-info .week-display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+#day-info .week-display:hover::before {
+    left: 100%;
+}
+
+#day-info .week-display:hover {
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.3);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 15px rgba(var(--term-color-rgb, 43, 93, 138), 0.4);
+    border-color: rgba(var(--term-color-rgb, 43, 93, 138), 0.5);
+}
+
+#day-info .week-display:active {
+    transform: translateY(0px) scale(0.98);
+    transition: all 0.1s ease;
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.4);
+}
+
+#day-info .week-display:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--term-color-rgb, 43, 93, 138), 0.5);
+}
+
+#day-info .week-display:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--term-color-rgb, 43, 93, 138), 0.5);
 }
 .day{
     position: absolute;
@@ -165,11 +271,9 @@ header {
     transform: translateX(-50%);
     display: flex;
     justify-content: center;
-    width: auto;
-    max-width: 800px;
-    margin-top: 60px;
-    padding: 50px 20px;
-    gap: clamp(15px, 2vw, 25px);
+    width: fit-content; /* Changed from auto to fit-content to exactly fit the text */
+    margin-top: 118px; /* Moved down 2px from 116px */
+    padding: 6px 4px 2px 4px; /* Top: 6px, Right: 4px, Bottom: 2px, Left: 4px - extends horizontal sides by 2px */
     border-radius: 8px;
     white-space: nowrap;
     z-index: 1000;
@@ -177,6 +281,7 @@ header {
     font-family: 'Excalifont';
     font-weight: 900;
     color: rgb(0, 0, 0);
+
 }
 .hourcard {
     position: absolute;
@@ -456,9 +561,9 @@ header {
     }
 }
 /* Global term color variables */
-body.term-0 { --term-color: grey; --term-color-active: #4d4d4d; --term-active-accent: #ff3d00; }
-body.term-1 { --term-color: #2b5d8a; --term-color-active: #1e3f63; --term-active-accent: #ff9800; }
-body.term-2 { --term-color: #1f7a3a; --term-color-active: #145c2f; --term-active-accent: #8e24aa; }
+body.term-0 { --term-color: grey; --term-color-active: #4d4d4d; --term-active-accent: #ff3d00; --term-color-rgb: 128, 128, 128; }
+body.term-1 { --term-color: #2b5d8a; --term-color-active: #1e3f63; --term-active-accent: #ff9800; --term-color-rgb: 43, 93, 138; }
+body.term-2 { --term-color: #1f7a3a; --term-color-active: #145c2f; --term-active-accent: #8e24aa; --term-color-rgb: 31, 122, 58; }
 
 /*-----------SETTINGS PAGE---------------*/
 .settings-card {
@@ -1149,9 +1254,7 @@ body.blackout-mode .setting .button-group .set {
     min-width: 120px;
 
 }
-.subbar a .active{
-    background: darkslategrey !important; 
-}
+
 .subtitle {
     position: absolute;
     top: 40px; /* move subtitle slightly up */
@@ -1919,15 +2022,15 @@ body.term-2 .term-element {
 
 /* Ensure navbar term elements always use term colors */
 body.term-0 .navbar .term-element {
-  background: grey !important;
+  background: var(--term-color, grey) !important;
 }
 
 body.term-1 .navbar .term-element {
-  background: #2b5d8a !important; /* dark blue */
+  background: var(--term-color, #2b5d8a) !important; /* dark blue */
 }
 
 body.term-2 .navbar .term-element {
-  background: #1f7a3a !important; /* dark green */
+  background: var(--term-color, #1f7a3a) !important; /* dark green */
 }
 
 /* Override dark mode for navbar term elements */
@@ -1970,15 +2073,38 @@ body.blackout-mode *:not(#day-info):not(#day-info *):not(.day):not(h1.day):not(.
 /* Ensure .term-element picks up colors */
 /* These are now defined above in the Term Colors section */
 
-/* Navbar active selectors (fix) */
-.navbar a.active { 
+/* Navbar active selectors (fix) - EXTREME OVERRIDE */
+.navbar a.active,
+body.term-0 .navbar a.active,
+body.term-1 .navbar a.active,
+body.term-2 .navbar a.active,
+body.dark-mode .navbar a.active,
+body.blackout-mode .navbar a.active,
+body.term-0.dark-mode .navbar a.active,
+body.term-1.dark-mode .navbar a.active,
+body.term-2.dark-mode .navbar a.active,
+body.term-0.blackout-mode .navbar a.active,
+body.term-1.blackout-mode .navbar a.active,
+body.term-2.blackout-mode .navbar a.active { 
   background: var(--term-active-accent, var(--term-color, #2b5d8a)) !important;
   color: #fff !important;
   box-shadow: 0 10px 28px rgba(0,0,0,0.45), 0 0 0 3px var(--term-active-accent, rgba(255,255,255,0.15)) inset;
   transform: translateY(-2px) scale(1.02);
   border: 2px solid var(--term-active-accent, transparent);
 }
-.subbar a.active { 
+
+.subbar a.active,
+body.term-0 .subbar a.active,
+body.term-1 .subbar a.active,
+body.term-2 .subbar a.active,
+body.dark-mode .subbar a.active,
+body.blackout-mode .subbar a.active,
+body.term-0.dark-mode .subbar a.active,
+body.term-1.dark-mode .subbar a.active,
+body.term-2.dark-mode .subbar a.active,
+body.term-0.blackout-mode .subbar a.active,
+body.term-1.blackout-mode .subbar a.active,
+body.term-2.blackout-mode .subbar a.active { 
   background: var(--term-active-accent, var(--term-color, #2b5d8a)) !important;
   color: #fff !important;
   box-shadow: 0 10px 28px rgba(0,0,0,0.45), 0 0 0 3px var(--term-active-accent, rgba(255,255,255,0.15)) inset;
@@ -2009,6 +2135,12 @@ body.dark-mode .day {
     color: #eaeaea !important;
 }
 
+/* Dark mode translucent backgrounds for day info paragraphs */
+body.dark-mode #day-info p {
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.25) !important;
+    border-color: rgba(var(--term-color-rgb, 43, 93, 138), 0.5) !important;
+}
+
 /* Dark mode assignment text colors */
 body.dark-mode .upassign h4 {
     color: #000 !important;
@@ -2029,6 +2161,199 @@ body.dark-mode .upassign:hover {
 /* Modal base ensure consistent behavior */
 .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
 .modal .modal-content { max-width: 900px; margin: 6% auto; }
+
+/* Weekly Progression Modal */
+#weeklyProgressionModal .modal-content {
+  max-width: 500px;
+  text-align: center;
+}
+
+/* Week Manager Modal */
+#weekManagerModal .modal-content {
+  max-width: 700px;
+  text-align: center;
+}
+
+#weekManagerModal h2 {
+  color: var(--term-color, #2b5d8a);
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid var(--term-color, #2b5d8a);
+}
+
+.close-btn {
+  font-size: 36px;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #333;
+  background: #f0f0f0;
+  transform: scale(1.1);
+}
+
+.total-weeks-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 25px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(var(--term-color-rgb, 43, 93, 138), 0.1), rgba(var(--term-color-rgb, 43, 93, 138), 0.05));
+  border-radius: 15px;
+  border: 2px solid rgba(var(--term-color-rgb, 43, 93, 138), 0.3);
+}
+
+.total-weeks-label {
+  font-family: 'Excalifont';
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--term-color, #2b5d8a);
+}
+
+.total-weeks-number {
+  font-family: 'Excalifont';
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--term-color, #2b5d8a);
+  background: linear-gradient(135deg, var(--term-color, #2b5d8a), #0f2742);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.week-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin: 25px 0;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  padding: 15px;
+  background: #f8f9fa;
+}
+
+.week-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin: 8px 0;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.week-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.week-number {
+  font-family: 'Excalifont';
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--term-color, #2b5d8a);
+}
+
+.delete-week-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Excalifont';
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.delete-week-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+#weekManagerModal .modal-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+#weekManagerModal .add-week-btn {
+  font-size: 18px;
+  padding: 12px 30px;
+}
+
+#weeklyProgressionModal h2 {
+  color: var(--term-color, #2b5d8a);
+  margin-bottom: 20px;
+}
+
+#weeklyProgressionModal p {
+  font-size: 18px;
+  margin: 15px 0;
+  line-height: 1.5;
+}
+
+#weeklyProgressionModal .modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+#weeklyProgressionModal .start-week-btn {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-family: 'Excalifont';
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#weeklyProgressionModal .start-week-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+}
+
+#weeklyProgressionModal .skip-week-btn {
+  background: linear-gradient(135deg, #FF9800, #F57C00);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-family: 'Excalifont';
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#weeklyProgressionModal .skip-week-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+}
 
 /* Toast notifications */
 #toast-container {
@@ -2713,9 +3038,8 @@ body.blackout-mode .srth a {
 /* ULTRA SPECIFIC day background override for blackout mode - MAXIMUM SPECIFICITY */
 body.blackout-mode #day-info,
 body.blackout-mode #day-info *,
-body.blackout-mode h1.day,
-body.blackout-mode .day {
-    background: transparent !important;
+body.blackout-mode h1.day {
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.1) !important;
     color: #fff !important;
 }
 
@@ -2739,9 +3063,9 @@ body.blackout-mode h1.day {
 body.blackout-mode #day-info,
 body.blackout-mode #day-info p,
 body.blackout-mode h1.day {
-    background: transparent !important;
+    background: rgba(var(--term-color-rgb, 43, 93, 138), 0.1) !important;
     color: #fff !important;
-    border: none !important;
+    border: 1px solid rgba(var(--term-color-rgb, 43, 93, 138), 0.2) !important;
     box-shadow: none !important;
 }
 
