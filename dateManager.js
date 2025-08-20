@@ -11,7 +11,22 @@ class DateManager {
     if (week > 11) return 11;
     return week;
   }
-  static getCurrentWeek(){ return this.getTermWeek(new Date()); }
+  static getCurrentWeek(){ 
+    // Check if we have a manually set week number from weekly progression
+    let manualWeek = null;
+    try {
+      if (typeof WeeklyProgression !== 'undefined' && WeeklyProgression.getCurrentWeekNumber) {
+        manualWeek = WeeklyProgression.getCurrentWeekNumber();
+      }
+    } catch (e) {
+      console.log('WeeklyProgression not available yet:', e);
+    }
+    
+    if (manualWeek) return manualWeek;
+    
+    // Otherwise calculate from term start
+    return this.getTermWeek(new Date()); 
+  }
   static init(){
     const now = new Date();
     const dayNames = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
@@ -23,11 +38,31 @@ class DateManager {
     let weekLabel = 'Week 0/11', termLabel = 'Term 0';
     if (termActive && LocalStorageManager.getTermStart()) {
       const week = this.getCurrentWeek();
-      weekLabel = `Week ${week}/11`;
+      // Safely check for WeekManager
+      let totalWeeks = 11; // Default fallback
+      try {
+        if (typeof WeekManager !== 'undefined' && WeekManager.getTotalWeeks) {
+          totalWeeks = WeekManager.getTotalWeeks();
+        }
+      } catch (e) {
+        console.log('WeekManager not available yet, using default:', e);
+      }
+      weekLabel = `Week ${week}/${totalWeeks}`;
       termLabel = `Term ${term}`;
     }
     if (di) {
-      di.innerHTML = `<p>${termLabel}</p><p>${weekLabel}</p><p>${months[now.getMonth()]}</p><p>${now.getDate()}</p>`;
+      // Update only the text content, preserve the button structure
+      const termP = di.querySelector('p:first-child');
+      const weekButton = di.querySelector('.week-display');
+      const monthP = di.querySelector('p:nth-child(3)');
+      const dayP = di.querySelector('p:last-child');
+      
+      if (termP) termP.textContent = termLabel;
+      if (weekButton) weekButton.textContent = weekLabel;
+      if (monthP) monthP.textContent = months[now.getMonth()];
+      if (dayP) dayP.textContent = now.getDate();
+      
+      console.log('Day info updated while preserving week-display button');
     }
   }
   static refresh(){ this.init(); }
