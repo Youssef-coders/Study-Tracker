@@ -20,18 +20,22 @@ class StreakCounter {
       const lastDate = new Date(this.last);
       const daysDiff = Math.round((now - lastDate) / (1000*60*60*24));
       
-             if (daysDiff === 3) {
-         // Check if it's Wednesday to Sunday gap
-         const lastDay = lastDate.getDay(); // 3=Wednesday
-         const todayDay = now.getDay(); // 0=Sunday
-         if (lastDay === 3 && todayDay === 0) {
-           // This is a valid weekend gap, don't reset
-         } else {
-           // Not a weekend gap, reset streak
-           this.streak = 0;
-           localStorage.setItem('streak', '0');
-         }
-       } else if (daysDiff > 3) {
+      if (daysDiff === 3) {
+        // Check if it's a valid weekend gap
+        const lastDay = lastDate.getDay(); // 3=Wednesday, 4=Thursday
+        const todayDay = now.getDay(); // 0=Sunday, 6=Saturday
+        
+        // Valid gaps: Wednesday to Sunday, Thursday to Sunday, Thursday to Saturday
+        if ((lastDay === 3 && todayDay === 0) || // Wed to Sun
+            (lastDay === 4 && todayDay === 0) || // Thu to Sun  
+            (lastDay === 4 && todayDay === 6)) { // Thu to Sat
+          // This is a valid weekend gap, don't reset
+        } else {
+          // Not a weekend gap, reset streak
+          this.streak = 0;
+          localStorage.setItem('streak', '0');
+        }
+      } else if (daysDiff > 3) {
         // Gap is more than weekend, reset streak
         this.streak = 0;
         localStorage.setItem('streak', '0');
@@ -80,10 +84,14 @@ class StreakCounter {
     // Check if the gap includes only weekend days (Wednesday to Sunday = 3 days)
     if (diff === 3) {
       const lastDay = ld.getDay(); // 3=Wednesday, 4=Thursday
-      const currentDay = now.getDay(); // 0=Sunday
+      const currentDay = now.getDay(); // 0=Sunday, 6=Saturday
       
       // If last study was Wednesday and current is Sunday, that's allowed (Thursday/Friday are weekend)
       if (lastDay === 3 && currentDay === 0) return true;
+      // If last study was Thursday and current is Sunday, that's allowed (Friday/Saturday are weekend)
+      if (lastDay === 4 && currentDay === 0) return true;
+      // If last study was Thursday and current is Saturday, that's allowed (Friday is weekend)
+      if (lastDay === 4 && currentDay === 6) return true;
     }
     
     // Check if the gap is Wednesday to Monday (5 days) - this should continue streak
