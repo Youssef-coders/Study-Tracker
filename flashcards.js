@@ -289,12 +289,6 @@ class Flashcards {
                     <button onclick="Flashcards.previousCard()" class="study-btn" ${this.currentCardIndex === 0 ? 'disabled' : ''}>Previous</button>
                     <button onclick="Flashcards.nextCard()" class="study-btn" ${this.currentCardIndex === set.cards.length - 1 ? 'disabled' : ''}>Next</button>
                 </div>
-                
-                <div class="study-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${((this.currentCardIndex + 1) / set.cards.length) * 100}%"></div>
-                    </div>
-                </div>
             </div>
         `;
         
