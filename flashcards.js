@@ -2,10 +2,17 @@
 class Flashcards {
     static init() {
         console.log('Flashcards.init() called');
-        this.loadSubjects();
-        this.loadFlashcardSets();
-        this.setupEventListeners();
-        console.log('Flashcards.init() completed');
+        this.currentSetId = null;
+        this.currentCardIndex = 0;
+        this.isFlipped = false;
+        
+        // Wait a bit for DOM to be fully ready
+        setTimeout(() => {
+            this.loadSubjects();
+            this.loadFlashcardSets();
+            this.setupEventListeners();
+            console.log('Flashcards.init() completed');
+        }, 100);
     }
 
     static setupEventListeners() {
@@ -15,10 +22,16 @@ class Flashcards {
         const addSetBtn = document.getElementById('addFlashcardSet');
         console.log('Add set button found:', addSetBtn);
         if (addSetBtn) {
-            addSetBtn.addEventListener('click', () => {
+            addSetBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 console.log('Add set button clicked');
                 this.openFlashcardSetModal();
             });
+            
+            // Add some visual feedback
+            addSetBtn.style.cursor = 'pointer';
+            addSetBtn.style.userSelect = 'none';
         }
 
         // Flashcard set form
@@ -227,10 +240,101 @@ class Flashcards {
     }
 
     static openFlashcardSet(setId) {
-        // This would open a study mode for the specific set
-        if (window.Notify) {
-            window.Notify.info('Study mode coming soon!');
+        console.log('Opening study mode for set:', setId);
+        this.currentSetId = setId;
+        this.currentCardIndex = 0;
+        this.isFlipped = false;
+        
+        const sets = JSON.parse(localStorage.getItem('flashcardSets') || '[]');
+        const set = sets.find(s => s.id === setId);
+        
+        if (!set || !set.cards || set.cards.length === 0) {
+            if (window.Notify) {
+                window.Notify.warn('No cards in this set to study!');
+            }
+            return;
         }
+        
+        this.showStudyMode(set);
+    }
+    
+    static showStudyMode(set) {
+        const container = document.getElementById('flashcardSets');
+        if (!container) return;
+        
+        const studyHTML = `
+            <div class="study-mode">
+                <div class="study-header">
+                    <h2>${this.escapeHtml(set.name)} - Study Mode</h2>
+                    <p>Card ${this.currentCardIndex + 1} of ${set.cards.length}</p>
+                    <button onclick="Flashcards.exitStudyMode()" class="exit-study-btn">Exit Study Mode</button>
+                </div>
+                
+                <div class="flashcard-study">
+                    <div class="flashcard" onclick="Flashcards.flipCard()">
+                        <div class="flashcard-inner ${this.isFlipped ? 'flipped' : ''}">
+                            <div class="flashcard-front">
+                                <p>${this.escapeHtml(set.cards[this.currentCardIndex].front)}</p>
+                                <div class="card-hint">Click to flip</div>
+                            </div>
+                            <div class="flashcard-back">
+                                <p>${this.escapeHtml(set.cards[this.currentCardIndex].back)}</p>
+                                <div class="card-hint">Click to flip back</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="study-controls">
+                    <button onclick="Flashcards.previousCard()" class="study-btn" ${this.currentCardIndex === 0 ? 'disabled' : ''}>Previous</button>
+                    <button onclick="Flashcards.nextCard()" class="study-btn" ${this.currentCardIndex === set.cards.length - 1 ? 'disabled' : ''}>Next</button>
+                </div>
+                
+                <div class="study-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${((this.currentCardIndex + 1) / set.cards.length) * 100}%"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML = studyHTML;
+    }
+    
+    static flipCard() {
+        this.isFlipped = !this.isFlipped;
+        const flashcard = document.querySelector('.flashcard');
+        if (flashcard) {
+            flashcard.classList.toggle('flipped', this.isFlipped);
+        }
+    }
+    
+    static nextCard() {
+        const sets = JSON.parse(localStorage.getItem('flashcardSets') || '[]');
+        const set = sets.find(s => s.id === this.currentSetId);
+        
+        if (this.currentCardIndex < set.cards.length - 1) {
+            this.currentCardIndex++;
+            this.isFlipped = false;
+            this.showStudyMode(set);
+        }
+    }
+    
+    static previousCard() {
+        if (this.currentCardIndex > 0) {
+            this.currentCardIndex--;
+            this.isFlipped = false;
+            const sets = JSON.parse(localStorage.getItem('flashcardSets') || '[]');
+            const set = sets.find(s => s.id === this.currentSetId);
+            this.showStudyMode(set);
+        }
+    }
+    
+    static exitStudyMode() {
+        this.currentSetId = null;
+        this.currentCardIndex = 0;
+        this.isFlipped = false;
+        this.loadFlashcardSets();
     }
 
     static addCardToSet(setId) {
