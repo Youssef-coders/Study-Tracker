@@ -3496,15 +3496,11 @@ body.blackout-mode .widecard {
     margin-bottom: 30px;
     flex-wrap: wrap;
     gap: 20px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+    background: white;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 
-        0 15px 40px rgba(0, 0, 0, 0.1),
-        0 5px 15px rgba(var(--term-color-rgb, 43, 93, 138), 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border: 2px solid rgba(var(--term-color-rgb, 43, 93, 138), 0.2);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--term-color, #2b5d8a);
 }
 
 .subject-filter {
@@ -3615,15 +3611,11 @@ body.blackout-mode .widecard {
 
 /* Study Mode Styling */
 .study-mode {
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 249, 250, 0.98) 100%);
-    border-radius: 25px;
-    padding: 40px;
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.1),
-        0 8px 25px rgba(var(--term-color-rgb, 43, 93, 138), 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(var(--term-color-rgb, 43, 93, 138), 0.2);
-    backdrop-filter: blur(10px);
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--term-color, #2b5d8a);
 }
 
 /* Blurting Button Styling */
@@ -3748,36 +3740,14 @@ body.blackout-mode .widecard {
 
 /* Pomodoro Page Specific Styling */
 .pomocard {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 50%, #e3f2fd 100%);
+    background: white;
     border: 3px solid var(--term-color, #2b5d8a);
-    border-radius: 30px;
-    padding: 50px;
+    border-radius: 20px;
+    padding: 40px;
     text-align: center;
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.12),
-        0 8px 25px rgba(var(--term-color-rgb, 43, 93, 138), 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 550px;
     margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-}
-
-.pomocard::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--term-color, #2b5d8a), var(--term-active-accent, #1e88e5), var(--term-color, #2b5d8a));
-    background-size: 200% 100%;
-    animation: shimmer 3s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
 }
 
 .pomocard h1 {
@@ -3805,31 +3775,14 @@ body.blackout-mode .widecard {
 
 /* Blurting Page Specific Styling */
 .blurting-container {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 50%, #e3f2fd 100%);
+    background: white;
     border: 3px solid var(--term-color, #2b5d8a);
-    border-radius: 30px;
-    padding: 50px;
+    border-radius: 20px;
+    padding: 40px;
     text-align: center;
-    box-shadow: 
-        0 20px 60px rgba(0, 0, 0, 0.12),
-        0 8px 25px rgba(var(--term-color-rgb, 43, 93, 138), 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 650px;
     margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-}
-
-.blurting-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--term-color, #2b5d8a), var(--term-active-accent, #1e88e5), var(--term-color, #2b5d8a));
-    background-size: 200% 100%;
-    animation: shimmer 3s ease-in-out infinite;
 }
 
 .blurting-controls {
@@ -4197,38 +4150,17 @@ body.blackout-mode .widecard {
 }
 
 .flashcard-set {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 50%, #e3f2fd 100%);
-    border: 3px solid var(--term-color, #2b5d8a);
-    border-radius: 25px;
-    padding: 30px;
-    box-shadow: 
-        0 15px 40px rgba(0, 0, 0, 0.08),
-        0 8px 25px rgba(var(--term-color-rgb, 43, 93, 138), 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    background: white;
+    border: 2px solid var(--term-color, #2b5d8a);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.flashcard-set::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--term-color, #2b5d8a), var(--term-active-accent, #1e88e5));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.flashcard-set:hover::before {
-    opacity: 1;
 }
 
 .flashcard-set:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(var(--term-color-rgb, 43, 93, 138), 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
 }
 
 .set-header {
