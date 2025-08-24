@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro Timer - Study Tracker</title>
+    <title>Blurting Method - Study Tracker</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preload" href="Excalifont-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="LeagueSpartan-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
     <script src="loader.js"></script>
 </head>
 <body class="term-0">
-    <header>POMODORO</header>
+    <header>BLURTING</header>
     <div class="headerspacer"></div>
     <div class="sidewallleft"></div>
     <div class="sidewallright"></div>
@@ -24,20 +24,17 @@
     </div>
 
     <div class="container">
-        <div class="pomocard">
-            <h1>Pomodoro Timer</h1>
-            <div class="timer-display">
-                <span id="minutes">25</span>:<span id="seconds">00</span>
+        <div class="blurting-container">
+            <div class="blurting-controls">
+                <button id="startBlurting" class="start-blurt-btn">Start Blurting</button>
+                <button id="stopBlurting" class="stop-blurt-btn" disabled>Stop</button>
+                <button id="clearBlurting" class="clear-btn">Clear</button>
             </div>
-            <div class="timer-controls">
-                <button id="startBtn" class="timer-btn">Start</button>
-                <button id="pauseBtn" class="timer-btn" disabled>Pause</button>
-                <button id="resetBtn" class="timer-btn">Reset</button>
+            <div class="blurting-timer">
+                <span id="blurtMinutes">5</span>:<span id="blurtSeconds">00</span>
             </div>
-            <div class="timer-mode">
-                <button class="mode-btn active" data-time="25">25 min</button>
-                <button class="mode-btn" data-time="5">5 min</button>
-                <button class="mode-btn" data-time="15">15 min</button>
+            <div class="blurting-area">
+                <textarea id="blurtingText" placeholder="Start writing everything you know about the topic... Don't stop, don't edit, just let it flow!"></textarea>
             </div>
         </div>
     </div>
@@ -49,6 +46,6 @@
     <script src="blackoutMode.js"></script>
     <script src="notify.js"></script>
     <script src="ripple.js"></script>
-    <script src="pomodoro.js"></script>
+    <script src="blurting.js"></script>
 </body>
 </html>

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro Timer - Study Tracker</title>
+    <title>Tools - Study Tracker</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preload" href="Excalifont-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="LeagueSpartan-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
     <script src="loader.js"></script>
 </head>
 <body class="term-0">
-    <header>POMODORO</header>
+    <header>TOOLS</header>
     <div class="headerspacer"></div>
     <div class="sidewallleft"></div>
     <div class="sidewallright"></div>
@@ -19,28 +19,41 @@
         <a class="term-element" href="index.html">Dashboard</a>
         <a class="term-element" href="subjects.html">Subjects</a>
         <a class="term-element" href="homework.html">Homework</a>
-        <a href="tools.html" class="term-element">Tools</a>
+        <a href="tools.html" class="active term-element">Tools</a>
         <a class="term-element" href="settings.html">Settings</a>
     </div>
 
     <div class="container">
-        <div class="pomocard">
-            <h1>Pomodoro Timer</h1>
-            <div class="timer-display">
-                <span id="minutes">25</span>:<span id="seconds">00</span>
+        <!-- Tools Overview Cards -->
+        <div class="tools-overview">
+            <div class="tool-card">
+                <div class="tool-icon">⏱️</div>
+                <h3>Pomodoro Timer</h3>
+                <p>Focus timer with customizable intervals</p>
+                <a href="pomodoro.html" class="open-tool-btn">Open Timer</a>
             </div>
-            <div class="timer-controls">
-                <button id="startBtn" class="timer-btn">Start</button>
-                <button id="pauseBtn" class="timer-btn" disabled>Pause</button>
-                <button id="resetBtn" class="timer-btn">Reset</button>
+            
+            <div class="tool-card">
+                <div class="tool-icon">🃏</div>
+                <h3>Flashcards</h3>
+                <p>Create and study with organized card sets</p>
+                <a href="flashcards.html" class="open-tool-btn">Open Flashcards</a>
             </div>
-            <div class="timer-mode">
-                <button class="mode-btn active" data-time="25">25 min</button>
-                <button class="mode-btn" data-time="5">5 min</button>
-                <button class="mode-btn" data-time="15">15 min</button>
+            
+            <div class="tool-card">
+                <div class="tool-icon">✍️</div>
+                <h3>Blurting Method</h3>
+                <p>Active recall writing technique</p>
+                <a href="blurting.html" class="open-tool-btn">Start Blurting</a>
             </div>
         </div>
+
+
     </div>
+
+
+
+
 
     <!-- Scripts -->
     <script src="localStorageManager.js"></script>
@@ -49,6 +62,7 @@
     <script src="blackoutMode.js"></script>
     <script src="notify.js"></script>
     <script src="ripple.js"></script>
-    <script src="pomodoro.js"></script>
+    <script src="tools.js"></script>
 </body>
 </html>
+

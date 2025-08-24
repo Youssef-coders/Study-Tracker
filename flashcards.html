@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - Study Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preload" href="Excalifont-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="LeagueSpartan-VariableFont_wght.ttf" as="font" type="font/ttf" crossorigin>
+    <script src="loader.js"></script>
+</head>
+<body class="term-0">
+    <header>FLASHCARDS</header>
+    <div class="headerspacer"></div>
+    <div class="sidewallleft"></div>
+    <div class="sidewallright"></div>
+
+    <div class="navbar">
+        <a class="term-element" href="index.html">Dashboard</a>
+        <a class="term-element" href="subjects.html">Subjects</a>
+        <a class="term-element" href="homework.html">Homework</a>
+        <a href="tools.html" class="term-element">Tools</a>
+        <a class="term-element" href="settings.html">Settings</a>
+    </div>
+
+    <div class="container">
+        <div class="flashcard-header">
+            <div class="subject-filter">
+                <label for="subjectSelect">Subject:</label>
+                <select id="subjectSelect">
+                    <option value="">All Subjects</option>
+                </select>
+            </div>
+            <button id="addFlashcardSet" class="add-set-btn">+ New Set</button>
+        </div>
+        
+        <div id="flashcardSets" class="flashcard-sets">
+            <!-- Sets will be populated here -->
+        </div>
+    </div>
+
+    <!-- Add Flashcard Set Modal -->
+    <div id="flashcardSetModal" class="modal">
+        <div class="modal-content">
+            <h2>Create New Flashcard Set</h2>
+            <form id="flashcardSetForm">
+                <div class="form-group">
+                    <label for="setName">Set Name:</label>
+                    <input type="text" id="setName" required placeholder="e.g., EOT 1 Vocabulary">
+                </div>
+                <div class="form-group">
+                    <label for="setSubject">Subject:</label>
+                    <select id="setSubject" required>
+                        <option value="">Select Subject</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="setDescription">Description (optional):</label>
+                    <textarea id="setDescription" placeholder="Brief description of this set..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Create Set</button>
+                    <button type="button" class="cancel-btn" onclick="closeFlashcardSetModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Flashcard Modal -->
+    <div id="flashcardModal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Flashcard</h2>
+            <form id="flashcardForm">
+                <div class="form-group">
+                    <label for="frontText">Front (Question):</label>
+                    <textarea id="frontText" required placeholder="Enter the question or prompt..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="backText">Back (Answer):</label>
+                    <textarea id="backText" required placeholder="Enter the answer or explanation..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Save</button>
+                    <button type="button" class="cancel-btn" onclick="closeFlashcardModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="localStorageManager.js"></script>
+    <script src="termController.js"></script>
+    <script src="darkMode.js"></script>
+    <script src="blackoutMode.js"></script>
+    <script src="notify.js"></script>
+    <script src="ripple.js"></script>
+    <script src="flashcards.js"></script>
+</body>
+</html>
