@@ -10,6 +10,30 @@ class Blurting {
     }
 
     static setupEventListeners() {
+        // Button event listeners
+        const startBtn = document.getElementById('startBlurting');
+        const stopBtn = document.getElementById('stopBlurting');
+        const clearBtn = document.getElementById('clearBlurting');
+        
+        if (startBtn) {
+            startBtn.addEventListener('click', () => {
+                this.start();
+            });
+        }
+        
+        if (stopBtn) {
+            stopBtn.addEventListener('click', () => {
+                this.stop();
+            });
+        }
+        
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                this.clear();
+            });
+        }
+        
+        // Textarea event listeners
         const textarea = document.getElementById('blurtingText');
         if (textarea) {
             textarea.addEventListener('input', () => {
@@ -120,3 +144,9 @@ class Blurting {
 
 // Make Blurting globally available
 window.Blurting = Blurting;
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing Blurting...');
+    Blurting.init();
+});
