@@ -630,7 +630,7 @@ body.term-2 { --term-color: #1f7a3a; --term-color-active: #145c2f; --term-active
 }
 
 .flashcard-sets {
-    top: 280px;
+    top: 320px;
     position: absolute;
     width: 80%;
     left: 50%;
@@ -3483,6 +3483,13 @@ body.blackout-mode .widecard {
 
 /* Flashcards */
 .flashcard-header {
+    top: 170px;
+    position: absolute;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    pointer-events: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
