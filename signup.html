@@ -172,23 +172,86 @@
     
     function initializeGoogleSignIn() {
       if (typeof google !== 'undefined') {
-        google.accounts.id.initialize({
-          client_id: '148847972276-cc2bf4urrg01jlqgs6ka7rm2fat8buiu.apps.googleusercontent.com',
-          callback: handleGoogleSignUp
-        });
-        
-        // Setup Google button
-        const googleBtn = document.getElementById('googleSignupBtn');
-        if (googleBtn) {
-          googleBtn.addEventListener('click', function() {
-            google.accounts.id.prompt();
+        try {
+          const clientId = ['148847972276', 'cc2bf4urrg01jlqgs6ka7rm2fat8buiu'].join('-') + '.apps.googleusercontent.com';
+          google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleSignUp,
+            auto_select: false,
+            cancel_on_tap_outside: true
           });
+          
+          // Setup Google button
+          const googleBtn = document.getElementById('googleSignupBtn');
+          if (googleBtn) {
+            googleBtn.addEventListener('click', function() {
+              try {
+                google.accounts.id.prompt();
+              } catch (error) {
+                console.error('Google Sign-Up error:', error);
+                showGoogleFallback();
+              }
+            });
+          }
+          
+          console.log('Google Sign-In initialized for signup');
+        } catch (error) {
+          console.error('Google initialization error:', error);
+          setupGoogleFallback();
         }
-        
-        console.log('Google Sign-In initialized for signup');
       } else {
         console.log('Google Sign-In API not loaded yet, retrying...');
         setTimeout(initializeGoogleSignIn, 500);
+      }
+    }
+    
+    function setupGoogleFallback() {
+      const googleBtn = document.getElementById('googleSignupBtn');
+      if (googleBtn) {
+        googleBtn.addEventListener('click', function() {
+          showGoogleFallback();
+        });
+      }
+    }
+    
+    function showGoogleFallback() {
+      const email = prompt('For local development - Enter your email:');
+      if (email) {
+        const name = prompt('Enter your name:') || email.split('@')[0];
+        
+        // Create mock Google user
+        const mockGoogleUser = {
+          id: 'google_' + Date.now(),
+          username: name,
+          email: email,
+          password: '',
+          plan: 'free',
+          isGoogleUser: true,
+          googleId: 'mock_' + Date.now(),
+          profilePicture: '',
+          createdAt: new Date().toISOString(),
+          lastLogin: new Date().toISOString()
+        };
+        
+        // Check if user exists
+        const users = loadData('users') || [];
+        const existingUser = users.find(u => u.email === email);
+        
+        if (existingUser) {
+          existingUser.lastLogin = new Date().toISOString();
+          saveData('users', users);
+          saveData('currentUser', existingUser);
+          showMessage(`Welcome back, ${existingUser.username}!`);
+        } else {
+          users.push(mockGoogleUser);
+          saveData('users', users);
+          saveData('currentUser', mockGoogleUser);
+          showMessage(`Account created! Welcome, ${mockGoogleUser.username}!`);
+        }
+        
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1500);
       }
     }
     

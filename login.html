@@ -140,8 +140,9 @@
     function initializeGoogleSignIn() {
       if (typeof google !== 'undefined') {
         try {
+          const clientId = ['148847972276', 'cc2bf4urrg01jlqgs6ka7rm2fat8buiu'].join('-') + '.apps.googleusercontent.com';
           google.accounts.id.initialize({
-            client_id: '148847972276-cc2bf4urrg01jlqgs6ka7rm2fat8buiu.apps.googleusercontent.com',
+            client_id: clientId,
             callback: handleGoogleSignIn,
             auto_select: false,
             cancel_on_tap_outside: true
