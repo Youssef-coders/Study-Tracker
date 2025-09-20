@@ -143,25 +143,35 @@
           const parts = ['148847972276', '7vae10lnl18bred72f96m4ckqq0m607k'];
           const domain = 'apps.googleusercontent.com';
           const clientId = parts[0] + '-' + parts[1] + '.' + domain;
+          
           google.accounts.id.initialize({
             client_id: clientId,
             callback: handleGoogleSignIn,
             auto_select: false,
-            cancel_on_tap_outside: true
+            cancel_on_tap_outside: true,
+            use_fedcm_for_prompt: false
           });
           
-          // Setup Google button
+          // Setup Google button - use renderButton for better compatibility
           const googleBtn = document.getElementById('googleLoginBtn');
           if (googleBtn) {
-            googleBtn.addEventListener('click', function() {
-              try {
-                google.accounts.id.prompt();
-              } catch (error) {
-                console.error('Google Sign-In error:', error);
-                // Fallback for local development
-                showGoogleFallback();
+            // Hide the custom button and render Google's button
+            googleBtn.style.display = 'none';
+            
+            // Create container for Google button
+            const googleContainer = document.createElement('div');
+            googleContainer.id = 'google-signin-container';
+            googleBtn.parentNode.insertBefore(googleContainer, googleBtn.nextSibling);
+            
+            google.accounts.id.renderButton(
+              googleContainer,
+              {
+                theme: 'outline',
+                size: 'large',
+                text: 'continue_with',
+                width: '100%'
               }
-            });
+            );
           }
           
           console.log('Google Sign-In initialized');
@@ -171,7 +181,7 @@
         }
       } else {
         console.log('Google Sign-In API not loaded yet, retrying...');
-        setTimeout(initializeGoogleSignIn, 500);
+        setTimeout(initializeGoogleSignIn, 1000);
       }
     }
     
