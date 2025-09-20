@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Settings</title>
   <link rel="stylesheet" href="style.css?v=1" />
+  <link rel="stylesheet" href="calendar-styles.css" />
+  <link rel="stylesheet" href="auth-styles.css" />
   <script src="loader.js"></script>
 </head>
 <body class="term-0">
@@ -13,12 +15,21 @@
   <div class="sidewallleft"></div>
   <div class="sidewallright"></div>
 
+  <!-- Settings Icon -->
+  <div class="settings-icon" id="settingsIcon" onclick="window.location.href='settings.html'" style="opacity: 0.5; pointer-events: none;">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2"/>
+      <path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291C20.3248 17.7719 20.3766 18.0322 20.3766 18.295C20.3766 18.5578 20.3248 18.8181 20.2241 19.0609C20.1235 19.3037 19.976 19.5243 19.79 19.71C19.6043 19.896 19.3837 20.0435 19.1409 20.1441C18.8981 20.2448 18.6378 20.2966 18.375 20.2966C18.1122 20.2966 17.8519 20.2448 17.6091 20.1441C17.3663 20.0435 17.1457 19.896 16.96 19.71L16.9 19.65C16.6643 19.4195 16.365 19.2648 16.0406 19.206C15.7162 19.1472 15.3816 19.1869 15.08 19.32C14.7842 19.4468 14.532 19.6572 14.3543 19.9255C14.1766 20.1938 14.0813 20.5082 14.08 20.83V21C14.08 21.5304 13.8693 22.0391 13.4942 22.4142C13.1191 22.7893 12.6104 23 12.08 23C11.5496 23 11.0409 22.7893 10.6658 22.4142C10.2907 22.0391 10.08 21.5304 10.08 21V20.91C10.0723 20.579 9.96512 20.2569 9.77251 19.9859C9.5799 19.7148 9.31074 19.5063 9 19.385C8.69838 19.2522 8.36381 19.2125 8.03941 19.2713C7.71502 19.3301 7.41568 19.4848 7.18 19.715L7.12 19.775C6.93425 19.961 6.71368 20.1085 6.47088 20.2091C6.22808 20.3098 5.96783 20.3616 5.705 20.3616C5.44217 20.3616 5.18192 20.3098 4.93912 20.2091C4.69632 20.1085 4.47575 19.961 4.29 19.775C4.10405 19.5893 3.95653 19.3687 3.85588 19.1259C3.75523 18.8831 3.70343 18.6228 3.70343 18.36C3.70343 18.0972 3.75523 17.8369 3.85588 17.5941C3.95653 17.3513 4.10405 17.1307 4.29 16.945L4.35 16.885C4.58054 16.6493 4.73519 16.35 4.794 16.0256C4.85282 15.7012 4.81312 15.3666 4.68 15.065C4.55324 14.7692 4.34276 14.517 4.07447 14.3393C3.80618 14.1616 3.49179 14.0663 3.17 14.065H3C2.46957 14.065 1.96086 13.8543 1.58579 13.4792C1.21071 13.1041 1 12.5954 1 12.065C1 11.5346 1.21071 11.0259 1.58579 10.6508C1.96086 10.2757 2.46957 10.065 3 10.065H3.09C3.42099 10.0573 3.742 9.95013 4.01309 9.75752C4.28417 9.56491 4.49268 9.29575 4.614 8.985C4.74669 8.68338 4.78638 8.34881 4.72756 8.02441C4.66874 7.70002 4.51409 7.40068 4.284 7.165L4.224 7.105C4.03805 6.91925 3.89053 6.69868 3.78988 6.45588C3.68923 6.21308 3.63743 5.95283 3.63743 5.69C3.63743 5.42717 3.68923 5.16692 3.78988 4.92412C3.89053 4.68132 4.03805 4.46075 4.224 4.275C4.40975 4.08905 4.63032 3.94153 4.87312 3.84088C5.11592 3.74023 5.37617 3.68843 5.639 3.68843C5.90183 3.68843 6.16208 3.74023 6.40488 3.84088C6.64768 3.94153 6.86825 4.08905 7.054 4.275L7.114 4.335C7.34968 4.56554 7.649 4.72019 7.97339 4.779C8.29779 4.83782 8.63236 4.79812 8.934 4.665H9C9.29577 4.53824 9.54802 4.32776 9.72571 4.05947C9.90341 3.79118 9.99872 3.47679 10 3.155V3C10 2.46957 10.2107 1.96086 10.5858 1.58579C10.9609 1.21071 11.4696 1 12 1C12.5304 1 13.0391 1.21071 13.4142 1.58579C13.7893 1.96086 14 2.46957 14 3V3.09C14.0013 3.41221 14.0966 3.7266 14.2743 3.99489C14.452 4.26318 14.7042 4.47366 15 4.6C15.3016 4.73269 15.6362 4.77238 15.9606 4.71356C16.285 4.65474 16.5843 4.50009 16.82 4.27L16.88 4.21C17.0657 4.02405 17.2863 3.87653 17.5291 3.77588C17.7719 3.67523 18.0322 3.62343 18.295 3.62343C18.5578 3.62343 18.8181 3.67523 19.0609 3.77588C19.3037 3.87653 19.5243 4.02405 19.71 4.21C19.896 4.39575 20.0435 4.61632 20.1441 4.85912C20.2448 5.10192 20.2966 5.36217 20.2966 5.625C20.2966 5.88783 20.2948 6.14808 20.1441 6.39088C20.0435 6.63368 19.896 6.85425 19.71 7.04L19.65 7.1C19.4195 7.33568 19.2648 7.635 19.206 7.95939C19.1472 8.28379 19.1869 8.61836 19.32 8.92V9C19.4468 9.29577 19.6572 9.54802 19.9255 9.72571C20.1938 9.90341 20.5082 9.99872 20.83 10H21C21.5304 10 22.0391 10.2107 22.4142 10.5858C22.7893 10.9609 23 11.4696 23 12C23 12.5304 22.7893 13.0391 22.4142 13.4142C22.0391 13.7893 21.5304 14 21 14H20.91C20.5878 14.0013 20.2734 14.0966 20.0051 14.2743C19.7368 14.452 19.5263 14.7042 19.4 15Z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </div>
+
   <div class="navbar">
-    <a class="term-element" href="index.html">Dashboard</a>
+    <a class="term-element" href="dashboard.html">Dashboard</a>
     <a class="term-element" href="subjects.html">Subjects</a>
     <a class="term-element" href="homework.html">Homework</a>
+    <a class="term-element" href="schedule.html">Schedule</a>
     <a class="term-element" href="tools.html">Tools</a>
-    <a href="settings.html" class="active term-element">Settings</a>
+    <a class="term-element" href="analytics.html">Analytics</a>
   </div>
 
   <div class="settings-card">
@@ -51,6 +62,14 @@
         <button class="term-start">Start</button>
         <button class="term-end">End</button>
       </div>
+    </div>
+
+    <div class="setting">
+      <h3>Account</h3>
+      <div class="button-group">
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
+      <p class="user-info" id="userInfo">Logged in as: <span id="currentUsername">Loading...</span></p>
     </div>
   </div>
 
@@ -92,9 +111,11 @@
 
 
 
-<script src="localStorageManager.js"></script>
-<script src="termController.js"></script>
+  <script src="localStorageManager.js"></script>
+  <script src="userDataManager.js"></script>
+  <script src="termController.js"></script>
 <script src="dateManager.js"></script>
+<script src="themeManager.js"></script>
 <script src="aiQuizGenerator.js"></script>
 <script src="lessonManager.js"></script>
 <script src="darkMode.js"></script>
@@ -106,5 +127,54 @@
 <script src="weeklyProgression.js"></script>
 <script src="weekManager.js"></script>
 <!-- <script src="soundManager.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      if (window.TermController) new TermController();
+      if (window.ThemeManager) new ThemeManager();
+      
+      // Setup logout functionality
+      setupLogout();
+      displayUserInfo();
+    });
+    
+    function setupLogout() {
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (confirm('Are you sure you want to logout?')) {
+            console.log('Logging out user...');
+            
+            // Clear current user data
+            localStorage.removeItem('currentUser');
+            
+            // Show logout message
+            alert('You have been logged out successfully!');
+            
+            // Redirect to landing page
+            window.location.href = 'index.html';
+          }
+        });
+      }
+    }
+    
+    function displayUserInfo() {
+      try {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const usernameSpan = document.getElementById('currentUsername');
+        
+        if (currentUser && usernameSpan) {
+          usernameSpan.textContent = currentUser.username;
+        } else if (usernameSpan) {
+          usernameSpan.textContent = 'Unknown';
+        }
+      } catch(e) {
+        console.error('Error displaying user info:', e);
+        const usernameSpan = document.getElementById('currentUsername');
+        if (usernameSpan) {
+          usernameSpan.textContent = 'Error';
+        }
+      }
+    }
+  </script>
 </body>
 </html>

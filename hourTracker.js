@@ -29,6 +29,11 @@ class HourTracker {
       localStorage.setItem('studyHours', String(curr + 1));
       if (h1) h1.textContent = String(curr + 1);
       StreakCounter.recordStudySession();
+      
+      // Record hour in analytics system
+      if (window.Analytics) {
+        Analytics.addStudyHour('General');
+      }
     });
 
     // Schedule automatic midnight reset for hours (and streak check)

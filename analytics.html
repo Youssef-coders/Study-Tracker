@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Subjects</title>
+  <title>Analytics</title>
   <link rel="stylesheet" href="style.css?v=1" />
   <link rel="stylesheet" href="calendar-styles.css" />
   <script src="loader.js"></script>
 </head>
 <body class="term-0">
-  <header>SUBJECTS</header>
+  <header>ANALYTICS</header>
   <div class="headerspacer"></div>
   <div class="sidewallleft"></div>
   <div class="sidewallright"></div>
@@ -24,68 +24,116 @@
 
   <div class="navbar">
     <a class="term-element" href="dashboard.html">Dashboard</a>
-    <a href="subjects.html" class="active term-element">Subjects</a>
+    <a class="term-element" href="subjects.html">Subjects</a>
     <a class="term-element" href="homework.html">Homework</a>
     <a class="term-element" href="schedule.html">Schedule</a>
     <a class="term-element" href="tools.html">Tools</a>
-    <a class="term-element" href="analytics.html">Analytics</a>
+    <a href="analytics.html" class="active term-element">Analytics</a>
   </div>
 
-  <!-- Dynamic subjects will be loaded here by SubjectManager -->
+  <!-- Study Hours Overview -->
+  <div class="analytics-overview">
+    <div class="analytics-card">
+      <h3>Today</h3>
+      <div class="hours-display" id="hoursToday">0h</div>
+    </div>
+    <div class="analytics-card">
+      <h3>This Week</h3>
+      <div class="hours-display" id="hoursWeek">0h</div>
+    </div>
+    <div class="analytics-card">
+      <h3>This Month</h3>
+      <div class="hours-display" id="hoursMonth">0h</div>
+    </div>
+  </div>
 
+  <!-- Goal Setting -->
+  <div class="goal-section">
+    <div class="goal-header">
+      <h2>Study Goals</h2>
+      <button id="setGoalBtn" class="goal-btn">Set Goal</button>
+    </div>
+    
+    <div class="goal-cards">
+      <div class="goal-card">
+        <h3>Daily Goal</h3>
+        <div class="goal-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="dailyProgress"></div>
+          </div>
+          <span class="progress-text" id="dailyProgressText">0/2 hours</span>
+        </div>
+      </div>
+      
+      <div class="goal-card">
+        <h3>Weekly Goal</h3>
+        <div class="goal-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="weeklyProgress"></div>
+          </div>
+          <span class="progress-text" id="weeklyProgressText">0/14 hours</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Subject Breakdown -->
+  <div class="subject-analytics">
+    <h2>Study Hours by Subject</h2>
+    <div class="subject-hours-grid" id="subjectHours">
+      <!-- Subject hours will be populated here -->
+    </div>
+  </div>
 
+  <!-- Weekly Chart Placeholder -->
+  <div class="chart-section">
+    <h2>Weekly Progress Chart</h2>
+    <div class="chart-container" id="weeklyChart">
+      <div class="chart-placeholder">
+        <p>Chart visualization will be added here</p>
+      </div>
+    </div>
+  </div>
 
+  <!-- Goal Setting Modal -->
+  <div id="goalModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Set Study Goals</h2>
+      <form id="goalForm">
+        <div class="form-group">
+          <label for="dailyGoal">Daily Goal (hours):</label>
+          <input type="number" id="dailyGoal" min="0.5" max="12" step="0.5" value="2" />
+        </div>
+        <div class="form-group">
+          <label for="weeklyGoal">Weekly Goal (hours):</label>
+          <input type="number" id="weeklyGoal" min="1" max="80" step="1" value="14" />
+        </div>
+        <div class="modal-actions">
+          <button type="submit" class="save-btn">Save Goals</button>
+          <button type="button" class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Core scripts -->
   <script src="localStorageManager.js"></script>
   <script src="userDataManager.js"></script>
   <script src="termController.js"></script>
-<script src="dateManager.js"></script>
-<script src="subjectManager.js"></script>
-<script src="themeManager.js"></script>
-<script src="dynamic-page-handler.js"></script>
-<script src="aiQuizGenerator.js"></script>
-<script src="lessonManager.js"></script>
-<script src="darkMode.js"></script>
-<script src="blackoutMode.js"></script>
-<script src="notify.js"></script>
-<script src="ripple.js"></script>
-<script src="weeklyProgression.js"></script>
-<script src="weekManager.js"></script>
-<!-- <script src="soundManager.js"></script> -->
-
-<script>
-// Set up proper history state for subjects page
-document.addEventListener('DOMContentLoaded', function() {
-  // If we don't have a hash, we're on the main subjects page
-  if (!window.location.hash) {
-    window.history.replaceState({ page: 'subjects' }, '', window.location.href);
-  }
-  
-  // Prevent any unwanted navigation to .html files
-  document.addEventListener('click', function(e) {
-    const link = e.target.closest('a');
-    if (link) {
-      const href = link.getAttribute('href');
-      if (href && (href.includes('.html') && !href.includes('subjects.html') && !href.includes('index.html') && !href.includes('homework.html') && !href.includes('tools.html') && !href.includes('analytics.html') && !href.includes('settings.html'))) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Prevented navigation to:', href);
-        
-        // If it's trying to go to a subject page, handle it with our virtual system
-        if (href.includes('curriculum.html') || href.includes('resources.html')) {
-          const match = href.match(/([^\/]+)\/(curriculum|resources)\.html$/);
-          if (match && window.SubjectManager && window.DynamicPageHandler) {
-            const [, subjectId, pageType] = match;
-            const subject = window.SubjectManager.getSubject(subjectId);
-            if (subject) {
-              window.DynamicPageHandler.navigateToSubjectPage(subject, pageType);
-            }
-          }
-        }
-      }
-    }
-  });
-});
-</script>
+  <script src="subjectManager.js"></script>
+  <script src="themeManager.js"></script>
+  <script src="weekManager.js"></script>
+  <script src="weeklyProgression.js"></script>
+  <script src="dateManager.js"></script>
+  <script src="hourTracker.js"></script>
+  <script src="streakCounter.js"></script>
+  <script src="notify.js"></script>
+  <script src="assignmentLoader.js"></script>
+  <script src="darkMode.js"></script>
+  <script src="blackoutMode.js"></script>
+  <script src="ripple.js"></script>
+  <script src="reminders.js"></script>
+  <script src="analytics.js"></script>
 </body>
 </html>

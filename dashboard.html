@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Subjects</title>
+  <title>Dashboard</title>
   <link rel="stylesheet" href="style.css?v=1" />
   <link rel="stylesheet" href="calendar-styles.css" />
   <script src="loader.js"></script>
 </head>
 <body class="term-0">
-  <header>SUBJECTS</header>
+  <header>DASHBOARD</header>
   <div class="headerspacer"></div>
   <div class="sidewallleft"></div>
   <div class="sidewallright"></div>
@@ -23,69 +23,77 @@
   </div>
 
   <div class="navbar">
-    <a class="term-element" href="dashboard.html">Dashboard</a>
-    <a href="subjects.html" class="active term-element">Subjects</a>
+    <a href="dashboard.html" class="active term-element">Dashboard</a>
+    <a class="term-element" href="subjects.html">Subjects</a>
     <a class="term-element" href="homework.html">Homework</a>
     <a class="term-element" href="schedule.html">Schedule</a>
     <a class="term-element" href="tools.html">Tools</a>
     <a class="term-element" href="analytics.html">Analytics</a>
   </div>
 
-  <!-- Dynamic subjects will be loaded here by SubjectManager -->
+  <div id="day-info">
+    <p>Term 0</p>
+    <button class="week-display">Week 0/11</button>
+    <p>Month</p>
+    <p>Day</p>
+  </div>
+  <h1 class="day">MONDAY</h1>
 
+  <div class="hourcard">
+    <h2>Hours Studied:</h2>
+    <h1>0</h1>
+    <button id="addHourBtn">Add 1 Hour</button>
+  </div>
 
+  <div class="streakcard">
+    <h2>Study Streak:</h2>
+    <h1>0</h1>
+  </div>
 
+  <div class="streak-top-card">
+    <h2>Highest Streak</h2>
+    <h1 id="highestStreak">0</h1>
+  </div>
 
+  <div class="widecard">
+    <h2>Upcoming Assignments:</h2>
+    <div class="assigncontainer"></div>
+  </div>
+
+  <!-- Core scripts -->
   <script src="localStorageManager.js"></script>
   <script src="userDataManager.js"></script>
+  <script src="authManager.js"></script>
   <script src="termController.js"></script>
-<script src="dateManager.js"></script>
-<script src="subjectManager.js"></script>
-<script src="themeManager.js"></script>
-<script src="dynamic-page-handler.js"></script>
-<script src="aiQuizGenerator.js"></script>
-<script src="lessonManager.js"></script>
-<script src="darkMode.js"></script>
-<script src="blackoutMode.js"></script>
-<script src="notify.js"></script>
-<script src="ripple.js"></script>
-<script src="weeklyProgression.js"></script>
-<script src="weekManager.js"></script>
-<!-- <script src="soundManager.js"></script> -->
-
-<script>
-// Set up proper history state for subjects page
-document.addEventListener('DOMContentLoaded', function() {
-  // If we don't have a hash, we're on the main subjects page
-  if (!window.location.hash) {
-    window.history.replaceState({ page: 'subjects' }, '', window.location.href);
-  }
-  
-  // Prevent any unwanted navigation to .html files
-  document.addEventListener('click', function(e) {
-    const link = e.target.closest('a');
-    if (link) {
-      const href = link.getAttribute('href');
-      if (href && (href.includes('.html') && !href.includes('subjects.html') && !href.includes('index.html') && !href.includes('homework.html') && !href.includes('tools.html') && !href.includes('analytics.html') && !href.includes('settings.html'))) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Prevented navigation to:', href);
-        
-        // If it's trying to go to a subject page, handle it with our virtual system
-        if (href.includes('curriculum.html') || href.includes('resources.html')) {
-          const match = href.match(/([^\/]+)\/(curriculum|resources)\.html$/);
-          if (match && window.SubjectManager && window.DynamicPageHandler) {
-            const [, subjectId, pageType] = match;
-            const subject = window.SubjectManager.getSubject(subjectId);
-            if (subject) {
-              window.DynamicPageHandler.navigateToSubjectPage(subject, pageType);
-            }
-          }
+  <script src="subjectManager.js"></script>
+  <script src="themeManager.js"></script>
+  <script src="weekManager.js"></script>
+  <script src="weeklyProgression.js"></script>
+  <script src="dateManager.js"></script>
+  <!-- <script src="hourTracker.js"></script> -->
+  <script src="enhanced-hour-tracker.js"></script>
+  <script src="analytics.js"></script>
+  <script src="streakCounter.js"></script>
+  <script src="notify.js"></script>
+  <script src="assignmentLoader.js"></script>
+  <script src="darkMode.js"></script>
+  <script src="blackoutMode.js"></script>
+  <script src="ripple.js"></script>
+  <script src="reminders.js"></script>
+  <script src="firebase-manager.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      try{
+        var hs = localStorage.getItem('highestStreak');
+        if (hs == null) {
+          var s = parseInt(localStorage.getItem('streak'))||0;
+          localStorage.setItem('highestStreak', String(s));
+          hs = s;
         }
-      }
-    }
-  });
-});
-</script>
+        var el = document.getElementById('highestStreak');
+        if (el) el.textContent = String(hs);
+      }catch(e){}
+    });
+  </script>
 </body>
 </html>

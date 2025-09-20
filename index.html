@@ -3,91 +3,185 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard</title>
+  <title>TrackMyStudies - Your Academic Success Partner</title>
   <link rel="stylesheet" href="style.css?v=1" />
+  <link rel="stylesheet" href="landing-styles.css" />
   <script src="loader.js"></script>
 </head>
-<body class="term-0">
-  <header>DASHBOARD</header>
-  <div class="headerspacer"></div>
-  <div class="sidewallleft"></div>
-  <div class="sidewallright"></div>
+<body class="landing-page">
+  <!-- Navigation Header -->
+  <nav class="landing-nav">
+    <div class="nav-brand">
+      <h2>TrackMyStudies</h2>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="login.html" class="nav-btn">Sign In</a>
+    </div>
+  </nav>
 
-  <div class="navbar">
-    <a href="index.html" class="active term-element">Dashboard</a>
-    <a class="term-element" href="subjects.html">Subjects</a>
-    <a class="term-element" href="homework.html">Homework</a>
-    <a class="term-element" href="tools.html">Tools</a>
-    <a class="term-element" href="settings.html">Settings</a>
-  </div>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Transform Your Study Experience</h1>
+      <p class="hero-subtitle">TrackMyStudies is the ultimate academic companion that helps you track progress, manage assignments, and achieve your educational goals with powerful analytics and beautiful themes.</p>
+      <div class="hero-buttons">
+        <a href="signup.html" class="cta-btn primary">Get Started Free</a>
+        <a href="#features" class="cta-btn secondary">Learn More</a>
+      </div>
+      <p class="hero-note">✨ No credit card required • Start tracking in seconds</p>
+    </div>
+    <div class="hero-visual">
+      <div class="dashboard-preview">
+        <div class="preview-header">TrackMyStudies Dashboard</div>
+        <div class="preview-content">
+          <div class="preview-card">
+            <h3>Hours Studied</h3>
+            <div class="preview-number">24</div>
+          </div>
+          <div class="preview-card">
+            <h3>Study Streak</h3>
+            <div class="preview-number">7</div>
+          </div>
+          <div class="preview-assignments">
+            <h3>Upcoming Assignments</h3>
+            <div class="preview-assignment">Mathematics - Due in 2 days</div>
+            <div class="preview-assignment">Physics - Due in 5 days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div id="day-info">
-    <p>Term 0</p>
-    <button class="week-display">Week 0/11</button>
-    <p>Month</p>
-    <p>Day</p>
-  </div>
-  <h1 class="day">MONDAY</h1>
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2>Everything You Need to Excel</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Smart Analytics</h3>
+          <p>Track your study hours, monitor progress, and identify patterns with beautiful charts and insights.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📅</div>
+          <h3>Schedule Management</h3>
+          <p>Google Calendar-like interface to manage assignments, exams, and study sessions with color coding.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Goal Tracking</h3>
+          <p>Set daily and weekly study goals, maintain streaks, and celebrate your achievements.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <h3>Subject Organization</h3>
+          <p>Organize your studies by subjects with custom colors, progress tracking, and detailed analytics.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>Custom Themes</h3>
+          <p>Personalize your experience with beautiful themes or create your own with custom color schemes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛠️</div>
+          <h3>Study Tools</h3>
+          <p>Pomodoro timer, flashcards, note-taking, and other tools to enhance your study sessions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="hourcard">
-    <h2>Hours Studied:</h2>
-    <h1>0</h1>
-    <button id="addHourBtn">Add 1 Hour</button>
-  </div>
+  <!-- Pricing Section -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <h2>Simple, Transparent Pricing</h2>
+      <p class="pricing-subtitle">Choose the plan that works best for your academic journey</p>
+      
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="plan-header">
+            <h3>Monthly</h3>
+            <div class="price">$3<span>/month</span></div>
+          </div>
+          <ul class="features">
+            <li>✅ Full access to all features</li>
+            <li>✅ Unlimited assignments</li>
+            <li>✅ Subject management</li>
+            <li>✅ Analytics & progress tracking</li>
+            <li>✅ Custom themes</li>
+            <li>✅ Schedule calendar</li>
+            <li>✅ Study tools</li>
+          </ul>
+          <a href="signup.html?plan=monthly" class="plan-btn">Start Monthly</a>
+        </div>
 
-  <div class="streakcard">
-    <h2>Study Streak:</h2>
-    <h1>0</h1>
-  </div>
+        <div class="pricing-card popular">
+          <div class="popular-badge">Most Popular</div>
+          <div class="plan-header">
+            <h3>Yearly</h3>
+            <div class="price">$8<span>/year</span></div>
+            <div class="savings">Save $28/year!</div>
+          </div>
+          <ul class="features">
+            <li>✅ Everything in Monthly</li>
+            <li>✅ Priority support</li>
+            <li>✅ Advanced analytics</li>
+            <li>✅ Data export</li>
+            <li>✅ Custom integrations</li>
+            <li>✅ Early access to new features</li>
+          </ul>
+          <a href="signup.html?plan=yearly" class="plan-btn primary">Start Yearly</a>
+        </div>
 
-  <div class="streak-top-card">
-    <h2>Highest Streak</h2>
-    <h1 id="highestStreak">0</h1>
-  </div>
+        <div class="pricing-card">
+          <div class="plan-header">
+            <h3>Lifetime</h3>
+            <div class="price">$10<span>/once</span></div>
+            <div class="savings">Best Value!</div>
+          </div>
+          <ul class="features">
+            <li>✅ Everything in Yearly</li>
+            <li>✅ Lifetime updates</li>
+            <li>✅ Premium support</li>
+            <li>✅ Advanced customization</li>
+            <li>✅ API access</li>
+            <li>✅ White-label options</li>
+          </ul>
+          <a href="signup.html?plan=lifetime" class="plan-btn">Get Lifetime</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="widecard">
-    <h2>Upcoming Assignments:</h2>
-    <div class="assigncontainer"></div>
-  </div>
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Transform Your Studies?</h2>
+      <p>Join thousands of students who've improved their academic performance with Study Tracker</p>
+      <a href="signup.html" class="cta-btn primary large">Start Your Journey Today</a>
+    </div>
+  </section>
 
-  <!-- Core scripts -->
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 TrackMyStudies. Built for academic success.</p>
+    </div>
+  </footer>
 
-
-
-
-
-
-
-<script src="localStorageManager.js"></script>
-<script src="termController.js"></script>
-  <script src="weekManager.js"></script>
-<script src="weeklyProgression.js"></script>
-<script src="dateManager.js"></script>
-<script src="hourTracker.js"></script>
-<script src="streakCounter.js"></script>
-<script src="notify.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function(){
-    try{
-      var hs = localStorage.getItem('highestStreak');
-      if (hs == null) {
-        var s = parseInt(localStorage.getItem('streak'))||0;
-        localStorage.setItem('highestStreak', String(s));
-        hs = s;
-      }
-      var el = document.getElementById('highestStreak');
-      if (el) el.textContent = String(hs);
-    }catch(e){}
-  });
-</script>
-<script src="assignmentLoader.js"></script>
-<script src="notify.js"></script>
-<script src="aiQuizGenerator.js"></script>
-<script src="lessonManager.js"></script>
-<script src="darkMode.js"></script>
-<script src="blackoutMode.js"></script>
-<script src="ripple.js"></script>
-<script src="reminders.js"></script>
-<!-- <script src="soundManager.js"></script> -->
+  <script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Debug</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <div id="debug-output"></div>
+    
+    <script>
+        // Test localStorage data
+        console.log('=== DEBUG TEST ===');
+        
+        const chapters = JSON.parse(localStorage.getItem('chapters') || '[]');
+        const resources = JSON.parse(localStorage.getItem('resources') || '[]');
+        
+        console.log('Chapters in localStorage:', chapters);
+        console.log('Resources in localStorage:', resources);
+        
+        // Test subject detection
+        const pageTitle = document.title;
+        const path = window.location.pathname;
+        
+        console.log('Page title:', pageTitle);
+        console.log('URL path:', path);
+        
+        // Display debug info
+        const debugDiv = document.getElementById('debug-output');
+        debugDiv.innerHTML = `
+            <h2>Debug Info</h2>
+            <p><strong>Page Title:</strong> ${pageTitle}</p>
+            <p><strong>URL Path:</strong> ${path}</p>
+            <h3>Chapters (${chapters.length}):</h3>
+            <ul>
+                ${chapters.map(c => `<li>${c.title} - Subject: ${c.subject}</li>`).join('')}
+            </ul>
+            <h3>Resources (${resources.length}):</h3>
+            <ul>
+                ${resources.map(r => `<li>${r.title} - Subject: ${r.subject}</li>`).join('')}
+            </ul>
+        `;
+    </script>
+</body>
+</html>

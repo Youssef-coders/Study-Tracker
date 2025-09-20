@@ -23,11 +23,27 @@ class AssignmentManager {
       const today = new Date(); today.setHours(0,0,0,0);
       const diff = Math.round((due - today)/(1000*60*60*24));
       const dueText = diff < 0 ? `Overdue by ${Math.abs(diff)} days` : (diff===0 ? 'Due Today' : `Due in ${diff} ${diff===1?'Day':'Days'}`);
+      
+      // Auto-set urgency to critical if due today, tomorrow, or overdue
+      let urgency = a.urgency || 'medium';
+      if (diff <= 1 && a.status !== 'Completed') { // Due today, tomorrow, or overdue
+        urgency = 'critical';
+      }
+      
       const el = document.createElement('div');
-      el.className = 'upassign';
-      el.innerHTML = `<h4>${a.name}</h4><h4>${a.subject}</h4><h4>${dueText}</h4><h4>${a.status}</h4>`;
+      el.className = `upassign assignment-item urgency-${urgency}`;
+      el.innerHTML = `
+        <h4>${a.name}</h4>
+        <h4>${a.subject}</h4>
+        <h4>${dueText}</h4>
+        <h4>${a.status}</h4>
+        <div class="urgency-badge urgency-${urgency}">
+          ${urgency.toUpperCase()}${diff <= 1 && a.status !== 'Completed' ? ' (AUTO)' : ''}
+        </div>
+      `;
       container.appendChild(el);
     });
   }
 }
-document.addEventListener('DOMContentLoaded', () => AssignmentManager.init());
+// Disabled to prevent conflicts with AssignmentLoader
+// document.addEventListener('DOMContentLoaded', () => AssignmentManager.init());

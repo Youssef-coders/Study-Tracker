@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TrackMyStudies - Sign In</title>
+  <link rel="stylesheet" href="style.css?v=1" />
+  <link rel="stylesheet" href="auth-styles.css" />
+  <script src="loader.js"></script>
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <!-- Back to Home -->
+    <a href="index.html" class="back-link">← Back to Home</a>
+    
+    <!-- Logo/Brand -->
+    <div class="brand-header">
+      <h1>TrackMyStudies</h1>
+      <p>Your Personal Academic Companion</p>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="auth-form-container" id="loginForm">
+      <h2>Welcome Back!</h2>
+      <form class="auth-form" id="loginFormElement">
+        <div class="form-group">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" required placeholder="Enter your username" />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required placeholder="Enter your password" />
+        </div>
+        <button type="submit" class="auth-btn primary">Sign In</button>
+        <p class="auth-link">Don't have an account? <span class="link" data-tab="signup">Sign up here</span></p>
+      </form>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="auth-form-container hidden" id="signupForm">
+      <h2>Create Your Account</h2>
+      <form class="auth-form" id="signupFormElement">
+        <div class="form-group">
+          <label for="signupUsername">Username</label>
+          <input type="text" id="signupUsername" required placeholder="Choose a username" />
+          <small>Must be at least 3 characters long</small>
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email (optional)</label>
+          <input type="email" id="signupEmail" placeholder="your@email.com" />
+          <small>For future features and notifications</small>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" required placeholder="Create a secure password" />
+          <small>Must be at least 6 characters long</small>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" required placeholder="Confirm your password" />
+        </div>
+        <button type="submit" class="auth-btn primary">Create Account</button>
+        <p class="auth-link">Already have an account? <span class="link" data-tab="login">Sign in here</span></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="localStorageManager.js"></script>
+  <script src="authManager.js"></script>
+  <script src="notify.js"></script>
+  
+  <script>
+    console.log('Auth page loaded');
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded on auth page');
+      
+      if (window.AuthManager) {
+        console.log('AuthManager found, initializing...');
+        AuthManager.init();
+      } else {
+        console.error('AuthManager not found!');
+      }
+      
+      // Check for plan parameter in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const plan = urlParams.get('plan');
+      if (plan) {
+        console.log('Plan parameter found:', plan);
+        // Show signup tab and highlight the selected plan
+        const signupTab = document.querySelector('[data-tab="signup"]');
+        if (signupTab) {
+          signupTab.click();
+          if (window.Notify) {
+            const planNames = { monthly: 'Monthly ($3/month)', yearly: 'Yearly ($8/year)', lifetime: 'Lifetime ($10)' };
+            Notify.info(`Selected: ${planNames[plan]} - Create your account to continue!`);
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
