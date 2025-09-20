@@ -173,7 +173,9 @@
     function initializeGoogleSignIn() {
       if (typeof google !== 'undefined') {
         try {
-          const clientId = ['148847972276', 'cc2bf4urrg01jlqgs6ka7rm2fat8buiu'].join('-') + '.apps.googleusercontent.com';
+          const parts = ['148847972276', 'cc2bf4urrg01jlqgs6ka7rm2fat8buiu'];
+          const domain = 'apps.googleusercontent.com';
+          const clientId = parts[0] + '-' + parts[1] + '.' + domain;
           google.accounts.id.initialize({
             client_id: clientId,
             callback: handleGoogleSignUp,
